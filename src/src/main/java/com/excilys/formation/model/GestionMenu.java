@@ -25,13 +25,13 @@ public class GestionMenu {
 		switch(entreeMenu) {
 			case(1) :
 			{
-				//Affichage de la base de donnee
+				// Affichage de la base de donnee
 				// appel avec menu 2
 				break;
 			}
 			case(2) :
 			{
-				//Affichage des constructeurs
+				//Affichage des constructeurs d'ordinateurs
 				break;
 			}
 			case(3) :

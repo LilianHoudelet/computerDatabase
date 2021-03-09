@@ -2,7 +2,9 @@ package src.main.java.com.excilys.formation.mapper;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 /**
  * Here we are connecting to the database, the informations given are used in the connectionUrl variable
  * and used to access the database
@@ -11,10 +13,10 @@ import java.sql.SQLException;
  *
  */
 public class AccessDatabase {
-	String username = "admincdb";
-	String psw = "qwerty1234";
-	String BDD= "";
-	String url= "jdbc://" + BDD;
+	static String username = "admincdb";
+	static String psw = "qwerty1234";
+	static String BDD= "computer-database-db";
+	static String url= "jdbc:mysql://localhost:3306/" + BDD;
 	
 	AccessDatabase instance;
 	
@@ -22,7 +24,7 @@ public class AccessDatabase {
 		
 	}
 	
-	public AccessDatabase getAccessDatabase() {
+	public AccessDatabase getAccessDatabase(){
 		if(this.instance == null) {
 			return new AccessDatabase();
 		}
@@ -30,9 +32,12 @@ public class AccessDatabase {
 			return this.instance;
 		}
 	}
-	public static void main(String[] args){
-		try(){
-			
+	public static void main(String[] args) throws ClassNotFoundException{
+		try{
+			Class.forName("com.mysql.cj.jdbc.Driver");
+			Connection con=DriverManager.getConnection(url,username,psw);  
+			//here sonoo is database name, root is username and password  
+			Statement stmt=con.createStatement();
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
