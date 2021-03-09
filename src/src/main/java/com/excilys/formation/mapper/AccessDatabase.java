@@ -34,8 +34,8 @@ public class AccessDatabase {
 		}
 	}
 	
-	public static Connection getInstance() throws ClassNotFoundException{
-		if(instance == null) {
+	public static Connection getInstance() throws ClassNotFoundException, SQLException{
+		if(instance == null || instance.isClosed()) {
 			new AccessDatabase();
 		}
 		return instance;
