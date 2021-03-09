@@ -15,32 +15,29 @@ import java.sql.Statement;
 public class AccessDatabase {
 	static String username = "admincdb";
 	static String psw = "qwerty1234";
-	static String BDD= "computer-database-db";
-	static String url= "jdbc:mysql://localhost:3306/" + BDD;
+	static String BDD = "computer-database-db";
+	static String url = "jdbc:mysql://localhost:3306/" + BDD;
 	
-	AccessDatabase instance;
+	private static Connection instance;
 	
-	private AccessDatabase() {
-		
-	}
-	
-	public AccessDatabase getAccessDatabase(){
-		if(this.instance == null) {
-			return new AccessDatabase();
-		}
-		else {
-			return this.instance;
-		}
-	}
-	public static void main(String[] args) throws ClassNotFoundException{
+	/**
+	 * ici, une connextion a la base de donnee est cree
+	 * @throws ClassNotFoundException
+	 */
+	private AccessDatabase() throws ClassNotFoundException {
 		try{
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection con=DriverManager.getConnection(url,username,psw);  
-			//here sonoo is database name, root is username and password  
-			Statement stmt=con.createStatement();
+			instance = DriverManager.getConnection(url,username,psw);  
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static Connection getInstance() throws ClassNotFoundException{
+		if(instance == null) {
+			new AccessDatabase();
+		}
+		return instance;
 	}
 }
