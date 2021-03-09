@@ -14,11 +14,24 @@ public class AccessDatabase {
 	String username = "admincdb";
 	String psw = "qwerty1234";
 	String BDD= "";
-	String url= "@127.0.0.1" + BDD;
+	String url= "jdbc://" + BDD;
 	
+	AccessDatabase instance;
+	
+	private AccessDatabase() {
+		
+	}
+	
+	public AccessDatabase getAccessDatabase() {
+		if(this.instance == null) {
+			return new AccessDatabase();
+		}
+		else {
+			return this.instance;
+		}
+	}
 	public static void main(String[] args){
-		String connectionUrl = "";
-		try (Connection connection = DriverManager.getConnection(connectionUrl);){
+		try(){
 			
 		}
 		catch (SQLException e) {
