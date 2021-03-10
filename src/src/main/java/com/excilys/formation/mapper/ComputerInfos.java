@@ -11,12 +11,14 @@ import src.main.java.com.excilys.formation.model.Computer;
 
 public class ComputerInfos {
 	
+	public static final String REQUETE = "select id, name from computer";
+	
 	public static List<Computer> computerInformations() throws ClassNotFoundException, SQLException{
 		List<Computer> list = new ArrayList<Computer>();
 		
 		try(Connection con = AccessDatabase.getInstance();){
 			Statement stmt=con.createStatement();
-			ResultSet rs = stmt.executeQuery("select id, name from computer");  
+			ResultSet rs = stmt.executeQuery(REQUETE);  
 			
 			while(rs.next()) 
 			{

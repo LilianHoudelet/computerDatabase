@@ -10,12 +10,14 @@ import java.util.List;
 import src.main.java.com.excilys.formation.model.Company;
 
 public class CompanyInfos {
+	
+	public static final String REQUETE = "select id, name from company";
 		
 	public static List<Company> companyInformations() throws ClassNotFoundException, SQLException{
 		List<Company> list = new ArrayList<Company>();
 		try(Connection con = AccessDatabase.getInstance();){	
 			Statement stmt=con.createStatement();
-			ResultSet rs = stmt.executeQuery("select id, name from company");  	
+			ResultSet rs = stmt.executeQuery(REQUETE);  	
 			while(rs.next())  
 			{
 				list.add(new Company(rs.getInt(1), rs.getString(2)));
