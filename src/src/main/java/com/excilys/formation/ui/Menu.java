@@ -1,6 +1,5 @@
 package src.main.java.com.excilys.formation.ui;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -58,11 +57,20 @@ public class Menu {
 		System.out.println("Entrez le nom de la date de retrait sous le format YYYY-MM-JJ : ");
 		System.out.print(">> ");
 	}
+	
 	public static void demandeEntreeConstructeur() {
 		System.out.println("");
 		System.out.println("Entrez le nom du constructeur : ");
+		System.out.print(">> ");	
+	}
+	
+	public static void AvertissementSuppression(String elementSupprime) {
+		System.out.println("");
+		System.out.println("Vous allez supprimer " + elementSupprime + " de la base de donnee : " );
+		System.out.println("Veuillez confirmer (O/N) ");
 		System.out.print(">> ");
 	}
+	
 	public static void printComputer(List<Computer> infos) {
 		for(Computer cpu : infos)  
 		{
@@ -89,9 +97,14 @@ public class Menu {
 			System.out.println("Aucun ordinateur a ete trouve");
 		}
 		else {
-			System.out.println("| Nom             : " + cp.getName() + 
-				" \n| Constructeur    : " + cp.getCompany());
-			
+			System.out.println("| Nom             : " + cp.getName()); 
+				
+			if(cp.getCompany() == null) {
+				System.out.println("| Constructeur    : unknown");	
+			}
+			else {
+				System.out.println("| Constructeur    : " + cp.getCompany());
+			}
 				//" \n| Date de Sortie  : " + cp.getDateSortie().format(DateTimeFormatter.ofPattern("dd/MM/YYYY")));
 			if(cp.getDateRetrait() == null) {
 				System.out.println("| Date de Sortie  : unknown");

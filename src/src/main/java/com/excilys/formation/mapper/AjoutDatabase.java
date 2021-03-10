@@ -16,7 +16,7 @@ public class AjoutDatabase {
 	
 	public static final String REQUETE_ID_CONSTRUCTEUR = "SELECT id FROM company WHERE name = \"";
 	
-	public static final String REQUETE_NOMBRE_ORDINATEURS = "SELECT max(id) FROM company";
+	public static final String REQUETE_NOMBRE_ORDINATEURS = "SELECT max(id) FROM computer";
 	
 	public static final int PAS_DE_CONSTRUCTEUR_TROUVE = 0;
 			
@@ -29,26 +29,26 @@ public class AjoutDatabase {
 		// 1ere partie : récupération de l'id de la compagnie
 		
 		Statement stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery(REQUETE_ID_CONSTRUCTEUR + machine.getCompany() +"\"");
+		ResultSet rsCompany = stmt.executeQuery(REQUETE_ID_CONSTRUCTEUR + machine.getCompany() +"\"");
 		
-		if(rs.next()) {
-			idConstructeur = rs.getInt(1);
+		if(rsCompany.next()) {
+			idConstructeur = rsCompany.getInt(1);
 		}
 		
 		// 2e partie : création de l'id machine
 		 
-		Statement stmt2 = con.createStatement();
-		ResultSet rs2 = stmt.executeQuery(REQUETE_NOMBRE_ORDINATEURS);
+		//Statement stmt2 = con.createStatement();
+		ResultSet rsIdMax = stmt.executeQuery(REQUETE_NOMBRE_ORDINATEURS);
 		
-		if(rs2.next()) {
-			idMachine = rs2.getInt(1) + 1;
+		if(rsIdMax.next()) {
+			idMachine = rsIdMax.getInt(1) + 1;
 		}
 		// 3e partie : ajout dans la base
 		
 		try{
-			Statement stmt3 = con.createStatement();
+			//Statement stmt3 = con.createStatement();
 			String requetePart1Complete = REQUETE_PART1;
-			String requetePart2Complete = REQUETE_PART2+idMachine + ", " + machine.getName();
+			String requetePart2Complete = REQUETE_PART2+idMachine + ", \"" + machine.getName()+"\"";
 			
 			if(idConstructeur != PAS_DE_CONSTRUCTEUR_TROUVE) {
 				requetePart1Complete = requetePart1Complete + ", company_id";
@@ -56,20 +56,19 @@ public class AjoutDatabase {
 			}
 			if(machine.getDateSortie() != null) {
 				requetePart1Complete = requetePart1Complete + ", introduced";
-				requetePart2Complete = requetePart2Complete + ", " + Date.valueOf(machine.getDateSortie()).toString();
+				requetePart2Complete = requetePart2Complete + ", \"" + Date.valueOf(machine.getDateSortie()).toString()+"\"";
 			}
 			if(machine.getDateRetrait() != null) {
 				requetePart1Complete = requetePart1Complete + ", discontinued";
-				requetePart2Complete = requetePart2Complete + ", " + Date.valueOf(machine.getDateRetrait()).toString();
+				requetePart2Complete = requetePart2Complete + ", \"" + Date.valueOf(machine.getDateRetrait()).toString()+"\"";
 			}
-			stmt3.executeUpdate(requetePart1Complete+requetePart2Complete+")");
+			
+			stmt.executeUpdate(requetePart1Complete+requetePart2Complete+")");
 			
 		}
 		catch (SQLException e) {
 			
 		}
 		con.close();
-
-				
 	}
 }

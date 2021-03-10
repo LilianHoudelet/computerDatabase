@@ -4,6 +4,8 @@ import src.main.java.com.excilys.formation.mapper.AjoutDatabase;
 import src.main.java.com.excilys.formation.mapper.ChercherDetails;
 import src.main.java.com.excilys.formation.mapper.CompanyInfos;
 import src.main.java.com.excilys.formation.mapper.ComputerInfos;
+import src.main.java.com.excilys.formation.mapper.SupprDatabase;
+import src.main.java.com.excilys.formation.mapper.UpdateDatabase;
 import src.main.java.com.excilys.formation.ui.Menu;
 
 import java.sql.SQLException;
@@ -23,6 +25,10 @@ public class GestionMenu {
 	public static final int AFFICHER_INFOS_ORDINATEURS = 1;
 	public static final int AFFICHER_INFOS_CONSTRUCTEURS = 2;
 	public static final int AJOUTER_INFORMATIONS = 3;
+	
+	public static final int METTRE_A_JOUR_INFOS_ORDINATEURS = 1;
+	public static final int AFFICHER_DETAILS_ORDINATEUR = 2;
+	public static final int SUPPRIMER_INFORMATIONS = 3;
 	
 	/**
 	 * Appelle les différentes fonctions pour afficher le menu, récupérer les données,
@@ -82,7 +88,7 @@ public class GestionMenu {
 						dateSortie = LocalDate.parse(dateSortieString);
 					}
 					catch(Exception e){
-						System.out.println("Invalid Date");
+						System.out.println("Invalid Date Sortie");
 					}
 				}
 				
@@ -92,11 +98,10 @@ public class GestionMenu {
 						dateRetrait = LocalDate.parse(dateRetraitString);
 					}
 					catch(Exception e){
-						System.out.println("Invalid Date");
+						System.out.println("Invalid Date Retrait");
 					}
 				}
 				AjoutDatabase.ajoutDB(new Computer(0, nomMachine, dateSortie, dateRetrait, nomConstructeur)); 
-				System.out.println("Ajoute");
 				break;
 			}
 			default : {
@@ -115,28 +120,78 @@ public class GestionMenu {
 	
 		
 		switch(entreeMenu2) {	
-			case(1) :
-			{
-				// mettre a jour infos
+			case(METTRE_A_JOUR_INFOS_ORDINATEURS) :
+			{			
+				String patternDate = "[0-9]{4}-[0-1][0-9]-[0-3][0-9]";
+				LocalDate dateSortie = null;
+				LocalDate dateRetrait = null;
+				
+				Menu.demandeEntreeNom();
+				Scanner readerLine = new Scanner(System.in);
+				String nomMachine = readerLine.nextLine();
+				
+				Computer details = ChercherDetails.details(nomMachine);
+				
+				Menu.demandeEntreeConstructeur();
+				String nomConstructeur = readerLine.nextLine();
+				
+				Menu.demandeEntreeDateSortie();
+				String dateSortieString = readerLine.nextLine();
+				
+				Menu.demandeEntreeDateRetrait();
+				String dateRetraitString = readerLine.nextLine();
+				
+				if(Pattern.matches(patternDate, dateSortieString)) {
+					try {
+						dateSortie = LocalDate.parse(dateSortieString);
+					}
+					catch(Exception e){
+						System.out.println("Invalid Date Entree");
+					}
+				}
+				
+				
+				if(Pattern.matches(patternDate, dateRetraitString)) {
+					try {
+						dateRetrait = LocalDate.parse(dateRetraitString);
+					}
+					catch(Exception e){
+						System.out.println("Invalid Date Sortie");
+					}
+				}
+				
+				UpdateDatabase.modifDB(details, new Computer(details.getId(), nomMachine, dateSortie, dateRetrait, nomConstructeur) );
+				
 				break;
+				
 			}
 			
-			case(2) :
+			case(AFFICHER_DETAILS_ORDINATEUR) :
 			{
 				Menu.demandeEntreeNom();
 				Scanner readerLine = new Scanner(System.in);
-				String machine = readerLine.nextLine();
-					
-				Computer details = ChercherDetails.details(machine);
+				String nomMachine = readerLine.nextLine();
+				Computer details = ChercherDetails.details(nomMachine);
 				Menu.afficheDetails(details);
 				
 
 				break;
 			}
 			
-			case(3) :
+			case(SUPPRIMER_INFORMATIONS) :
 			{
-				// supprimer d'une table
+				Menu.demandeEntreeNom();
+				Scanner readerLine = new Scanner(System.in);
+				String nomMachine = readerLine.nextLine();
+				// TODO demande de confirmation
+				Menu.AvertissementSuppression(nomMachine);
+				String confirmation = readerLine.nextLine();
+				if(confirmation.equals(new String("O")) || confirmation.equals(new String("o"))) {
+					SupprDatabase.supprimerInfos(nomMachine);
+				}
+				else {
+					System.out.println("Element non supprime");
+				}
 				break;
 			}
 			default : {
@@ -144,7 +199,7 @@ public class GestionMenu {
 			}
 		}
 	}
-	
+		
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		menu1();
 	}

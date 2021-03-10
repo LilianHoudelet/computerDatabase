@@ -21,7 +21,7 @@ import src.main.java.com.excilys.formation.model.Computer;
  */
 public class ChercherDetails {
 	
-	public static final String REQUETE = "select computer.id, computer.name, introduced, discontinued, company.name from computer join company where company.id = computer.company_id and computer.name = '";
+	public static final String REQUETE = "SELECT computer.id, computer.name, introduced, discontinued, company.name FROM computer LEFT JOIN company ON company.id = computer.company_id WHERE computer.name = '";
 	
 	public static Computer details(String s) throws ClassNotFoundException, SQLException{
 		

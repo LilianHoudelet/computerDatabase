@@ -11,7 +11,7 @@ import src.main.java.com.excilys.formation.model.Company;
 
 public class CompanyInfos {
 	
-	public static final String REQUETE = "select id, name from company";
+	public static final String REQUETE = "SELECT id, name FROM company";
 		
 	public static List<Company> companyInformations() throws ClassNotFoundException, SQLException{
 		List<Company> list = new ArrayList<Company>();
