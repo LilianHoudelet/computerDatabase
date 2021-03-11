@@ -64,27 +64,38 @@ public class Menu {
 		System.out.print(">> ");	
 	}
 	
-	public static void AvertissementSuppression(String elementSupprime) {
+	public static void avertissementSuppression(String elementSupprime) {
 		System.out.println("");
-		System.out.println("Vous allez supprimer " + elementSupprime + " de la base de donnee : " );
+		System.out.println("Vous allez supprimer " + elementSupprime + " de la base de donnee : ");
 		System.out.println("Veuillez confirmer (O/N) ");
 		System.out.print(">> ");
 	}
 	
+	public static void avertissementDate() {
+		System.out.println("");
+		System.out.println(BARRE);
+		System.out.println("  Vous avez rentré une date de Sortie après la date de retrait de la vente");
+		System.out.println(BARRE);
+	}
+	
 	public static void printComputer(List<Computer> infos) {
-		for(Computer cpu : infos)  
-		{
+		
+		if (infos.isEmpty()) {
 			System.out.println(BARRE);
-			System.out.println("|" + cpu.getId()+"  "+ cpu.getName() +"|");  
+			System.out.println(" Pas d'information trouvees");
+		} else {
+			for (Computer cpu : infos) {
+				System.out.println(BARRE);
+				System.out.println("|" + cpu.getId() + "  " +  cpu.getName());  
+			}
 		}
 		System.out.println(BARRE);
 	}
 	
 	public static void printCompany(List<Company> infos) {
-		for(Company company : infos)  
-		{
+		for (Company company : infos) {
 			System.out.println(BARRE);
-			System.out.println("|" + company.getId()+"  "+ company.getName() +"|");  
+			System.out.println("|" + company.getId() + "  " + company.getName());  
 		}
 		System.out.println(BARRE);
 	}
@@ -93,29 +104,25 @@ public class Menu {
 		
 		System.out.println(BARRE);
 		
-		if(cp == null) {
+		if (cp == null) {
 			System.out.println("  Aucun ordinateur a ete trouve");
-		}
-		else {
+		} else {
 			System.out.println("| Nom             : " + cp.getName()); 
 				
-			if(cp.getCompany() == null) {
+			if (cp.getCompany() == null) {
 				System.out.println("| Constructeur    : unknown");	
-			}
-			else {
+			} else {
 				System.out.println("| Constructeur    : " + cp.getCompany());
 			}
 				//" \n| Date de Sortie  : " + cp.getDateSortie().format(DateTimeFormatter.ofPattern("dd/MM/YYYY")));
-			if(cp.getDateSortie() == null) {
+			if (cp.getDateSortie() == null) {
 				System.out.println("| Date de Sortie  : unknown");
+			} else {
+				System.out.println("| Date de Sortie  : " + cp.getDateSortie().format(DateTimeFormatter.ofPattern("dd/MM/YYYY")));
 			}
-			else {
-				System.out.println("| Date de Sortie  : "+ cp.getDateSortie().format(DateTimeFormatter.ofPattern("dd/MM/YYYY")));
-			}
-			if(cp.getDateRetrait() == null) {
+			if (cp.getDateRetrait() == null) {
 				System.out.println("| Date de Retrait : unknown");
-			}
-			else {
+			} else {
 				System.out.println("| Date de Retrait : " + cp.getDateRetrait().format(DateTimeFormatter.ofPattern("dd/MM/YYYY")));
 			}
 		}

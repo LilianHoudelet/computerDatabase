@@ -5,8 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
+
 //import java.util.ArrayList;
 //import java.util.List;
 
@@ -23,29 +22,27 @@ public class ChercherDetails {
 	
 	public static final String REQUETE = "SELECT computer.id, computer.name, introduced, discontinued, company.name FROM computer LEFT JOIN company ON company.id = computer.company_id WHERE computer.name = '";
 	
-	public static Computer details(String s) throws ClassNotFoundException, SQLException{
+	public static Computer details(String s) throws ClassNotFoundException, SQLException {
 		
-		String requete = new String(REQUETE +s+"'");
+		String requete = new String(REQUETE + s + "'");
 		
 		Connection con = AccessDatabase.getInstance();  
-		Statement stmt=con.createStatement();
+		Statement stmt = con.createStatement();
 		ResultSet rs = stmt.executeQuery(requete);  
 		
 
-		if(rs.next())  // si il y en a un 
-		{
+		if (rs.next()) {  // si il y en a un 
+		
 			LocalDate dateSortie;
-			if( rs.getDate(3) == null ) {
+			if (rs.getDate(3) == null) {
 				dateSortie = null;
-			}
-			else {
+			} else {
 				dateSortie = rs.getDate(3).toLocalDate();
 			}
-			if( rs.getDate(4) == null ) {
-				return (new Computer(rs.getInt(1),rs.getString(2),dateSortie, rs.getString(5)));
-			}
-			else {
-				return (new Computer(rs.getInt(1),rs.getString(2),dateSortie, rs.getDate(4).toLocalDate() ,rs.getString(5)));
+			if (rs.getDate(4) == null) {
+				return (new Computer(rs.getInt(1), rs.getString(2), dateSortie, rs.getString(5)));
+			} else {
+				return (new Computer(rs.getInt(1), rs.getString(2), dateSortie, rs.getDate(4).toLocalDate(), rs.getString(5)));
 			}
 			
 		}

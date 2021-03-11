@@ -8,15 +8,14 @@ public class SupprDatabase {
 	
 public static final String REQUETE = "DELETE FROM computer WHERE name = \"";
 	
-	public static void supprimerInfos(String nomMachine) throws ClassNotFoundException, SQLException{
+	public static void supprimerInfos(String nomMachine) throws ClassNotFoundException, SQLException {
 		
-		try(Connection con = AccessDatabase.getInstance();){
-			Statement stmt=con.createStatement();
+		try (Connection con = AccessDatabase.getInstance();) {
+			Statement stmt = con.createStatement();
 			stmt.executeUpdate(REQUETE + nomMachine + "\"");  
 						
 			con.close();
-		}
-		catch(SQLException e) {
+		} catch (SQLException e) {
 			
 		}
 	}	

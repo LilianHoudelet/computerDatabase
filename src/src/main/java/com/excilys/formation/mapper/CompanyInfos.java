@@ -13,13 +13,12 @@ public class CompanyInfos {
 	
 	public static final String REQUETE = "SELECT id, name FROM company";
 		
-	public static List<Company> companyInformations() throws ClassNotFoundException, SQLException{
+	public static List<Company> companyInformations() throws ClassNotFoundException, SQLException {
 		List<Company> list = new ArrayList<Company>();
-		try(Connection con = AccessDatabase.getInstance();){	
-			Statement stmt=con.createStatement();
+		try (Connection con = AccessDatabase.getInstance();) {
+			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(REQUETE);  	
-			while(rs.next())  
-			{
+			while (rs.next()) {
 				list.add(new Company(rs.getInt(1), rs.getString(2)));
 			}
 			con.close();
