@@ -86,7 +86,7 @@ public class Menu {
 		} else {
 			for (Computer cpu : infos) {
 				System.out.println(BARRE);
-				System.out.println("|" + cpu.getId() + "  " +  cpu.getName());  
+				System.out.println("|  " + cpu.toString());  
 			}
 		}
 		System.out.println(BARRE);

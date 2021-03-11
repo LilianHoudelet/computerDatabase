@@ -6,13 +6,14 @@ import src.main.java.com.excilys.formation.mapper.CompanyInfos;
 import src.main.java.com.excilys.formation.mapper.ComputerInfos;
 import src.main.java.com.excilys.formation.mapper.SupprDatabase;
 import src.main.java.com.excilys.formation.mapper.UpdateDatabase;
+import src.main.java.com.excilys.formation.service.CheckDate;
 import src.main.java.com.excilys.formation.ui.Menu;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Pattern;
+
 
 /**
  * 
@@ -64,8 +65,7 @@ public class GestionMenu {
 			break;
 		
 		case (AJOUTER_INFORMATIONS): 
-			LocalDate dateSortie = null;
-			LocalDate dateRetrait = null;
+			
 
 			Menu.demandeEntreeNom();
 
@@ -80,22 +80,9 @@ public class GestionMenu {
 			Menu.demandeEntreeDateRetrait();
 			String dateRetraitString = readerLine.nextLine();
 
-			if (Pattern.matches(PATTERN_DATE, dateSortieString)) {
-				try {
-					dateSortie = LocalDate.parse(dateSortieString);
-				} catch (Exception e) {
-					System.out.println("Invalid Date Sortie");
-				}
-			}
+			LocalDate dateSortie = CheckDate.dateValide(dateSortieString);
+			LocalDate dateRetrait = CheckDate.dateValide(dateRetraitString);
 
-			if (Pattern.matches(PATTERN_DATE, dateRetraitString)) {
-				try {
-					dateRetrait = LocalDate.parse(dateRetraitString);
-				} catch (Exception e) {
-					System.out.println("Invalid Date Retrait");
-				}
-			}
-			
 			if (dateRetrait != null && dateSortie != null &&  dateSortie.compareTo(dateRetrait) > 0) { // si on a deux dates et la date de sortie est avant
 				Menu.avertissementDate();
 			} else { 
@@ -122,8 +109,6 @@ public class GestionMenu {
 
 		switch (entreeMenu2) {
 		case (METTRE_A_JOUR_INFOS_ORDINATEURS): 
-			LocalDate dateSortie = null;
-			LocalDate dateRetrait = null;
 
 			Menu.demandeEntreeNom();
 			// Scanner readerLine = new Scanner(System.in);
@@ -131,7 +116,6 @@ public class GestionMenu {
 
 			Computer details = ChercherDetails.details(nomMachine);
 
-			System.out.println("");
 			Menu.afficheDetails(details);
 
 			if (details != null) {
@@ -145,21 +129,8 @@ public class GestionMenu {
 				Menu.demandeEntreeDateRetrait();
 				String dateRetraitString = readerLine.nextLine();
 
-				if (Pattern.matches(PATTERN_DATE, dateSortieString)) {
-					try {
-						dateSortie = LocalDate.parse(dateSortieString);
-					} catch (Exception e) {
-						System.out.println("Invalid Date Entree");
-					}
-				}
-
-				if (Pattern.matches(PATTERN_DATE, dateRetraitString)) {
-					try {
-						dateRetrait = LocalDate.parse(dateRetraitString);
-					} catch (Exception e) {
-						System.out.println("Invalid Date Sortie");
-					}
-				}
+				LocalDate dateSortie = CheckDate.dateValide(dateSortieString);
+				LocalDate dateRetrait = CheckDate.dateValide(dateRetraitString);
 
 				UpdateDatabase.modifDB(details,
 						new Computer(details.getId(), nomMachine, dateSortie, dateRetrait, nomConstructeur));

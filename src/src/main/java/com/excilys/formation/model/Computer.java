@@ -49,4 +49,9 @@ public class Computer {
 	public String getCompany() {
 		return this.company;
 	}
+	
+	@Override
+	public String toString() {
+		return "  " + this.id + ".  " + this.nom;
+	}
 }
