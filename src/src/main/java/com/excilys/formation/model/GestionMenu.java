@@ -132,36 +132,41 @@ public class GestionMenu {
 				
 				Computer details = ChercherDetails.details(nomMachine);
 				
-				Menu.demandeEntreeConstructeur();
-				String nomConstructeur = readerLine.nextLine();
+				System.out.println("");
+				Menu.afficheDetails(details);
 				
-				Menu.demandeEntreeDateSortie();
-				String dateSortieString = readerLine.nextLine();
-				
-				Menu.demandeEntreeDateRetrait();
-				String dateRetraitString = readerLine.nextLine();
-				
-				if(Pattern.matches(patternDate, dateSortieString)) {
-					try {
-						dateSortie = LocalDate.parse(dateSortieString);
+				if(details != null) {
+					System.out.println("Rentrer les nouvelles informations");
+					Menu.demandeEntreeConstructeur();
+					String nomConstructeur = readerLine.nextLine();
+					
+					Menu.demandeEntreeDateSortie();
+					String dateSortieString = readerLine.nextLine();
+					
+					Menu.demandeEntreeDateRetrait();
+					String dateRetraitString = readerLine.nextLine();
+					
+					if(Pattern.matches(patternDate, dateSortieString)) {
+						try {
+							dateSortie = LocalDate.parse(dateSortieString);
+						}
+						catch(Exception e){
+							System.out.println("Invalid Date Entree");
+						}
 					}
-					catch(Exception e){
-						System.out.println("Invalid Date Entree");
+					
+					
+					if(Pattern.matches(patternDate, dateRetraitString)) {
+						try {
+							dateRetrait = LocalDate.parse(dateRetraitString);
+						}
+						catch(Exception e){
+							System.out.println("Invalid Date Sortie");
+						}
 					}
+					
+					UpdateDatabase.modifDB(details, new Computer(details.getId(), nomMachine, dateSortie, dateRetrait, nomConstructeur) );
 				}
-				
-				
-				if(Pattern.matches(patternDate, dateRetraitString)) {
-					try {
-						dateRetrait = LocalDate.parse(dateRetraitString);
-					}
-					catch(Exception e){
-						System.out.println("Invalid Date Sortie");
-					}
-				}
-				
-				UpdateDatabase.modifDB(details, new Computer(details.getId(), nomMachine, dateSortie, dateRetrait, nomConstructeur) );
-				
 				break;
 				
 			}
@@ -186,7 +191,7 @@ public class GestionMenu {
 				// TODO demande de confirmation
 				Menu.AvertissementSuppression(nomMachine);
 				String confirmation = readerLine.nextLine();
-				if(confirmation.equals(new String("O")) || confirmation.equals(new String("o"))) {
+				if(!confirmation.isEmpty() && ( confirmation.equals(new String("O")) || confirmation.equals(new String("o")))) {
 					SupprDatabase.supprimerInfos(nomMachine);
 				}
 				else {

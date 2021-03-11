@@ -94,7 +94,7 @@ public class Menu {
 		System.out.println(BARRE);
 		
 		if(cp == null) {
-			System.out.println("Aucun ordinateur a ete trouve");
+			System.out.println("  Aucun ordinateur a ete trouve");
 		}
 		else {
 			System.out.println("| Nom             : " + cp.getName()); 
@@ -106,7 +106,7 @@ public class Menu {
 				System.out.println("| Constructeur    : " + cp.getCompany());
 			}
 				//" \n| Date de Sortie  : " + cp.getDateSortie().format(DateTimeFormatter.ofPattern("dd/MM/YYYY")));
-			if(cp.getDateRetrait() == null) {
+			if(cp.getDateSortie() == null) {
 				System.out.println("| Date de Sortie  : unknown");
 			}
 			else {

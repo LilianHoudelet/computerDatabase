@@ -16,6 +16,8 @@ public class UpdateDatabase {
 	
 	public static final String REQUETE_NOMBRE_ORDINATEURS = "SELECT id FROM computer WHERE name = \"";
 	
+	public static final String REQUETE_UPDATE_FIN = " WHERE id = ";
+	
 	public static void modifDB(Computer machine, Computer machineModif) throws ClassNotFoundException, SQLException{
 		
 		Connection con = AccessDatabase.getInstance(); 
@@ -31,16 +33,17 @@ public class UpdateDatabase {
 				requeteFinal = requeteFinal + "company_id=" + rsCompany.getInt(1)+" ";
 			}
 		}
-		if(machineModif.getDateSortie()!=null && !machine.getDateSortie().equals(machineModif.getDateSortie())) {
-			requeteFinal = requeteFinal + "introduced=\"" + machine.getDateSortie()+"\" ";
+		if(machineModif.getDateSortie()!=null) { // && machine.getDateSortie()!=null) { //&& !machine.getDateSortie().equals(machineModif.getDateSortie())) {
+			requeteFinal = requeteFinal + "introduced=\"" + machineModif.getDateSortie()+"\" ";
 		}
-		if(machineModif.getDateRetrait()!=null && !machine.getDateRetrait().equals(machineModif.getDateRetrait())) {
-			requeteFinal = requeteFinal + "discontinued=\"" + machine.getDateRetrait()+"\"";
+		if(machineModif.getDateRetrait()!=null) { //  && !machine.getDateRetrait().equals(machineModif.getDateRetrait())) {
+			requeteFinal = requeteFinal + "discontinued=\"" + machineModif.getDateRetrait()+"\"";
 		}
 		
 		try{
-			Statement stmt = con.createStatement();	
-			stmt.executeUpdate(REQUETE_UPDATE + requeteFinal.trim().replace(" ",","));
+			Statement stmt = con.createStatement();
+			
+			stmt.executeUpdate(REQUETE_UPDATE + requeteFinal.trim().replace(" ",",") + REQUETE_UPDATE_FIN + machine.getId());
 		}
 		catch (SQLException e) {
 			
