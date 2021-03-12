@@ -112,7 +112,7 @@ public class Menu {
 			if (cp.getCompany() == null) {
 				System.out.println("| Constructeur    : unknown");	
 			} else {
-				System.out.println("| Constructeur    : " + cp.getCompany());
+				System.out.println("| Constructeur    : " + cp.getCompany().toString());
 			}
 				//" \n| Date de Sortie  : " + cp.getDateSortie().format(DateTimeFormatter.ofPattern("dd/MM/YYYY")));
 			if (cp.getDateSortie() == null) {

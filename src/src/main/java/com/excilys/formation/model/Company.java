@@ -16,5 +16,10 @@ public class Company {
 	public String getName() {
 		return this.nom;
 	}
+	
+	@Override
+	public String toString() {
+		return nom;
+	}
 
 }

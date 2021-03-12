@@ -43,9 +43,9 @@ public class ChercherDetails {
 				dateSortie = rs.getDate(3).toLocalDate();
 			}
 			if (rs.getDate(4) == null) {
-				return (new Computer(rs.getInt(1), rs.getString(2), dateSortie, new Company(rs.getInt(5), rs.getString(6))));
+				return (new Computer(rs.getInt(1), rs.getString(2), dateSortie, new Company(rs.getInt(6), rs.getString(5))));
 			} else {
-				return (new Computer(rs.getInt(1), rs.getString(2), dateSortie, rs.getDate(4).toLocalDate(), new Company(rs.getInt(5), rs.getString(6))));
+				return (new Computer(rs.getInt(1), rs.getString(2), dateSortie, rs.getDate(4).toLocalDate(), new Company(rs.getInt(6), rs.getString(5))));
 			}
 			
 		}

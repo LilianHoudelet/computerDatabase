@@ -2,11 +2,12 @@ package src.main.java.com.excilys.formation.model;
 
 import src.main.java.com.excilys.formation.mapper.AjoutDatabase;
 import src.main.java.com.excilys.formation.mapper.ChercherDetails;
-import src.main.java.com.excilys.formation.mapper.CompanyInfos;
 import src.main.java.com.excilys.formation.mapper.SupprDatabase;
 import src.main.java.com.excilys.formation.mapper.UpdateDatabase;
 import src.main.java.com.excilys.formation.service.CheckDate;
+import src.main.java.com.excilys.formation.service.CompanyDataService;
 import src.main.java.com.excilys.formation.service.ComputerDataService;
+import src.main.java.com.excilys.formation.service.ComputerDetailsDataService;
 import src.main.java.com.excilys.formation.ui.Menu;
 
 import java.time.LocalDate;
@@ -57,8 +58,8 @@ public class GestionMenu {
 			break;
 		
 		case (AFFICHER_INFOS_CONSTRUCTEURS): 
-			List<Company> infos1 = CompanyInfos.companyInformations();
-			Menu.printCompany(infos1);
+			List<Company> infosCompany = CompanyDataService.recupDataOrdi();
+			Menu.printCompany(infosCompany);
 			break;
 		
 		case (AJOUTER_INFORMATIONS): 
@@ -119,10 +120,8 @@ public class GestionMenu {
 			
 			String nomMachine = readerLine.nextLine();
 
-			Computer details = ChercherDetails.details(nomMachine);
+			Computer details = ComputerDetailsDataService.recupDataDetailsOrdi(nomMachine);
 			
-			
-
 			Menu.afficheDetails(details);
 
 			if (details != null) {
