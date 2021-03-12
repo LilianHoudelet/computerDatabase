@@ -1,4 +1,4 @@
-package src.main.java.com.excilys.formation.mapper;
+package src.main.java.com.excilys.formation.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

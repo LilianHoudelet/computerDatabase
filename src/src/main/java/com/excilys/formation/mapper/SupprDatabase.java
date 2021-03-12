@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import src.main.java.com.excilys.formation.dao.AccessDatabase;
+
 public class SupprDatabase {
 	
 public static final String REQUETE = "DELETE FROM computer WHERE name = \"";

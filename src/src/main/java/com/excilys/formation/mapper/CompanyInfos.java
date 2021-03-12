@@ -7,6 +7,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import src.main.java.com.excilys.formation.dao.AccessDatabase;
 import src.main.java.com.excilys.formation.model.Company;
 
 public class CompanyInfos {

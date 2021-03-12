@@ -7,14 +7,14 @@ public class Computer {
 	String nom;
 	LocalDate dateSortie; 
 	LocalDate dateRetrait;
-	String company;
+	Company company;
 	
 	public Computer(int id, String nom) {
 		this.id = id;
 		this.nom = nom;
 	}
 	
-	public Computer(int id, String nom, LocalDate dateSortie, LocalDate dateRetrait, String company) {
+	public Computer(int id, String nom, LocalDate dateSortie, LocalDate dateRetrait, Company company) {
 		this.id = id;
 		this.nom = nom;
 		this.dateSortie = dateSortie;
@@ -22,7 +22,7 @@ public class Computer {
 		this.company = company;
 		
 	}
-	public Computer(int id, String nom, LocalDate dateSortie, String company) {
+	public Computer(int id, String nom, LocalDate dateSortie, Company company) {
 		this.id = id;
 		this.nom = nom;
 		this.dateSortie = dateSortie;
@@ -46,7 +46,7 @@ public class Computer {
 		return this.dateRetrait;
 	}
 	
-	public String getCompany() {
+	public Company getCompany() {
 		return this.company;
 	}
 	

@@ -3,13 +3,12 @@ package src.main.java.com.excilys.formation.model;
 import src.main.java.com.excilys.formation.mapper.AjoutDatabase;
 import src.main.java.com.excilys.formation.mapper.ChercherDetails;
 import src.main.java.com.excilys.formation.mapper.CompanyInfos;
-import src.main.java.com.excilys.formation.mapper.ComputerInfos;
 import src.main.java.com.excilys.formation.mapper.SupprDatabase;
 import src.main.java.com.excilys.formation.mapper.UpdateDatabase;
 import src.main.java.com.excilys.formation.service.CheckDate;
+import src.main.java.com.excilys.formation.service.ComputerDataService;
 import src.main.java.com.excilys.formation.ui.Menu;
 
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
@@ -36,11 +35,9 @@ public class GestionMenu {
 	/**
 	 * Appelle les différentes fonctions pour afficher le menu, récupérer les
 	 * données, appelle les fonctions de recherche
-	 * 
-	 * @throws SQLException
-	 * @throws ClassNotFoundException
+	 * @throws Exception 
 	 */
-	public static void menu1() throws ClassNotFoundException, SQLException {
+	public static void menu1() throws Exception {
 		int entreeMenu1;
 
 		Menu.afficherMenu1();
@@ -53,7 +50,7 @@ public class GestionMenu {
 
 		switch (entreeMenu1) {
 		case (AFFICHER_INFOS_ORDINATEURS): 
-			List<Computer> infos = ComputerInfos.computerInformations();
+			List<Computer> infos = ComputerDataService.recupDataOrdi();
 			Menu.printComputer(infos);
 			// autre page, autre action -> menu 2
 			menu2();
@@ -66,6 +63,10 @@ public class GestionMenu {
 		
 		case (AJOUTER_INFORMATIONS): 
 			
+			LocalDate dateSortie = null;
+			String dateSortieString;
+			LocalDate dateRetrait = null;
+			String dateRetraitString;
 
 			Menu.demandeEntreeNom();
 
@@ -74,30 +75,34 @@ public class GestionMenu {
 			Menu.demandeEntreeConstructeur();
 			String nomConstructeur = readerLine.nextLine();
 
-			Menu.demandeEntreeDateSortie();
-			String dateSortieString = readerLine.nextLine();
-
-			Menu.demandeEntreeDateRetrait();
-			String dateRetraitString = readerLine.nextLine();
-
-			LocalDate dateSortie = CheckDate.dateValide(dateSortieString);
-			LocalDate dateRetrait = CheckDate.dateValide(dateRetraitString);
+			do {
+				Menu.demandeEntreeDateSortie();
+				dateSortieString = readerLine.nextLine();
+				dateSortie = CheckDate.dateValide(dateSortieString);
+				
+			} while (!(dateSortieString.isEmpty() || dateSortie != null));
+			
+			do {
+				Menu.demandeEntreeDateRetrait();
+				dateRetraitString = readerLine.nextLine();
+				dateRetrait = CheckDate.dateValide(dateSortieString);
+				
+			} while (!(dateRetraitString.isEmpty() || dateRetrait != null));
 
 			if (dateRetrait != null && dateSortie != null &&  dateSortie.compareTo(dateRetrait) > 0) { // si on a deux dates et la date de sortie est avant
 				Menu.avertissementDate();
 			} else { 
-				AjoutDatabase.ajoutDB(new Computer(0, nomMachine, dateSortie, dateRetrait, nomConstructeur));
+				AjoutDatabase.ajoutDB(new Computer(0, nomMachine, dateSortie, dateRetrait, new Company(0, nomConstructeur)));
 			}
 			break;
 		
 		default: 
 			reader.close();
 			readerLine.close();
-	
 		}
 	}
 
-	public static void menu2() throws ClassNotFoundException, SQLException {
+	public static void menu2() throws Exception {
 		int entreeMenu2;
 
 		Menu.afficherMenu2();
@@ -111,10 +116,12 @@ public class GestionMenu {
 		case (METTRE_A_JOUR_INFOS_ORDINATEURS): 
 
 			Menu.demandeEntreeNom();
-			// Scanner readerLine = new Scanner(System.in);
+			
 			String nomMachine = readerLine.nextLine();
 
 			Computer details = ChercherDetails.details(nomMachine);
+			
+			
 
 			Menu.afficheDetails(details);
 
@@ -122,18 +129,29 @@ public class GestionMenu {
 				System.out.println("Rentrer les nouvelles informations");
 				Menu.demandeEntreeConstructeur();
 				String nomConstructeur = readerLine.nextLine();
-
-				Menu.demandeEntreeDateSortie();
-				String dateSortieString = readerLine.nextLine();
-
-				Menu.demandeEntreeDateRetrait();
-				String dateRetraitString = readerLine.nextLine();
-
-				LocalDate dateSortie = CheckDate.dateValide(dateSortieString);
-				LocalDate dateRetrait = CheckDate.dateValide(dateRetraitString);
+				
+				LocalDate dateSortie = null;
+				String dateSortieString;
+				LocalDate dateRetrait = null;
+				String dateRetraitString;
+				
+				do {
+					Menu.demandeEntreeDateSortie();
+					dateSortieString = readerLine.nextLine();
+					dateSortie = CheckDate.dateValide(dateSortieString);
+					
+				} while (!(dateSortieString.isEmpty() || dateSortie != null));
+				
+				do {
+					Menu.demandeEntreeDateRetrait();
+					dateRetraitString = readerLine.nextLine();
+					dateRetrait = CheckDate.dateValide(dateSortieString);
+					
+				} while (!(dateRetraitString.isEmpty() || dateRetrait != null));
+				
 
 				UpdateDatabase.modifDB(details,
-						new Computer(details.getId(), nomMachine, dateSortie, dateRetrait, nomConstructeur));
+						new Computer(details.getId(), nomMachine, dateSortie, dateRetrait, new Company(0, nomConstructeur)));
 			}
 			break;
 
@@ -167,7 +185,7 @@ public class GestionMenu {
 		
 	}
 
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+	public static void main(String[] args) throws Exception {
 		menu1();
 	}
 }
