@@ -2,12 +2,12 @@ package src.main.java.com.excilys.formation.model;
 
 import src.main.java.com.excilys.formation.mapper.AjoutDatabase;
 import src.main.java.com.excilys.formation.mapper.ChercherDetails;
-import src.main.java.com.excilys.formation.mapper.SupprDatabase;
 import src.main.java.com.excilys.formation.mapper.UpdateDatabase;
 import src.main.java.com.excilys.formation.service.CheckDate;
 import src.main.java.com.excilys.formation.service.CompanyDataService;
 import src.main.java.com.excilys.formation.service.ComputerDataService;
 import src.main.java.com.excilys.formation.service.ComputerDetailsDataService;
+import src.main.java.com.excilys.formation.service.ComputerSuppressionService;
 import src.main.java.com.excilys.formation.ui.Menu;
 
 import java.time.LocalDate;
@@ -46,14 +46,12 @@ public class GestionMenu {
 		Scanner reader = new Scanner(System.in);
 		entreeMenu1 = reader.nextInt();
 		// TODO : Gerer les entrees de type string
-
 		Scanner readerLine = new Scanner(System.in);
 
 		switch (entreeMenu1) {
 		case (AFFICHER_INFOS_ORDINATEURS): 
 			List<Computer> infos = ComputerDataService.recupDataOrdi();
 			Menu.printComputer(infos);
-			// autre page, autre action -> menu 2
 			menu2();
 			break;
 		
@@ -63,7 +61,7 @@ public class GestionMenu {
 			break;
 		
 		case (AJOUTER_INFORMATIONS): 
-			
+			// Refactor a faire ici
 			LocalDate dateSortie = null;
 			String dateSortieString;
 			LocalDate dateRetrait = null;
@@ -148,9 +146,10 @@ public class GestionMenu {
 					
 				} while (!(dateRetraitString.isEmpty() || dateRetrait != null));
 				
-
+				// Refactor cette fonction
 				UpdateDatabase.modifDB(details,
 						new Computer(details.getId(), nomMachine, dateSortie, dateRetrait, new Company(0, nomConstructeur)));
+				
 			}
 			break;
 
@@ -169,9 +168,12 @@ public class GestionMenu {
 			String nomMachineInfos = readerLine.nextLine();
 			Menu.avertissementSuppression(nomMachineInfos);
 			String confirmation = readerLine.nextLine();
+			
+			Computer ordiSuppr = ComputerDetailsDataService.recupDataDetailsOrdi(nomMachineInfos);
+			
 			if (!confirmation.isEmpty()
 					&& (confirmation.equals(new String("O")) || confirmation.equals(new String("o")))) {
-				SupprDatabase.supprimerInfos(nomMachineInfos);
+				ComputerSuppressionService.supprDataOrdi(ordiSuppr);
 			} else {
 				System.out.println("Element non supprime");
 			}
