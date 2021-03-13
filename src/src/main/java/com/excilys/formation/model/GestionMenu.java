@@ -1,12 +1,12 @@
 package src.main.java.com.excilys.formation.model;
 
-import src.main.java.com.excilys.formation.mapper.UpdateDatabase;
 import src.main.java.com.excilys.formation.service.AjoutOrdinateurService;
 import src.main.java.com.excilys.formation.service.CheckDate;
 import src.main.java.com.excilys.formation.service.CompanyDataService;
 import src.main.java.com.excilys.formation.service.ComputerDataService;
 import src.main.java.com.excilys.formation.service.ComputerDetailsDataService;
 import src.main.java.com.excilys.formation.service.ComputerSuppressionService;
+import src.main.java.com.excilys.formation.service.UpdateDatabaseService;
 import src.main.java.com.excilys.formation.ui.Menu;
 
 import java.time.LocalDate;
@@ -137,19 +137,25 @@ public class GestionMenu {
 					Menu.demandeEntreeDateSortie();
 					dateSortieString = readerLine.nextLine();
 					dateSortie = CheckDate.dateValide(dateSortieString);
-					
+					if (dateSortieString.isEmpty()) {
+						dateSortie = details.getDateSortie();
+					}
 				} while (!(dateSortieString.isEmpty() || dateSortie != null));
 				
 				do {
 					Menu.demandeEntreeDateRetrait();
 					dateRetraitString = readerLine.nextLine();
-					dateRetrait = CheckDate.dateValide(dateSortieString);
-					
+					dateRetrait = CheckDate.dateValide(dateRetraitString);
+					if (dateRetraitString.isEmpty()) {
+						dateRetrait = details.getDateRetrait();
+					}
 				} while (!(dateRetraitString.isEmpty() || dateRetrait != null));
 				
 				// Refactor cette fonction
-				UpdateDatabase.modifDB(details,
-						new Computer(details.getId(), nomMachine, dateSortie, dateRetrait, new Company(0, nomConstructeur)));
+				Company company = CompanyDataService.recupDataOrdiId(nomConstructeur);
+				
+				UpdateDatabaseService.updateDataService(
+						new Computer(details.getId(), details.getName(), dateSortie, dateRetrait, company));
 				
 			}
 			break;
