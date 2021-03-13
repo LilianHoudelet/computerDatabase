@@ -19,4 +19,13 @@ public class CompanyDataService {
 			throw new Exception("Impossible de se connecter a la base de donnees");
 		} 
 	}
+	public static Company recupDataOrdiId(String nomConstructeur) throws Exception {
+		try (Connection con = AccessDatabase.getInstance();) {
+			
+			return CompanyInfos.companyInformationsMapperId(CompanieInfoDao.companyInformationsId(con, nomConstructeur));
+		
+		} catch (SQLException e) {
+			throw new Exception("Impossible de se connecter a la base de donnees Id");
+		} 
+	}
 }

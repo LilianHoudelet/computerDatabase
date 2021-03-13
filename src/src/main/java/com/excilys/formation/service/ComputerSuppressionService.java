@@ -14,7 +14,7 @@ public class ComputerSuppressionService {
 		try (Connection con = AccessDatabase.getInstance();) {
 			SupprimerDatabaseDao.computerInformations(con, computer);
 		} catch (SQLException e) {
-			throw new Exception("Impossible de se connecter a la base de donnees");
+			throw new Exception("Impossible de se connecter a la base de donnees Suppression");
 		} 
 	}
 }

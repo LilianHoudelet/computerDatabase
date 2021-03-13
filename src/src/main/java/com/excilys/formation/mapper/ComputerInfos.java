@@ -56,12 +56,12 @@ public class ComputerInfos {
 				dateSortie = computerInformations.getDate(3).toLocalDate();
 			}
 			if (computerInformations.getDate(4) == null) {
-				return (new Computer(computerInformations.getInt(1), computerInformations.getString(2), dateSortie, new Company(computerInformations.getInt(5), computerInformations.getString(6))));
+				return (new Computer(computerInformations.getInt(1), computerInformations.getString(2), dateSortie, new Company(computerInformations.getInt(6), computerInformations.getString(5))));
 			} else {
-				return (new Computer(computerInformations.getInt(1), computerInformations.getString(2), dateSortie, computerInformations.getDate(4).toLocalDate(), new Company(computerInformations.getInt(5), computerInformations.getString(6))));
+				return (new Computer(computerInformations.getInt(1), computerInformations.getString(2), dateSortie, computerInformations.getDate(4).toLocalDate(), new Company(computerInformations.getInt(6), computerInformations.getString(5))));
 			}
 		} else {
-			throw new Exception("");
+			throw new Exception("Le mapping a raté");
 		}
 	}
 }

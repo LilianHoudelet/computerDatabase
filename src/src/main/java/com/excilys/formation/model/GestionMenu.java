@@ -1,8 +1,7 @@
 package src.main.java.com.excilys.formation.model;
 
-import src.main.java.com.excilys.formation.mapper.AjoutDatabase;
-import src.main.java.com.excilys.formation.mapper.ChercherDetails;
 import src.main.java.com.excilys.formation.mapper.UpdateDatabase;
+import src.main.java.com.excilys.formation.service.AjoutOrdinateurService;
 import src.main.java.com.excilys.formation.service.CheckDate;
 import src.main.java.com.excilys.formation.service.CompanyDataService;
 import src.main.java.com.excilys.formation.service.ComputerDataService;
@@ -84,14 +83,16 @@ public class GestionMenu {
 			do {
 				Menu.demandeEntreeDateRetrait();
 				dateRetraitString = readerLine.nextLine();
-				dateRetrait = CheckDate.dateValide(dateSortieString);
+				dateRetrait = CheckDate.dateValide(dateRetraitString);
 				
 			} while (!(dateRetraitString.isEmpty() || dateRetrait != null));
 
 			if (dateRetrait != null && dateSortie != null &&  dateSortie.compareTo(dateRetrait) > 0) { // si on a deux dates et la date de sortie est avant
 				Menu.avertissementDate();
 			} else { 
-				AjoutDatabase.ajoutDB(new Computer(0, nomMachine, dateSortie, dateRetrait, new Company(0, nomConstructeur)));
+				Company company = CompanyDataService.recupDataOrdiId(nomConstructeur);
+				
+				AjoutOrdinateurService.ajoutDataService(new Computer(0, nomMachine, dateSortie, dateRetrait, company));
 			}
 			break;
 		
@@ -157,7 +158,7 @@ public class GestionMenu {
 			Menu.demandeEntreeNom();
 			// Scanner readerLine = new Scanner(System.in);
 			String nomMachineDetails = readerLine.nextLine();
-			Computer detailsOrdinateur = ChercherDetails.details(nomMachineDetails);
+			Computer detailsOrdinateur = ComputerDetailsDataService.recupDataDetailsOrdi(nomMachineDetails);
 			Menu.afficheDetails(detailsOrdinateur);
 
 			break;

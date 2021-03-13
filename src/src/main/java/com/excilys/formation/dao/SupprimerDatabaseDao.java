@@ -13,10 +13,8 @@ public class SupprimerDatabaseDao {
 	public static void computerInformations(Connection con, Computer ordinateur) throws ClassNotFoundException, SQLException {
 
 		PreparedStatement stmt = con.prepareStatement(REQUETE_SUPPRIMER);
+		stmt.setString(1, ordinateur.getName());
+		stmt.executeUpdate();
 		
-		stmt.setString(0, ordinateur.getName());
-		stmt.executeQuery();
-					
-		con.close();
 	}
 }

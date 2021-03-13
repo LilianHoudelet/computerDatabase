@@ -27,7 +27,7 @@ public class ComputersInfosDao {
 	public static ResultSet computerInformationsDetails(Connection con, String nomMachine) throws ClassNotFoundException, SQLException {
 
 		PreparedStatement stmt = con.prepareStatement(REQUETE_DETAILS);
-		stmt.setString(0, nomMachine);
+		stmt.setString(1, nomMachine);
 		ResultSet rs = stmt.executeQuery();
 			
 		return rs;

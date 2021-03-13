@@ -18,4 +18,12 @@ public class CompanyInfos {
 		}			
 		return list; 
 	}
+	
+	public static Company companyInformationsMapperId(ResultSet companyInformations) throws Exception {
+		if (companyInformations.next()) {
+			return new Company(companyInformations.getInt(1), companyInformations.getString(2));	
+		}	else {
+			throw new Exception ("Pas de donnes dans la base");
+		}
+	}
 }

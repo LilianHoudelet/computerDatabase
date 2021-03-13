@@ -49,7 +49,7 @@ public class ChercherDetails {
 			}
 			
 		}
-		con.close();
+		//con.close();
 		// sinon, on entre pas et on ressort null
 		return null;
 	}
