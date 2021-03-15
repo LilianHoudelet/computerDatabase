@@ -9,6 +9,9 @@ public class Computer {
 	LocalDate dateRetrait;
 	Company company;
 	
+	public Computer() {
+		
+	}
 	public Computer(int id, String nom) {
 		this.id = id;
 		this.nom = nom;
@@ -53,5 +56,38 @@ public class Computer {
 	@Override
 	public String toString() {
 		return "  " + this.id + ".  " + this.nom;
+	}
+	
+	public class ComputerBuilder {
+		int id;
+		String nom;
+		LocalDate dateSortie; 
+		LocalDate dateRetrait;
+		Company company;
+		
+		ComputerBuilder withId(int id) {
+			this.id = id;
+			return this;
+		}
+		ComputerBuilder withName(String name) {
+			this.nom = name;
+			return this;
+		}
+		ComputerBuilder withDateSortie(LocalDate dateSortie) {
+			this.dateSortie = dateSortie;
+			return this;
+		}
+		ComputerBuilder withDateRetrait(LocalDate dateRetrait) {
+			this.dateRetrait = dateRetrait;
+			return this;
+		}
+		ComputerBuilder withCompany(Company company) {
+			this.company = company;
+			return this;
+		}
+		Computer build() {
+			return new Computer();
+			
+		}
 	}
 }

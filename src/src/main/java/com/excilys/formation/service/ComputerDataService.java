@@ -18,4 +18,20 @@ public class ComputerDataService {
 			throw new Exception("Impossible de se connecter a la base de donnees");
 		} 
 	}
+	
+	public static List<Computer> recupDataOrdiPage(int nombreParPage, int page) throws Exception {
+		try (Connection con = AccessDatabase.getInstance();) {
+			return ComputerInfos.computerInformationsMapper(ComputersInfosDao.computerInformationsPage(con, nombreParPage, page));
+		} catch (SQLException e) {
+			throw new Exception("Impossible de se connecter a la base de donnees");
+		} 
+	}
+	
+	public static int recupDataOrdiNombre() throws Exception {
+		try (Connection con = AccessDatabase.getInstance();) {
+			return ComputerInfos.computerInformationsMapperCount(ComputersInfosDao.computerInformationsNbElts(con));
+		} catch (SQLException e) {
+			throw new Exception("Impossible de se connecter a la base de donnees Compte");
+		} 
+	}
 }

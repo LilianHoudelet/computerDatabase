@@ -49,8 +49,11 @@ public class GestionMenu {
 
 		switch (entreeMenu1) {
 		case (AFFICHER_INFOS_ORDINATEURS): 
+			
 			List<Computer> infos = ComputerDataService.recupDataOrdi();
 			Menu.printComputer(infos);
+			
+			//GestionPages.affichePage();
 			menu2();
 			break;
 		
@@ -91,7 +94,7 @@ public class GestionMenu {
 				Menu.avertissementDate();
 			} else { 
 				Company company = CompanyDataService.recupDataOrdiId(nomConstructeur);
-				
+		
 				AjoutOrdinateurService.ajoutDataService(new Computer(0, nomMachine, dateSortie, dateRetrait, company));
 			}
 			break;
