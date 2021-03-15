@@ -12,6 +12,7 @@ public class GestionPages {
 		int page = 0;
 		int taillePage = 10;
 		String entreeMenu;
+		//@SuppressWarnings("resource")
 		Scanner reader = new Scanner(System.in);
 		
 		int pageMax = ComputerDataService.recupDataOrdiNombre();
@@ -28,15 +29,14 @@ public class GestionPages {
 				}
 			} else if ("-".equals(entreeMenu)) {
 				page--;
-				if (page <= 0) {
-					page = 1;
+				if (page < 0) {
+					page = 0;
 				}
 			} else {
 				break;
 			}
 			
 		} while (true);
-		
 		reader.close();
 	}
 }
