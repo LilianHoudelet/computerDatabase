@@ -154,7 +154,6 @@ public class GestionMenu {
 					}
 				} while (!(dateRetraitString.isEmpty() || dateRetrait != null));
 				
-				// Refactor cette fonction
 				Company company = CompanyDataService.recupDataOrdiId(nomConstructeur);
 				
 				UpdateDatabaseService.updateDataService(

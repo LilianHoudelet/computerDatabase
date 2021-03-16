@@ -86,7 +86,7 @@ public class Menu {
 		} else {
 			for (Computer cpu : infos) {
 				System.out.println(BARRE);
-				System.out.println("|  " + cpu.toString());  
+				System.out.println("  " + cpu.toString());  
 			}
 		}
 		System.out.println(BARRE);
@@ -95,7 +95,7 @@ public class Menu {
 	public static void printCompany(List<Company> infos) {
 		for (Company company : infos) {
 			System.out.println(BARRE);
-			System.out.println("|" + company.getId() + "  " + company.getName());  
+			System.out.println("" + company.getId() + "  " + company.getName());  
 		}
 		System.out.println(BARRE);
 	}
