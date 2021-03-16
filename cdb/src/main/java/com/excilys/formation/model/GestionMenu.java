@@ -30,79 +30,92 @@ public class GestionMenu {
 	public static final int METTRE_A_JOUR_INFOS_ORDINATEURS = 1;
 	public static final int AFFICHER_DETAILS_ORDINATEUR = 2;
 	public static final int SUPPRIMER_INFORMATIONS = 3;
-	public static final String PATTERN_DATE = "[0-9]{4}-[0-1][0-9]-[0-3][0-9]";
-
+	
+	
 	/**
 	 * Appelle les différentes fonctions pour afficher le menu, récupérer les
 	 * données, appelle les fonctions de recherche
 	 * @throws Exception 
 	 */
 	public static void menu1() throws Exception {
-		int entreeMenu1;
-
-		Menu.afficherMenu1();
-		Menu.demandeEntreeMenu();
-		Scanner reader = new Scanner(System.in);
-		entreeMenu1 = reader.nextInt();
-		// TODO : Gerer les entrees de type string
+		int entreeMenuInt = 0;
+		String entreeMenu1;
+		boolean sortieMenu = true;
+		
 		Scanner readerLine = new Scanner(System.in);
-
-		switch (entreeMenu1) {
-		case (AFFICHER_INFOS_ORDINATEURS): 
-			
-			//List<Computer> infos = ComputerDataService.recupDataOrdi();
-			//Menu.printComputer(infos);
-			
-			GestionPages.affichePage();
-			menu2();
-			break;
 		
-		case (AFFICHER_INFOS_CONSTRUCTEURS): 
-			List<Company> infosCompany = CompanyDataService.recupDataOrdi();
-			Menu.printCompany(infosCompany);
-			break;
-		
-		case (AJOUTER_INFORMATIONS): 
-			// Refactor a faire ici
-			LocalDate dateSortie = null;
-			String dateSortieString;
-			LocalDate dateRetrait = null;
-			String dateRetraitString;
-
-			Menu.demandeEntreeNom();
-
-			String nomMachine = readerLine.nextLine();
-
-			Menu.demandeEntreeConstructeur();
-			String nomConstructeur = readerLine.nextLine();
-
-			do {
-				Menu.demandeEntreeDateSortie();
-				dateSortieString = readerLine.nextLine();
-				dateSortie = CheckDate.dateValide(dateSortieString);
-				
-			} while (!(dateSortieString.isEmpty() || dateSortie != null));
+		do {
+			//Scanner reader = new Scanner(System.in);
+			Menu.afficherMenu1();
+			Menu.demandeEntreeMenu();
 			
-			do {
-				Menu.demandeEntreeDateRetrait();
-				dateRetraitString = readerLine.nextLine();
-				dateRetrait = CheckDate.dateValide(dateRetraitString);
-				
-			} while (!(dateRetraitString.isEmpty() || dateRetrait != null));
-
-			if (dateRetrait != null && dateSortie != null &&  dateSortie.compareTo(dateRetrait) > 0) { // si on a deux dates et la date de sortie est avant
-				Menu.avertissementDate();
-			} else { 
-				Company company = CompanyDataService.recupDataOrdiId(nomConstructeur);
-		
-				AjoutOrdinateurService.ajoutDataService(new Computer(0, nomMachine, dateSortie, dateRetrait, company));
+			entreeMenu1 = readerLine.nextLine();
+			
+			try {
+				entreeMenuInt = Integer.parseInt(entreeMenu1);
+			} catch (Exception e) {
+				continue;
 			}
-			break;
-		
-		default: 
-			reader.close();
-			readerLine.close();
-		}
+			
+			switch (entreeMenuInt) {
+			case (AFFICHER_INFOS_ORDINATEURS): 
+				
+				//List<Computer> infos = ComputerDataService.recupDataOrdi();
+				//Menu.printComputer(infos);
+				
+				GestionPages.affichePage();
+				menu2();
+				break;
+			
+			case (AFFICHER_INFOS_CONSTRUCTEURS): 
+				List<Company> infosCompany = CompanyDataService.recupDataOrdi();
+				Menu.printCompany(infosCompany);
+				break;
+			
+			case (AJOUTER_INFORMATIONS): 
+				// Refactor a faire ici
+				LocalDate dateSortie = null;
+				String dateSortieString;
+				LocalDate dateRetrait = null;
+				String dateRetraitString;
+	
+				Menu.demandeEntreeNom();
+	
+				String nomMachine = readerLine.nextLine();
+	
+				Menu.demandeEntreeConstructeur();
+				String nomConstructeur = readerLine.nextLine();
+	
+				do {
+					Menu.demandeEntreeDateSortie();
+					dateSortieString = readerLine.nextLine();
+					dateSortie = CheckDate.dateValide(dateSortieString);
+					
+				} while (!(dateSortieString.isEmpty() || dateSortie != null));
+				
+				do {
+					Menu.demandeEntreeDateRetrait();
+					dateRetraitString = readerLine.nextLine();
+					dateRetrait = CheckDate.dateValide(dateRetraitString);
+					
+				} while (!(dateRetraitString.isEmpty() || dateRetrait != null));
+	
+				if (dateRetrait != null && dateSortie != null &&  dateSortie.compareTo(dateRetrait) > 0) { // si on a deux dates et la date de sortie est avant
+					Menu.avertissementDate();
+				} else { 
+					Company company = CompanyDataService.recupDataOrdiId(nomConstructeur);
+			
+					AjoutOrdinateurService.ajoutDataService(new Computer(0, nomMachine, dateSortie, dateRetrait, company));
+				}
+				break;
+			
+			default: 
+				
+				readerLine.close();
+				sortieMenu = !sortieMenu;
+				
+			}
+		} while(sortieMenu);
 	}
 
 	public static void menu2() throws Exception {
@@ -189,8 +202,8 @@ public class GestionMenu {
 			break;
 		
 		default: 
-			reader.close();
-			readerLine.close();
+//			reader.close();
+//			readerLine.close();
 		}
 		
 	}
