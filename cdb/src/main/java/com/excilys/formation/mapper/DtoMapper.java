@@ -11,10 +11,26 @@ import com.excilys.formation.model.Computer;
 public class DtoMapper {
 	
 	public static List<ComputerDTO> mapComputerToComputerDTO(List<Computer> computers) {
+		String nullString = "None";
 		
 		List<ComputerDTO> listeComputerDto = new ArrayList<ComputerDTO>();
 		for (Computer computer : computers) {
-			listeComputerDto.add(new ComputerDTO(String.valueOf(computer.getId()), computer.getName(), computer.getDateSortie().toString(), computer.getDateRetrait().toString(), computer.getCompany().getName()));
+			
+			String dateSortie;
+			String dateRetrait;
+			
+			if (computer.getDateSortie() != null) {
+				dateSortie = computer.getDateSortie().toString();
+			} else {
+				dateSortie = nullString;
+			}
+			if (computer.getDateRetrait() != null) {
+				dateRetrait = computer.getDateRetrait().toString();
+			} else {
+				dateRetrait = nullString;
+			}
+			
+			listeComputerDto.add(new ComputerDTO(String.valueOf(computer.getId()), computer.getName(), dateSortie, dateRetrait, computer.getCompany().getName()));
 		}
 		return listeComputerDto;
 	}

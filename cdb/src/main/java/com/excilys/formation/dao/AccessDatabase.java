@@ -27,7 +27,7 @@ public class AccessDatabase {
 	 */
 	private AccessDatabase() throws ClassNotFoundException {
 		try {
-			//Class.forName("com.mysql.cj.jdbc.Driver");
+			Class.forName("com.mysql.cj.jdbc.Driver");
 			instance = DriverManager.getConnection(url, username, psw);
 		} catch (SQLException e) {
 			e.printStackTrace();

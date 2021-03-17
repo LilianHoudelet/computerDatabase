@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class ComputersInfosDao {
-	public static final String REQUETE_TOUT = "select id, name from computer";
+	public static final String REQUETE_TOUT = "SELECT computer.id, computer.name, introduced, discontinued, company.name, computer.company_id FROM computer LEFT JOIN company ON company.id = computer.company_id";
 	
 	public static final String REQUETE_NOMBRE = "SELECT COUNT(id) from computer";
 	
@@ -19,7 +19,7 @@ public class ComputersInfosDao {
 
 		Statement stmt = con.createStatement();
 		ResultSet rs = stmt.executeQuery(REQUETE_TOUT);
-			
+					
 		return rs;
 	}
 	
