@@ -17,7 +17,17 @@ public class ComputerInfos {
 		List<Computer> list = new ArrayList<Computer>();
 		
 		while (computerInformations.next()) {
-			list.add(new Computer(computerInformations.getInt(1), computerInformations.getString(2)));
+			LocalDate dateSortie;
+			if (computerInformations.getDate(3) == null) {
+				dateSortie = null;
+			} else {
+				dateSortie = computerInformations.getDate(3).toLocalDate();
+			}
+			if (computerInformations.getDate(4) == null) {
+				list.add(new Computer(computerInformations.getInt(1), computerInformations.getString(2), dateSortie, new Company(computerInformations.getInt(6), computerInformations.getString(5))));
+			} else {
+				list.add(new Computer(computerInformations.getInt(1), computerInformations.getString(2), dateSortie, computerInformations.getDate(4).toLocalDate(), new Company(computerInformations.getInt(6), computerInformations.getString(5))));
+			}
 		}	
 			
 		return list; 

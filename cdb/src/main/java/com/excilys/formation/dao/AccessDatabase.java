@@ -19,6 +19,8 @@ public class AccessDatabase {
 	
 	private static Connection instance;
 	
+	org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AccessDatabase.class);
+	
 	/**
 	 * ici, une connextion a la base de donnee est cree
 	 * @throws ClassNotFoundException

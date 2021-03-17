@@ -7,18 +7,18 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class ComputersInfosDao {
-	public static final String REQUETE = "select id, name from computer";
+	public static final String REQUETE_TOUT = "select id, name from computer";
 	
 	public static final String REQUETE_NOMBRE = "SELECT COUNT(id) from computer";
 	
-	public static final String REQUETE_PAGE = "select id, name from computer LIMIT ? OFFSET ?";
+	public static final String REQUETE_PAGE = "SELECT computer.id, computer.name, introduced, discontinued, company.name, computer.company_id FROM computer LEFT JOIN company ON company.id = computer.company_id LIMIT ? OFFSET ?";
 
 	public static final String REQUETE_DETAILS = "SELECT computer.id, computer.name, introduced, discontinued, company.name, computer.company_id FROM computer LEFT JOIN company ON company.id = computer.company_id WHERE computer.name = ?";
 	
 	public static ResultSet computerInformations(Connection con) throws ClassNotFoundException, SQLException {
 
 		Statement stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery(REQUETE);
+		ResultSet rs = stmt.executeQuery(REQUETE_TOUT);
 			
 		return rs;
 	}
