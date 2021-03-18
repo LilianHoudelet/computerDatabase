@@ -10,7 +10,7 @@ import com.excilys.formation.mapper.CompanyInfos;
 import com.excilys.formation.model.Company;
 
 public class CompanyDataService {
-	public static List<Company> recupDataOrdi() throws Exception {
+	public static List<Company> recupDataCompany() throws Exception {
 		try (Connection con = AccessDatabase.getInstance();) {
 			
 			return CompanyInfos.companyInformationsMapper(CompanieInfoDao.companyInformations(con));
@@ -19,7 +19,7 @@ public class CompanyDataService {
 			throw new Exception("Impossible de se connecter a la base de donnees");
 		} 
 	}
-	public static Company recupDataOrdiId(String nomConstructeur) throws Exception {
+	public static Company recupDataCompanyId(String nomConstructeur) throws Exception {
 		try (Connection con = AccessDatabase.getInstance();) {
 			
 			return CompanyInfos.companyInformationsMapperId(CompanieInfoDao.companyInformationsId(con, nomConstructeur));

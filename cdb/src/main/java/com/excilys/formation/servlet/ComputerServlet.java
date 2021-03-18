@@ -1,6 +1,7 @@
 package com.excilys.formation.servlet;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -26,6 +27,8 @@ public class ComputerServlet extends HttpServlet {
 	public static final String COMPUTER_INTRODUCED = "computerIntroduced";
 	public static final String COMPANY_NAME = "companyName";
 	
+	public static final String LISTE_COMPUTER = "ComputerList";
+	
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -42,20 +45,19 @@ public class ComputerServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		int nombre = 0;
-		List<ComputerDTO> computers;
+		List<ComputerDTO> computers = new ArrayList<ComputerDTO>();
+		
 		try {
 			computers = DtoMapper.mapComputerToComputerDTO(ComputerDataService.recupDataOrdi());
-			nombre = computers.size();
+			nombre = ComputerDataService.recupDataOrdiNombre();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		request.setAttribute(COMPUTER_NUMBER, nombre);
+		request.setAttribute(LISTE_COMPUTER, computers);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/views/dashboard.jsp").forward(request, response);
-		//getWriter().append("Il y a ").append(String.valueOf(nombre)).append(" ordinateurs \n");
-		
-		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**

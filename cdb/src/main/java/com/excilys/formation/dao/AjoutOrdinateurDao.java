@@ -26,7 +26,12 @@ public static final String REQUETE_AJOUTER_COMPLET = "INSERT INTO computer (id, 
 		} else {
 			stmt.setDate(4, null);
 		}
-		stmt.setInt(5, ordinateur.getCompany().getId()); // ordinateur.getCompany().getId());
-		stmt.executeUpdate();
+		if (ordinateur.getCompany().getId() != 0) {
+			stmt.setInt(5, ordinateur.getCompany().getId()); // ordinateur.getCompany().getId());
+		} else {
+			stmt.setNull(5, 0);
+		}
+		
+		stmt.executeUpdate();		
 	}
 }

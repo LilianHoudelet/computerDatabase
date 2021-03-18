@@ -22,7 +22,11 @@ public class CompanyInfos {
 		if (companyInformations.next()) {
 			return new Company(companyInformations.getInt(1), companyInformations.getString(2));	
 		}	else {
-			throw new Exception ("Pas de donnes dans la base");
+			//throw new Exception ("Pas de donnes dans la base");
+			return new Company(0,"");
+			
 		}
 	}
+	
+	
 }

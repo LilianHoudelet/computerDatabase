@@ -24,8 +24,7 @@ public class CompanieInfoDao {
 
 		PreparedStatement stmt = con.prepareStatement(REQUETE_ID);
 		stmt.setString(1, name);
-		ResultSet rs = stmt.executeQuery();
-		System.out.println("Fine");	
+		ResultSet rs = stmt.executeQuery();	
 		return rs;
 	}
 	

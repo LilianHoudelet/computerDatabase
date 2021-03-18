@@ -11,7 +11,7 @@ import com.excilys.formation.model.Computer;
 public class DtoMapper {
 	
 	public static List<ComputerDTO> mapComputerToComputerDTO(List<Computer> computers) {
-		String nullString = "None";
+		String nullString = "Unknown";
 		
 		List<ComputerDTO> listeComputerDto = new ArrayList<ComputerDTO>();
 		for (Computer computer : computers) {
@@ -19,16 +19,9 @@ public class DtoMapper {
 			String dateSortie;
 			String dateRetrait;
 			
-			if (computer.getDateSortie() != null) {
-				dateSortie = computer.getDateSortie().toString();
-			} else {
-				dateSortie = nullString;
-			}
-			if (computer.getDateRetrait() != null) {
-				dateRetrait = computer.getDateRetrait().toString();
-			} else {
-				dateRetrait = nullString;
-			}
+			dateSortie = computer.getDateSortie() == null ? nullString : computer.getDateSortie().toString();
+			dateRetrait = computer.getDateRetrait() == null ? nullString : computer.getDateRetrait().toString();
+			
 			
 			listeComputerDto.add(new ComputerDTO(String.valueOf(computer.getId()), computer.getName(), dateSortie, dateRetrait, computer.getCompany().getName()));
 		}

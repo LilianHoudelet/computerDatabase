@@ -4,20 +4,17 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	version="3.0">
 	<display-name>cdb</display-name>
-	
+
 	<welcome-file-list>
-		
+
 		<welcome-file>cdb/ComputerServlet</welcome-file>
-		
+
 	</welcome-file-list>
-	
-<!-- 	<servlet>
-		<servlet-name>ComputerServlet</servlet-name>
-		<servlet-class>com.excilys.formation.servlet.Servlet</servlet-class>
-	</servlet> -->
-	
-<!-- 	<servlet-mapping>
-		<servlet-name>ComputerServlet</servlet-name>
-		<url-pattern>/liste</url-pattern>
-	</servlet-mapping> -->
+
+
+	<!-- <servlet> <servlet-name>ComputerServlet</servlet-name> <servlet-class>com.excilys.formation.servlet.Servlet</servlet-class> 
+		</servlet> -->
+
+	<!-- <servlet-mapping> <servlet-name>ComputerServlet</servlet-name> <url-pattern>/liste</url-pattern> 
+		</servlet-mapping> -->
 </web-app>

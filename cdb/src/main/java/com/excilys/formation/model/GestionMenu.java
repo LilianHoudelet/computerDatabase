@@ -67,7 +67,7 @@ public class GestionMenu {
 				break;
 
 			case (AFFICHER_INFOS_CONSTRUCTEURS):
-				List<Company> infosCompany = CompanyDataService.recupDataOrdi();
+				List<Company> infosCompany = CompanyDataService.recupDataCompany();
 				Menu.printCompany(infosCompany);
 				break;
 
@@ -102,7 +102,7 @@ public class GestionMenu {
 				if (dateRetrait != null && dateSortie != null && dateSortie.compareTo(dateRetrait) > 0) {
 					Menu.avertissementDate();
 				} else {
-					Company company = CompanyDataService.recupDataOrdiId(nomConstructeur);
+					Company company = CompanyDataService.recupDataCompanyId(nomConstructeur);
 
 					AjoutOrdinateurService
 							.ajoutDataService(new Computer(0, nomMachine, dateSortie, dateRetrait, company));
@@ -179,7 +179,7 @@ public class GestionMenu {
 						}
 					} while (!(dateRetraitString.isEmpty() || dateRetrait != null));
 
-					Company company = CompanyDataService.recupDataOrdiId(nomConstructeur);
+					Company company = CompanyDataService.recupDataCompanyId(nomConstructeur);
 
 					UpdateDatabaseService.updateDataService(
 							new Computer(details.getId(), details.getName(), dateSortie, dateRetrait, company));
