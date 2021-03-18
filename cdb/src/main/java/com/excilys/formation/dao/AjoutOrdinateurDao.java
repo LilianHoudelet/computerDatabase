@@ -5,13 +5,18 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import org.slf4j.Logger;
+
 import com.excilys.formation.model.Computer;
 
 public class AjoutOrdinateurDao {
+	
+	static Logger logger = org.slf4j.LoggerFactory.getLogger(AjoutOrdinateurDao.class);
+	
 public static final String REQUETE_AJOUTER_COMPLET = "INSERT INTO computer (id, name, introduced, discontinued, company_id) VALUES (?,?,?,?,?)";
 	
 	public static void computerInformations(Connection con, Computer ordinateur) throws ClassNotFoundException, SQLException {
-
+		
 		PreparedStatement stmt = con.prepareStatement(REQUETE_AJOUTER_COMPLET);
 		stmt.setInt(1, ordinateur.getId());
 		stmt.setString(2, ordinateur.getName());
@@ -32,6 +37,7 @@ public static final String REQUETE_AJOUTER_COMPLET = "INSERT INTO computer (id, 
 			stmt.setNull(5, 0);
 		}
 		
-		stmt.executeUpdate();		
+		stmt.executeUpdate();
+		logger.debug("Ajout d'un élément dans la base de données");		
 	}
 }

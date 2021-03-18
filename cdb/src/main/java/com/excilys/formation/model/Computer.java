@@ -25,14 +25,7 @@ public class Computer {
 		this.company = company;
 		
 	}
-	public Computer(int id, String nom, LocalDate dateSortie, Company company) {
-		this.id = id;
-		this.nom = nom;
-		this.dateSortie = dateSortie;
-		//this.dateRetrait = dateRetrait;
-		this.company = company;
-		
-	}
+
 	public int getId() {
 		return this.id;
 	}

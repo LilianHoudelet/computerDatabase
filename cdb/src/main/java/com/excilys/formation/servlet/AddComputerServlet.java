@@ -10,8 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.excilys.formation.dto.CompanyDTO;
+import com.excilys.formation.mapper.DtoMapper;
 import com.excilys.formation.mapper.MapStringToComputer;
-import com.excilys.formation.model.Company;
 
 import com.excilys.formation.service.AjoutOrdinateurService;
 import com.excilys.formation.service.CompanyDataService;
@@ -38,10 +39,10 @@ public class AddComputerServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		List<Company> companies = new ArrayList<Company>();
+		List<CompanyDTO> companies = new ArrayList<CompanyDTO>();
 		
 		try {
-			companies = CompanyDataService.recupDataCompany();
+			companies = DtoMapper.mapCompanyToCompanyDTO(CompanyDataService.recupDataCompany());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

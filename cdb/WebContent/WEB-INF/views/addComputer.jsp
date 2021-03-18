@@ -25,12 +25,12 @@
 			<div class="row">
 				<div class="col-xs-8 col-xs-offset-2 box">
 					<h1>Add Computer</h1>
-					<form action="/cdb/AddComputerServlet" method="POST">
+					<form action="/cdb/ComputerServlet" method="POST">
 						<fieldset>
 							<div class="form-group">
 								<label for="computerName">Computer name</label> <input
 									type="text" class="form-control" id="computerName"
-									placeholder="Computer name" name="ComputerName">
+									placeholder="Computer name" name="ComputerName" required="required">
 							</div>
 							<div class="form-group">
 								<label for="introduced">Introduced date</label> <input
@@ -49,7 +49,6 @@
 									<c:forEach items="${CompanyList}" var="current">
 										<option value="${current.getId()}"> ${current.getName()} </option>
 									</c:forEach>
-									
 								</select>
 							</div>
 						</fieldset>
