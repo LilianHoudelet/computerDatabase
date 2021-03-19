@@ -49,16 +49,9 @@ public class ComputerServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		int nombre = 0;
 		
-		List<ComputerDTO> computers = new ArrayList<ComputerDTO>();
+		List<ComputerDTO> computers = new ArrayList<ComputerDTO>();	
 		
-		try {
-			computers = DtoMapper.mapComputerToComputerDTO(ComputerDataService.recupDataOrdiPage(nbEltParPage, page-1));
-			nombre = ComputerDataService.recupDataOrdiNombre();
-			computerPage = new ComputerPage(nbEltParPage, nombre , computers);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-				
+		computerPage = new ComputerPage(nbEltParPage, nombre , computers);
 		// TODO ajouter des sessions
 		
 		String nbEltsParPageString = request.getParameter(NOMBRE_ELEMENTS);
@@ -73,16 +66,28 @@ public class ComputerServlet extends HttpServlet {
 		String numPageString = request.getParameter(NUM_PAGE);
 		// Fin TODO
 		
+		
 		try {
 			page = Integer.parseInt(numPageString);
-			computerPage.setNumPage(page);
 		} catch (Exception e) {
 			page = 1;
+
+		}
+		
+		
+		try {
+			computers = DtoMapper.mapComputerToComputerDTO(ComputerDataService.recupDataOrdiPage(nbEltParPage, page-1));
+			nombre = ComputerDataService.recupDataOrdiNombre();
+			
+			computerPage = new ComputerPage(nbEltParPage, nombre , computers);
+			computerPage.setNumPage(page);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 				
 		request.setAttribute(COMPUTER_NUMBER, nombre);
 		request.setAttribute(LISTE_COMPUTER, computerPage.getComputerList());
-		request.setAttribute(NUM_PAGE, computerPage.getNumPage());
+		request.setAttribute(NUM_PAGE, page);
 		request.setAttribute(PAGE_INDEX, computerPage.getIndex());
 		request.setAttribute(MAX_PAGE, computerPage.getMaxPage());
 		this.getServletContext().getRequestDispatcher("/WEB-INF/views/dashboard.jsp").forward(request, response);
@@ -90,13 +95,13 @@ public class ComputerServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String nbEltsParPageString = request.getParameter(NOMBRE_ELEMENTS);
-		System.out.println(nbEltsParPageString);
-		try {
-			nbEltParPage = Integer.parseInt(nbEltsParPageString);
-		} catch (Exception e) {
-			//nbEltParPage = 10;
-		}
+//		String nbEltsParPageString = request.getParameter(NOMBRE_ELEMENTS);
+//		System.out.println(nbEltsParPageString);
+//		try {
+//			nbEltParPage = Integer.parseInt(nbEltsParPageString);
+//		} catch (Exception e) {
+//			//nbEltParPage = 10;
+//		}
 		
 		doGet(request, response);
 	}

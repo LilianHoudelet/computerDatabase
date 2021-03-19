@@ -68,7 +68,7 @@ public class AddComputerServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		doGet(request, response);
+		response.sendRedirect("/cdb/ComputerServlet");
 	}
 
 }

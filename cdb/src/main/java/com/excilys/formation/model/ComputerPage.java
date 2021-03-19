@@ -18,7 +18,7 @@ public class ComputerPage {
 		this.nbEltsParPage = nbEltsParPage;
 		this.computerList = computerList;
 		this.numPage = 1;
-		maxPage = nbElts / this.nbEltsParPage + 1;
+		maxPage = (nbElts -1) / this.nbEltsParPage + 1;
 		indexPagination();
 	}
 	
@@ -51,7 +51,7 @@ public class ComputerPage {
 	public void setComputerList(List<ComputerDTO> computerList) {
 		this.computerList = computerList;
 		setNbEltsParPage(computerList.size());
-		maxPage = computerList.size() / this.nbEltsParPage + 1;
+		maxPage = (computerList.size() -1) / this.nbEltsParPage + 1;
 	}
 	
 	

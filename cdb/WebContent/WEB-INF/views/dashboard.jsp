@@ -99,31 +99,33 @@
 			<ul class="pagination">
 			
 				<li>
-					<a href="?page=${1}" aria-label="Previous" name="numPage" value="1"> 
+					<a href="?page=${1}" aria-label="Previous" > 
 						<span aria-hidden="true">&laquo;</span>
 					</a>
 				</li>
 				
-				<c:if test="${page == 1}">
+				<c:if test="${page != 1}">
 					<li>
-						<a href="?page=${page-1}" aria-label="Previous" name="numPage" value="${page-1}"> 
+						<a href="?page=${page-1}" aria-label="Previous"> 
 							<span aria-hidden="true">&laquo;</span>
 						</a>
 					</li>
 				</c:if>
 				
 				<c:forEach var="i" begin="0" end="4" step="1">
-					<li><a href="?page=${index+i-2}" name="numPage" value="${index+i-2}">${index+i-2}</a></li>
+					<li><a href="?page=${index+i-2}">${index+i-2}</a></li>
 				</c:forEach>
 				
 				<c:if test="${page != maxPage}">
-					<a href="?page=${page+1}" aria-label="Next" value="${page+1}"> 
+				<li>
+					<a href="?page=${page+1}" aria-label="Next"> 
 						<span aria-hidden="true">&raquo;</span>
 					</a>
+				</li>
 				</c:if>
 				
 				<li>
-					<a href="?page=${maxPage}" aria-label="Next" name="numPage" value="${page}"> 
+					<a href="?page=${maxPage}" aria-label="Next"> 
 						<span aria-hidden="true">&raquo;</span>
 					</a>
 				</li>
