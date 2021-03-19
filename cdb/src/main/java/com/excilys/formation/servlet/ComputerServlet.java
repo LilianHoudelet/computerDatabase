@@ -9,62 +9,95 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+//import javax.servlet.http.HttpSession;
 
 import com.excilys.formation.dto.ComputerDTO;
 import com.excilys.formation.mapper.DtoMapper;
+import com.excilys.formation.model.ComputerPage;
 import com.excilys.formation.service.ComputerDataService;
 
-/**
- * Servlet implementation class ComputerServlet
- */
 @WebServlet("/ComputerServlet")
 public class ComputerServlet extends HttpServlet {
 	
 	public static final String COMPUTER_NUMBER = "computerNumber";
-	public static final String COMPUTER_NAME = "computerName";
-	public static final String COMPUTER_ID = "computerID";
-	public static final String COMPUTER_DISCONTINUED = "computerDiscontinued";
-	public static final String COMPUTER_INTRODUCED = "computerIntroduced";
-	public static final String COMPANY_NAME = "companyName";
+//	public static final String COMPUTER_NAME = "computerName";
+//	public static final String COMPUTER_ID = "computerID";
+//	public static final String COMPUTER_DISCONTINUED = "computerDiscontinued";
+//	public static final String COMPUTER_INTRODUCED = "computerIntroduced";
+//	public static final String COMPANY_NAME = "companyName";
 	
 	public static final String LISTE_COMPUTER = "ComputerList";
+	public static final String NOMBRE_ELEMENTS = "nbEltsParPage";
+	
+	public static final String NUM_PAGE = "page";
+	public static final String PAGE_INDEX = "index";
+	public static final String MAX_PAGE = "maxPage";
 	
 	private static final long serialVersionUID = 1L;
+	
+	private static int nbEltParPage = 10;
+	
+	private static int page = 1;
+	
+	private ComputerPage computerPage;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
     public ComputerServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		int nombre = 0;
+		
 		List<ComputerDTO> computers = new ArrayList<ComputerDTO>();
 		
 		try {
-			computers = DtoMapper.mapComputerToComputerDTO(ComputerDataService.recupDataOrdi());
+			computers = DtoMapper.mapComputerToComputerDTO(ComputerDataService.recupDataOrdiPage(nbEltParPage, page-1));
 			nombre = ComputerDataService.recupDataOrdiNombre();
+			computerPage = new ComputerPage(nbEltParPage, nombre , computers);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+				
+		// TODO ajouter des sessions
 		
+		String nbEltsParPageString = request.getParameter(NOMBRE_ELEMENTS);
+				
+		try {
+			nbEltParPage = Integer.parseInt(nbEltsParPageString);
+		} catch (Exception e) {
+			
+		}
+
+		// TODO gestion des pages 
+		String numPageString = request.getParameter(NUM_PAGE);
+		// Fin TODO
+		
+		try {
+			page = Integer.parseInt(numPageString);
+			computerPage.setNumPage(page);
+		} catch (Exception e) {
+			page = 1;
+		}
+				
 		request.setAttribute(COMPUTER_NUMBER, nombre);
-		request.setAttribute(LISTE_COMPUTER, computers);
+		request.setAttribute(LISTE_COMPUTER, computerPage.getComputerList());
+		request.setAttribute(NUM_PAGE, computerPage.getNumPage());
+		request.setAttribute(PAGE_INDEX, computerPage.getIndex());
+		request.setAttribute(MAX_PAGE, computerPage.getMaxPage());
 		this.getServletContext().getRequestDispatcher("/WEB-INF/views/dashboard.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
+		String nbEltsParPageString = request.getParameter(NOMBRE_ELEMENTS);
+		System.out.println(nbEltsParPageString);
+		try {
+			nbEltParPage = Integer.parseInt(nbEltsParPageString);
+		} catch (Exception e) {
+			//nbEltParPage = 10;
+		}
+		
 		doGet(request, response);
 	}
 

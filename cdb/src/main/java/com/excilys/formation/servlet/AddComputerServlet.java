@@ -65,7 +65,6 @@ public class AddComputerServlet extends HttpServlet {
 		try {
 			AjoutOrdinateurService.ajoutDataService(MapStringToComputer.ComputerStringToComputer(computerName, dateSortie, dateRetrait, company));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

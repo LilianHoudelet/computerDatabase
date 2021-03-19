@@ -17,8 +17,8 @@
 <body>
 	<header class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="/cdb/ComputerServlet"> Application -
-				Computer Database </a>
+			<a class="navbar-brand" href="/cdb/ComputerServlet"> Application
+				- Computer Database </a>
 		</div>
 	</header>
 
@@ -36,11 +36,13 @@
 					</form>
 				</div>
 				<div class="pull-right">
-					
-					
-					
-					<a class="btn btn-success" id="addComputer" href="/cdb/AddComputerServlet">Add Computer</a> 
-					<a class="btn btn-default" id="editComputer" href="#" onclick="$.fn.toggleEditMode();">Edit</a>
+
+
+
+					<a class="btn btn-success" id="addComputer"
+						href="/cdb/AddComputerServlet">Add Computer</a> <a
+						class="btn btn-default" id="editComputer" href="#"
+						onclick="$.fn.toggleEditMode();">Edit</a>
 				</div>
 			</div>
 		</div>
@@ -76,8 +78,11 @@
 				<tbody id="results">
 					<c:forEach items="${ComputerList}" var="current">
 						<tr>
-							<td class="editMode"><input type="checkbox" name="cb" class="cb" value="0"></td>
-							<td><a href="/cdb/editComputer.jsp" onclick=""><c:out value="${current.getName()}" /></a></td>
+							<td class="editMode"><input type="checkbox" name="cb"
+								class="cb" value="0"></td>
+							<td><a href="/cdb/editComputer.jsp" onclick="">
+								<c:out value="${current.getName()}" /></a>
+							</td>
 							<td><c:out value="${current.getDateSortie()}" /></td>
 							<td><c:out value="${current.getDateRetrait()}" /></td>
 							<td><c:out value="${current.getCompany()}" /></td>
@@ -92,24 +97,47 @@
 	<footer class="navbar-fixed-bottom">
 		<div class="container text-center">
 			<ul class="pagination">
-				<li><a href="#" aria-label="Previous"> <span
-						aria-hidden="true">&laquo;</span>
-				</a></li>
-				<li><a href="#">1</a></li>
-				<li><a href="#">2</a></li>
-				<li><a href="#">3</a></li>
-				<li><a href="#">4</a></li>
-				<li><a href="#">5</a></li>
-				<li><a href="#" aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-				</a></li>
+			
+				<li>
+					<a href="?page=${1}" aria-label="Previous" name="numPage" value="1"> 
+						<span aria-hidden="true">&laquo;</span>
+					</a>
+				</li>
+				
+				<c:if test="${page == 1}">
+					<li>
+						<a href="?page=${page-1}" aria-label="Previous" name="numPage" value="${page-1}"> 
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+					</li>
+				</c:if>
+				
+				<c:forEach var="i" begin="0" end="4" step="1">
+					<li><a href="?page=${index+i-2}" name="numPage" value="${index+i-2}">${index+i-2}</a></li>
+				</c:forEach>
+				
+				<c:if test="${page != maxPage}">
+					<a href="?page=${page+1}" aria-label="Next" value="${page+1}"> 
+						<span aria-hidden="true">&raquo;</span>
+					</a>
+				</c:if>
+				
+				<li>
+					<a href="?page=${maxPage}" aria-label="Next" name="numPage" value="${page}"> 
+						<span aria-hidden="true">&raquo;</span>
+					</a>
+				</li>
+				
 			</ul>
-		</div>
+		
 		<div class="btn-group btn-group-sm pull-right" role="group">
-			<button type="button" class="btn btn-default">10</button>
-			<button type="button" class="btn btn-default">50</button>
-			<button type="button" class="btn btn-default">100</button>
+			<form action="">
+				<button type="submit" class="btn btn-default" name="nbEltsParPage" value="10">10</button>
+				<button type="submit" class="btn btn-default" name="nbEltsParPage" value="50">50</button>
+				<button type="submit" class="btn btn-default" name="nbEltsParPage" value="100">100</button>
+			</form>
 		</div>
-
+	</div>
 	</footer>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
