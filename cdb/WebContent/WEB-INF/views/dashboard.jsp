@@ -107,7 +107,7 @@
 				<c:if test="${page != 1}">
 					<li>
 						<a href="?page=${page-1}" aria-label="Previous"> 
-							<span aria-hidden="true">&laquo;</span>
+							<span aria-hidden="true">Previous</span>
 						</a>
 					</li>
 				</c:if>
@@ -119,7 +119,7 @@
 				<c:if test="${page != maxPage}">
 				<li>
 					<a href="?page=${page+1}" aria-label="Next"> 
-						<span aria-hidden="true">&raquo;</span>
+						<span aria-hidden="true">Next</span>
 					</a>
 				</li>
 				</c:if>

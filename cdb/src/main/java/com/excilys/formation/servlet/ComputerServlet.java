@@ -20,11 +20,6 @@ import com.excilys.formation.service.ComputerDataService;
 public class ComputerServlet extends HttpServlet {
 	
 	public static final String COMPUTER_NUMBER = "computerNumber";
-//	public static final String COMPUTER_NAME = "computerName";
-//	public static final String COMPUTER_ID = "computerID";
-//	public static final String COMPUTER_DISCONTINUED = "computerDiscontinued";
-//	public static final String COMPUTER_INTRODUCED = "computerIntroduced";
-//	public static final String COMPANY_NAME = "companyName";
 	
 	public static final String LISTE_COMPUTER = "ComputerList";
 	public static final String NOMBRE_ELEMENTS = "nbEltsParPage";
@@ -46,14 +41,14 @@ public class ComputerServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		
 		int nombre = 0;
 		
 		List<ComputerDTO> computers = new ArrayList<ComputerDTO>();	
 		
 		computerPage = new ComputerPage(nbEltParPage, nombre , computers);
 		// TODO ajouter des sessions
-		
+				
 		String nbEltsParPageString = request.getParameter(NOMBRE_ELEMENTS);
 				
 		try {
@@ -61,19 +56,15 @@ public class ComputerServlet extends HttpServlet {
 		} catch (Exception e) {
 			
 		}
-
-		// TODO gestion des pages 
+ 
 		String numPageString = request.getParameter(NUM_PAGE);
-		// Fin TODO
-		
-		
+				
 		try {
 			page = Integer.parseInt(numPageString);
 		} catch (Exception e) {
 			page = 1;
 
 		}
-		
 		
 		try {
 			computers = DtoMapper.mapComputerToComputerDTO(ComputerDataService.recupDataOrdiPage(nbEltParPage, page-1));
@@ -94,15 +85,7 @@ public class ComputerServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-//		String nbEltsParPageString = request.getParameter(NOMBRE_ELEMENTS);
-//		System.out.println(nbEltsParPageString);
-//		try {
-//			nbEltParPage = Integer.parseInt(nbEltsParPageString);
-//		} catch (Exception e) {
-//			//nbEltParPage = 10;
-//		}
-		
+	
 		doGet(request, response);
 	}
 

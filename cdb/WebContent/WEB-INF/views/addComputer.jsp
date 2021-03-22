@@ -61,5 +61,8 @@
 			</div>
 		</div>
 	</section>
+	<footer>
+		<script src="js/jquery.min.js"></script>
+	</footer>
 </body>
 </html>
