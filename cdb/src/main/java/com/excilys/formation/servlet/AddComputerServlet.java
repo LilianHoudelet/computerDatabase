@@ -64,8 +64,8 @@ public class AddComputerServlet extends HttpServlet {
 		String company = request.getParameter("CompanyId");
 		
 		try {
-			Computer addedComputer = MapStringToComputer.ComputerStringToComputer(computerName, dateSortie, dateRetrait, company);
-			if (ValidationComputer.isComputerValid(addedComputer)) {
+			if (ValidationComputer.isComputerValid(computerName, dateSortie, dateRetrait)) {
+				Computer addedComputer = MapStringToComputer.ComputerStringToComputer(computerName, dateSortie, dateRetrait, company);
 				AjoutOrdinateurService.ajoutDataService(addedComputer);
 			} else {
 				System.out.println("Ordinateur non valide");

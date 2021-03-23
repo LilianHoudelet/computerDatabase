@@ -1,5 +1,6 @@
 package com.excilys;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
@@ -8,6 +9,7 @@ import org.junit.Test;
 
 import com.excilys.formation.dto.ComputerDTO;
 import com.excilys.formation.mapper.DtoMapper;
+import com.excilys.formation.mapper.MapStringToComputer;
 import com.excilys.formation.model.Company;
 import com.excilys.formation.model.Computer;
 import com.excilys.formation.service.ValidationComputer;
@@ -25,24 +27,36 @@ public class MapperTest {
 	}
 	
 	@Test
-	public void computerValidTest() {
-		Computer computer = new Computer(1,"Test",LocalDate.parse("2020-09-01"), LocalDate.parse("2020-10-01"),new Company(1,"Apple Inc."));
+	public void StringToComputerTest() throws Exception {
+		Computer computer = new Computer(1,"Test",LocalDate.parse("2020-01-09"), LocalDate.parse("2020-10-01"),new Company(1,""));	
+		Computer computerString = MapStringToComputer.ComputerStringToComputer("Test", "2020-01-09", "2020-10-01", "1");
 				
+		assertTrue(computer.equals(computerString));
+	}
+	
+	@Test
+	public void computerValidTestString() {
+		assertTrue(ValidationComputer.isComputerValid("Test","2020-09-01","2020-10-01"));
+	}
+	
+	@Test
+	public void computerValidTest() {
+		Computer computer = new Computer(1,"Test",LocalDate.parse("2020-09-01"), LocalDate.parse("2020-10-01"),new Company(1,"Apple Inc."));		
 		assertTrue(ValidationComputer.isComputerValid(computer));
 	}
 	
 	@Test
 	public void computerNotValidTest() {
-		Computer computer = new Computer(1,"Test",LocalDate.parse("2020-09-01"), LocalDate.parse("2020-08-01"),new Company(1,"Apple Inc."));
-				
-		assertTrue(!ValidationComputer.isComputerValid(computer));
+		Computer computer = new Computer(1,"Test",LocalDate.parse("2020-09-01"), LocalDate.parse("2020-08-01"),new Company(1,"Apple Inc."));		
+		assertFalse(ValidationComputer.isComputerValid(computer));
 	}
 	
 	@Test
 	public void isComputerValidTest() {
-		Computer computer = new Computer(1,"Test",LocalDate.parse("2020-09-01"), null,new Company(1,"Apple Inc."));
-				
+		Computer computer = new Computer(1,"Test",LocalDate.parse("2020-09-01"), null,new Company(1,"Apple Inc."));			
 		assertTrue(ValidationComputer.isComputerValid(computer));
 	}
+	
+	
 
 }

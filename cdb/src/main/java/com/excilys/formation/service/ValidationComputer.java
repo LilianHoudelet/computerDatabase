@@ -1,5 +1,7 @@
 package com.excilys.formation.service;
 
+import java.time.LocalDate;
+
 import com.excilys.formation.model.Computer;
 
 public class ValidationComputer {
@@ -21,4 +23,20 @@ public class ValidationComputer {
 		return true;
 	}
 	
+public static boolean isComputerValid(String computerName, String dateSortie, String dateRetrait) {
+		
+		if (computerName == null || computerName.isBlank()) {
+			
+			return false;
+		}
+		if (dateSortie != null) {
+			
+			if (dateRetrait != null && LocalDate.parse(dateRetrait).isBefore(LocalDate.parse(dateSortie))) {
+				
+				return false;
+			}
+		}
+		
+		return true;
+	}
 }

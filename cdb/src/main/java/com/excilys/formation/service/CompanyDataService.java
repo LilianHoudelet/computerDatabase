@@ -30,7 +30,7 @@ public class CompanyDataService {
 			logger.debug("Récupération de l'Id de Company avec le nom");
 			return CompanyInfos.companyInformationsMapperId(CompanieInfoDao.companyInformationsId(con, nomConstructeur));
 		
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			logger.error("Erreur sur l'accès a la base de données ou sur la récupération de l'Id");
 			throw new Exception("Impossible de se connecter a la base de donnees Id");
 		} 
