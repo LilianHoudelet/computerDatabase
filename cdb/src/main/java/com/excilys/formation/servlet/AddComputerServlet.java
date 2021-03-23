@@ -13,9 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import com.excilys.formation.dto.CompanyDTO;
 import com.excilys.formation.mapper.DtoMapper;
 import com.excilys.formation.mapper.MapStringToComputer;
-
+import com.excilys.formation.model.Computer;
 import com.excilys.formation.service.AjoutOrdinateurService;
 import com.excilys.formation.service.CompanyDataService;
+import com.excilys.formation.service.ValidationComputer;
 
 /**
  * Servlet implementation class AddComputerServlet
@@ -63,7 +64,13 @@ public class AddComputerServlet extends HttpServlet {
 		String company = request.getParameter("CompanyId");
 		
 		try {
-			AjoutOrdinateurService.ajoutDataService(MapStringToComputer.ComputerStringToComputer(computerName, dateSortie, dateRetrait, company));
+			Computer addedComputer = MapStringToComputer.ComputerStringToComputer(computerName, dateSortie, dateRetrait, company);
+			if (ValidationComputer.isComputerValid(addedComputer)) {
+				AjoutOrdinateurService.ajoutDataService(addedComputer);
+			} else {
+				System.out.println("Ordinateur non valide");
+			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
