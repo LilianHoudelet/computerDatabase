@@ -28,11 +28,17 @@ public class ComputerServlet extends HttpServlet {
 	public static final String PAGE_INDEX = "index";
 	public static final String MAX_PAGE = "maxPage";
 	
+	public static final String SORTED = "sorted";
+	public static final String NOT_SORTED = "notSorted";
+	
 	private static final long serialVersionUID = 1L;
 	
 	private static int nbEltParPage = 10;
 	
 	private static int page = 1;
+	
+	private static int sorted = 0;
+	private static int notSorted = 1;
 	
 	private ComputerPage computerPage;
        
@@ -56,6 +62,17 @@ public class ComputerServlet extends HttpServlet {
 		} catch (Exception e) {
 			
 		}
+		
+		String SortedString = request.getParameter(SORTED);
+		
+		try {
+			if( sorted != Integer.parseInt(SortedString)) {
+				notSorted = sorted;
+				sorted = Integer.parseInt(SortedString);
+			}
+			
+		} catch (Exception e) {
+		}
  
 		String numPageString = request.getParameter(NUM_PAGE);
 				
@@ -63,11 +80,14 @@ public class ComputerServlet extends HttpServlet {
 			page = Integer.parseInt(numPageString);
 		} catch (Exception e) {
 			page = 1;
-
 		}
 		
 		try {
-			computers = DtoMapper.mapComputerToComputerDTO(ComputerDataService.recupDataOrdiPage(nbEltParPage, page-1));
+			if (sorted == 0) {
+				computers = DtoMapper.mapComputerToComputerDTO(ComputerDataService.recupDataOrdiPageTrie(nbEltParPage, page-1));
+			} else {
+				computers = DtoMapper.mapComputerToComputerDTO(ComputerDataService.recupDataOrdiPage(nbEltParPage, page-1));
+			}
 			nombre = ComputerDataService.recupDataOrdiNombre();
 			
 			computerPage = new ComputerPage(nbEltParPage, nombre , computers);
@@ -75,7 +95,9 @@ public class ComputerServlet extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-				
+		
+		request.setAttribute(SORTED, sorted);
+		request.setAttribute(NOT_SORTED, notSorted);
 		request.setAttribute(COMPUTER_NUMBER, nombre);
 		request.setAttribute(LISTE_COMPUTER, computerPage.getComputerList());
 		request.setAttribute(NUM_PAGE, page);

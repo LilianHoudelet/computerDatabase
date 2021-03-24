@@ -36,7 +36,10 @@
 					</form>
 				</div>
 				<div class="pull-right">
-
+				
+					<a class="btn btn-default" id="sortList"
+						href="?sorted=${ notSorted }">Sort Computer</a>
+						
 					<a class="btn btn-success" id="addComputer"
 						href="/cdb/AddComputerServlet">Add Computer</a> <a
 						class="btn btn-default" id="editComputer" href="#"

@@ -15,9 +15,9 @@ import com.excilys.formation.dto.ComputerDTO;
 import com.excilys.formation.mapper.DtoMapper;
 import com.excilys.formation.mapper.MapStringToComputer;
 import com.excilys.formation.model.Computer;
-import com.excilys.formation.service.AjoutOrdinateurService;
 import com.excilys.formation.service.CompanyDataService;
 import com.excilys.formation.service.ComputerDetailsDataService;
+import com.excilys.formation.service.UpdateDatabaseService;
 import com.excilys.formation.service.ValidationComputer;
 
 /**
@@ -26,18 +26,19 @@ import com.excilys.formation.service.ValidationComputer;
 @WebServlet("/EditComputerServlet")
 public class EditComputerServlet extends HttpServlet {
 	
+	
 	public static final String LISTE_COMPANIES = "CompanyList";
 	public static final String INTRODUCED = "IntroducedDate";
 	public static final String DISCONTINUED = "DiscontinuedDate";
 	public static final String COMPUTER_NAME = "ComputerName";
 	public static final String COMPUTER_ID = "ComputerId";
-	
-	private static final long serialVersionUID = 1L;
+	public static final String COMPANY_NAME = "CompanyName";
 	
 	private static int id = 0;
 	
 	private ComputerDTO computerToUpdate;
-       
+	
+	private static final long serialVersionUID = 1L;
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -71,6 +72,7 @@ public class EditComputerServlet extends HttpServlet {
 		request.setAttribute(COMPUTER_NAME,computerToUpdate.getName());
 		request.setAttribute(INTRODUCED,computerToUpdate.getDateSortie());
 		request.setAttribute(DISCONTINUED,computerToUpdate.getDateRetrait());
+		request.setAttribute(COMPANY_NAME,computerToUpdate.getCompany());
 		
 		request.setAttribute(LISTE_COMPANIES, companies);
 		this.getServletContext().getRequestDispatcher("/WEB-INF/views/editComputer.jsp").forward(request, response);
@@ -88,9 +90,11 @@ public class EditComputerServlet extends HttpServlet {
 		
 		try {
 			if (ValidationComputer.isComputerValid(computerName, dateSortie, dateRetrait)) {
-				Computer addedComputer = MapStringToComputer.ComputerStringToComputer(computerName, dateSortie, dateRetrait, company);
-				addedComputer.setId(id);
-				AjoutOrdinateurService.ajoutDataService(addedComputer);
+				Computer updatedComputer = MapStringToComputer.ComputerStringToComputer(computerName, dateSortie, dateRetrait, company);
+				updatedComputer.setId(id);
+				
+				UpdateDatabaseService.updateDataService(updatedComputer);
+				
 			} else {
 				System.out.println("Ordinateur non valide");
 			}

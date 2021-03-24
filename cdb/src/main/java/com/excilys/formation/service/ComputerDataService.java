@@ -36,6 +36,16 @@ public class ComputerDataService {
 		} 
 	}
 	
+	public static List<Computer> recupDataOrdiPageTrie(int nombreParPage, int page) throws Exception {
+		try (Connection con = AccessDatabase.getInstance();) {
+			logger.debug("Récupération d'une liste de computer triée plus petite : Page " + page);
+			return ComputerInfos.computerInformationsMapper(ComputersInfosDao.computerInformationsPageOrdreNom(con, nombreParPage, page));
+		} catch (SQLException e) {
+			logger.error("Impossible de se connecter a la BDD, recherche page de computer");
+			throw new Exception("Impossible de se connecter a la base de donnees");
+		} 
+	}
+	
 	public static int recupDataOrdiNombre() throws Exception {
 		try (Connection con = AccessDatabase.getInstance();) {
 			logger.debug("Récupération du nombre de computer plus petite");

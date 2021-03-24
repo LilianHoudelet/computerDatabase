@@ -15,7 +15,7 @@
 <body>
     <header class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="views/dashboard.jsp"> Application - Computer Database </a>
+            <a class="navbar-brand" href="ComputerServlet"> Application - Computer Database </a>
         </div>
     </header>
     <section id="main">
@@ -49,16 +49,22 @@
 							</div>
 							<div class="form-group">
 								<label for="companyId">Company</label> <select
-									class="form-control" id="companyId" name="CompanyId">
+									class="form-control" id="companyId" name="CompanyId" >
 									<option value="0"> -- </option>
 									<c:forEach items="${CompanyList}" var="current">
-										<option value="${current.getId()}"> ${current.getName()} </option>
+										
+										<c:if test="${CompanyName == current.getName()}">
+											<option value="${current.getId()}" selected> ${current.getName()} </option>
+										</c:if>
+										<c:if test="${CompanyName != current.getName()}">
+											<option value="${current.getId()}"> ${current.getName()} </option>
+										</c:if>
 									</c:forEach>
 								</select>
 							</div>
 						</fieldset>
 						<div class="actions pull-right">
-							<input type="submit" value="Add" class="btn btn-primary">
+							<input type="submit" value="Update" class="btn btn-primary">
 							or <a href="/cdb/ComputerServlet" class="btn btn-default">Cancel</a>
 						</div>
                     </form>
@@ -66,5 +72,9 @@
             </div>
         </div>
     </section>
+    <footer>
+		<script src="js/jquery.min.js"></script>
+		<script src="js/validation.js"></script>
+	</footer>
 </body>
 </html>

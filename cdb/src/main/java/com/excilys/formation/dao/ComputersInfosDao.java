@@ -13,6 +13,8 @@ public class ComputersInfosDao {
 	
 	public static final String REQUETE_PAGE = "SELECT computer.id, computer.name, introduced, discontinued, company.name, computer.company_id FROM computer LEFT JOIN company ON company.id = computer.company_id LIMIT ? OFFSET ?";
 
+	public static final String REQUETE_PAGE_TRIE = "SELECT computer.id, computer.name, introduced, discontinued, company.name, computer.company_id FROM computer LEFT JOIN company ON company.id = computer.company_id ORDER BY computer.name LIMIT ? OFFSET ? ";
+	
 	public static final String REQUETE_DETAILS = "SELECT computer.id, computer.name, introduced, discontinued, company.name, computer.company_id FROM computer LEFT JOIN company ON company.id = computer.company_id WHERE computer.name = ?";
 	
 	public static final String REQUETE_DETAILS_ID = "SELECT computer.id, computer.name, introduced, discontinued, company.name, computer.company_id FROM computer LEFT JOIN company ON company.id = computer.company_id WHERE computer.id = ?";
@@ -32,16 +34,7 @@ public class ComputersInfosDao {
 			
 		return rs;
 	}
-	
-	public static ResultSet computerInformationsDetails(Connection con, String nomMachine) throws ClassNotFoundException, SQLException {
-
-		PreparedStatement stmt = con.prepareStatement(REQUETE_DETAILS);
-		stmt.setString(1, nomMachine);
-		ResultSet rs = stmt.executeQuery();
-			
-		return rs;
-	}
-	
+		
 	public static ResultSet computerInformationsPage(Connection con, int taillePage, int page) throws SQLException {
 				
 		PreparedStatement stmt = con.prepareStatement(REQUETE_PAGE);
@@ -50,6 +43,26 @@ public class ComputersInfosDao {
 		stmt.setInt(2, page * taillePage);
 		
 		ResultSet rs = stmt.executeQuery();
+		return rs;
+	}
+	
+	public static ResultSet computerInformationsPageOrdreNom(Connection con, int taillePage, int page) throws SQLException {
+		
+		PreparedStatement stmt = con.prepareStatement(REQUETE_PAGE_TRIE);
+		
+		stmt.setInt(1, taillePage);
+		stmt.setInt(2, page * taillePage);
+		
+		ResultSet rs = stmt.executeQuery();
+		return rs;
+	}
+	
+	public static ResultSet computerInformationsDetails(Connection con, String nomMachine) throws ClassNotFoundException, SQLException {
+
+		PreparedStatement stmt = con.prepareStatement(REQUETE_DETAILS);
+		stmt.setString(1, nomMachine);
+		ResultSet rs = stmt.executeQuery();
+			
 		return rs;
 	}
 

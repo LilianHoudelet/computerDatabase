@@ -19,7 +19,7 @@ public class UpdateDatabaseService {
 			UpdateDatabaseDao.updateComputerInformations(newCon, computer);
 		} catch (SQLException e) {
 			logger.error("Erreur dans la suppression dans la BDD");
-			throw new Exception("Impossible de se connecter a la base de donnees Ajout");
+			throw new Exception("Impossible de se connecter a la base de donnees Update");
 		} 
 	}
 }
