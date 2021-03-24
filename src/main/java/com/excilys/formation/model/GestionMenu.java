@@ -7,7 +7,7 @@ import java.util.Scanner;
 import main.java.com.excilys.formation.service.AjoutOrdinateurService;
 import main.java.com.excilys.formation.service.CheckDate;
 import main.java.com.excilys.formation.service.CompanyDataService;
-import main.java.com.excilys.formation.service.ComputerDataService;
+//import main.java.com.excilys.formation.service.ComputerDataService;
 import main.java.com.excilys.formation.service.ComputerDetailsDataService;
 import main.java.com.excilys.formation.service.ComputerSuppressionService;
 import main.java.com.excilys.formation.service.UpdateDatabaseService;
@@ -50,10 +50,10 @@ public class GestionMenu {
 		switch (entreeMenu1) {
 		case (AFFICHER_INFOS_ORDINATEURS): 
 			
-			List<Computer> infos = ComputerDataService.recupDataOrdi();
-			Menu.printComputer(infos);
+			//List<Computer> infos = ComputerDataService.recupDataOrdi();
+			//Menu.printComputer(infos);
 			
-			//GestionPages.affichePage();
+			GestionPages.affichePage();
 			menu2();
 			break;
 		
@@ -154,7 +154,6 @@ public class GestionMenu {
 					}
 				} while (!(dateRetraitString.isEmpty() || dateRetrait != null));
 				
-				// Refactor cette fonction
 				Company company = CompanyDataService.recupDataOrdiId(nomConstructeur);
 				
 				UpdateDatabaseService.updateDataService(

@@ -1,25 +1,28 @@
-package main.java.com.excilys.formation.model;
+package com.excilys.formation.model;
 
 import java.util.List;
 import java.util.Scanner;
 
-import main.java.com.excilys.formation.service.ComputerDataService;
-import main.java.com.excilys.formation.ui.Menu;
+import com.excilys.formation.service.ComputerDataService;
+import com.excilys.formation.ui.Page;
 
 public class GestionPages {
 	
 	public static void affichePage() throws Exception {
-		int page = 0;
 		int taillePage = 10;
-		String entreeMenu;
-		//@SuppressWarnings("resource")
-		Scanner reader = new Scanner(System.in);
 		
-		int pageMax = ComputerDataService.recupDataOrdiNombre();
+		int pageMax = ComputerDataService.recupDataOrdiNombre() / taillePage ;
+		
+		int page = 0;
+		
+		String entreeMenu;
+		@SuppressWarnings("resource")
+		Scanner reader = new Scanner(System.in);
 		
 		do {
 			List<Computer> infos = ComputerDataService.recupDataOrdiPage(taillePage, page);
-			Menu.printComputer(infos);
+			Page.printComputerPage(infos,page+1);
+			Page.demandeEntreePage();
 			entreeMenu = reader.nextLine();
 			
 			if ("+".equals(entreeMenu)) {
@@ -33,10 +36,19 @@ public class GestionPages {
 					page = 0;
 				}
 			} else {
-				break;
+				try {
+					page = Integer.parseInt(entreeMenu);
+					if( page  > pageMax) {
+						page = pageMax;
+					}
+					else if (page < 0) {
+						page = 0;
+					}
+				} catch(Exception e) {
+					break;
+				}
 			}
-			
 		} while (true);
-		reader.close();
+		//reader.close();
 	}
 }
