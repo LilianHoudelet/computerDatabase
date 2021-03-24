@@ -24,4 +24,17 @@ public class ComputerDetailsDataService {
 			throw new Exception("Impossible de se connecter a la base de donnees Details");
 		} 
 	}
+	
+public static Computer recupDataDetailsOrdi(int id) throws Exception {
+		
+		try (Connection newCon = AccessDatabase.getInstance();) {
+			logger.debug("récupération des détails de la machine "+ id);
+			return ComputerInfos.computerDetailsMapper(ComputersInfosDao.computerInformationsDetails(newCon, id));
+		} catch (SQLException e) {
+			logger.error("Impossible de se connecter a la BDD, recherche détails de computer");
+			throw new Exception("Impossible de se connecter a la base de donnees Details");
+		} 
+	}
+
+
 }

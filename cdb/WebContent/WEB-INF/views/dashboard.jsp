@@ -37,8 +37,6 @@
 				</div>
 				<div class="pull-right">
 
-
-
 					<a class="btn btn-success" id="addComputer"
 						href="/cdb/AddComputerServlet">Add Computer</a> <a
 						class="btn btn-default" id="editComputer" href="#"
@@ -79,9 +77,9 @@
 					<c:forEach items="${ComputerList}" var="current">
 						<tr>
 							<td class="editMode"><input type="checkbox" name="cb"
-								class="cb" value="0"></td>
-							<td><a href="/cdb/editComputer.jsp" onclick="">
-								<c:out value="${current.getName()}" /></a>
+								class="cb" value="${ current.getId() }"></td>
+							<td><a href="/cdb/EditComputerServlet?id=${ current.getId() }" onclick="">
+								<c:out value="${ current.getName()}" /></a>
 							</td>
 							<td><c:out value="${current.getDateSortie()}" /></td>
 							<td><c:out value="${current.getDateRetrait()}" /></td>

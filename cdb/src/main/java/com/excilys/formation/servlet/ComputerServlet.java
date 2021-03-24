@@ -85,7 +85,10 @@ public class ComputerServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+		
+		String id = request.getParameter("cb");
+		System.out.println(id);
+		
 		doGet(request, response);
 	}
 

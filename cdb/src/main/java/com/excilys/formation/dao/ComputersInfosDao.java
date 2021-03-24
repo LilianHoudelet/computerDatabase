@@ -15,6 +15,8 @@ public class ComputersInfosDao {
 
 	public static final String REQUETE_DETAILS = "SELECT computer.id, computer.name, introduced, discontinued, company.name, computer.company_id FROM computer LEFT JOIN company ON company.id = computer.company_id WHERE computer.name = ?";
 	
+	public static final String REQUETE_DETAILS_ID = "SELECT computer.id, computer.name, introduced, discontinued, company.name, computer.company_id FROM computer LEFT JOIN company ON company.id = computer.company_id WHERE computer.id = ?";
+	
 	public static ResultSet computerInformations(Connection con) throws ClassNotFoundException, SQLException {
 
 		Statement stmt = con.createStatement();
@@ -48,6 +50,14 @@ public class ComputersInfosDao {
 		stmt.setInt(2, page * taillePage);
 		
 		ResultSet rs = stmt.executeQuery();
+		return rs;
+	}
+
+	public static ResultSet computerInformationsDetails(Connection con, int id) throws SQLException {
+		PreparedStatement stmt = con.prepareStatement(REQUETE_DETAILS_ID);
+		stmt.setInt(1, id);
+		ResultSet rs = stmt.executeQuery();
+
 		return rs;
 	}
 	
