@@ -11,9 +11,10 @@ import com.excilys.formation.mapper.ComputerInfos;
 import com.excilys.formation.model.Computer;
 
 public class ComputerDetailsDataService {
+	
+	static Logger logger = org.slf4j.LoggerFactory.getLogger(ComputerDetailsDataService.class);
+	
 	public static Computer recupDataDetailsOrdi(String nomMachine) throws Exception {
-		
-		Logger logger = org.slf4j.LoggerFactory.getLogger(ComputerDetailsDataService.class);
 		
 		try (Connection newCon = AccessDatabase.getInstance();) {
 			logger.debug("récupération des détails de la machine "+ nomMachine);

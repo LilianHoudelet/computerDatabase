@@ -25,5 +25,3 @@ var discontinued = $('#discontinued').val();
 
 	return true;
 });
-
-
