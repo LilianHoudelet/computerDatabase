@@ -19,6 +19,8 @@ public class ComputersInfosDao {
 	
 	public static final String REQUETE_PAGE_TRIE = "SELECT computer.id, computer.name, introduced, discontinued, company.name, computer.company_id FROM computer LEFT JOIN company ON company.id = computer.company_id ORDER BY computer.name LIMIT ? OFFSET ? ";
 	
+	public static final String REQUETE_PAGE_FILTRE_TRIE = "SELECT computer.id, computer.name, introduced, discontinued, company.name, computer.company_id FROM computer LEFT JOIN company ON company.id = computer.company_id WHERE computer.name LIKE ? ORDER BY computer.name LIMIT ? OFFSET ? ";
+	
 	public static final String REQUETE_DETAILS = "SELECT computer.id, computer.name, introduced, discontinued, company.name, computer.company_id FROM computer LEFT JOIN company ON company.id = computer.company_id WHERE computer.name = ?";
 	
 	public static final String REQUETE_DETAILS_ID = "SELECT computer.id, computer.name, introduced, discontinued, company.name, computer.company_id FROM computer LEFT JOIN company ON company.id = computer.company_id WHERE computer.id = ?";
@@ -82,6 +84,17 @@ public class ComputersInfosDao {
 		return rs;
 	}
 	
+public static ResultSet computerInformationsPageFilterSorted(Connection con, int taillePage, int page, String chaine) throws SQLException {
+		
+		PreparedStatement stmt = con.prepareStatement(REQUETE_PAGE_FILTRE_TRIE);
+		
+		stmt.setString(1, "%"+chaine+"%");
+		stmt.setInt(2, taillePage);
+		stmt.setInt(3, page * taillePage);
+		
+		ResultSet rs = stmt.executeQuery();
+		return rs;
+	}
 	public static ResultSet computerInformationsDetails(Connection con, String nomMachine) throws ClassNotFoundException, SQLException {
 
 		PreparedStatement stmt = con.prepareStatement(REQUETE_DETAILS);

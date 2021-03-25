@@ -28,19 +28,20 @@
 			<div id="actions" class="form-horizontal">
 				<div class="pull-left">
 				
-					<form id="searchForm" action="#" method="GET" class="form-inline">
+					<form id="searchForm" action="?search=${ search }" method="GET" class="form-inline">
 
 						<input type="search" id="searchbox" name="search"
-							class="form-control" placeholder="Search name" value=""/> 
+							class="form-control" placeholder="Search name" value="${ search }"/> 
 						<input type="submit" id="searchsubmit" value="Filter by name"
 							class="btn btn-primary" />
 					</form>
 					
 				</div>
+				
 				<div class="pull-right">
 				
 					<a class="btn btn-default" id="sortList"
-						href="?sorted=${ notSorted }">Sort Computer</a>
+						href="?sorted=${ sorted }">Sort Computers</a>
 						
 					<a class="btn btn-success" id="addComputer"
 						href="/cdb/AddComputerServlet">Add Computer</a> <a
@@ -116,7 +117,9 @@
 				</c:if>
 				
 				<c:forEach var="i" begin="0" end="4" step="1">
-					<li><a href="?page=${index+i-2}">${index+i-2}</a></li>
+					<c:if test="${index-2+i <= maxPage}">
+						<li><a href="?page=${index+i-2}">${index+i-2}</a></li>
+					</c:if>
 				</c:forEach>
 				
 				<c:if test="${page != maxPage}">
