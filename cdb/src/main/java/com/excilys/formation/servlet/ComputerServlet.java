@@ -16,7 +16,6 @@ import com.excilys.formation.dto.ComputerDTO;
 import com.excilys.formation.mapper.DtoMapper;
 import com.excilys.formation.model.ComputerPage;
 import com.excilys.formation.service.ComputerDataService;
-import com.excilys.formation.service.ComputerSuppressionService;
 
 @WebServlet("/ComputerServlet")
 public class ComputerServlet extends HttpServlet {
@@ -105,6 +104,7 @@ public class ComputerServlet extends HttpServlet {
 		String filterString = request.getParameter(FILTER);
 		if (filterString != null && !filterString.equals(chaineFiltre)) {
 			chaineFiltre = filterString;
+			sorted = false;
 		}
 		
 		session.setAttribute(NUM_PAGE, pagination);

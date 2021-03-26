@@ -1,7 +1,7 @@
 package com.excilys.formation.dao;
 
+
 import java.sql.Connection;
-//import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import org.slf4j.Logger;
@@ -18,8 +18,6 @@ import com.zaxxer.hikari.HikariDataSource;
 public class AccessDatabase {
 	
     private static HikariDataSource dataSource = new HikariDataSource();
-    
-    static String dataBase = "computer-database-db";
 		
 	private static AccessDatabase instance = new AccessDatabase();
 		
@@ -30,8 +28,7 @@ public class AccessDatabase {
 	 * @throws ClassNotFoundException
 	 */
 	private AccessDatabase() {
-		try {
-			
+		try {		
 			dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
 			dataSource.setJdbcUrl( "jdbc:mysql://localhost:3306/computer-database-db" );
 			dataSource.setUsername( "admincdb" );

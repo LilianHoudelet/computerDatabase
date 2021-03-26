@@ -11,15 +11,15 @@ public class ComputersInfosDao {
 	
 	public static final String REQUETE_NOMBRE = "SELECT COUNT(id) from computer";
 	
-	public static final String REQUETE_NOMBRE_FILTRE = "SELECT COUNT(id) from computer WHERE name LIKE ?";
+	public static final String REQUETE_NOMBRE_FILTRE = "SELECT count(computer.id) FROM computer LEFT JOIN company ON company.id = computer.company_id WHERE computer.name LIKE ? OR company.name LIKE ?";
 	
 	public static final String REQUETE_PAGE = "SELECT computer.id, computer.name, introduced, discontinued, company.name, computer.company_id FROM computer LEFT JOIN company ON company.id = computer.company_id LIMIT ? OFFSET ?";
 
-	public static final String REQUETE_PAGE_FILTRE = "SELECT computer.id, computer.name, introduced, discontinued, company.name, computer.company_id FROM computer LEFT JOIN company ON company.id = computer.company_id WHERE computer.name LIKE ? LIMIT ? OFFSET ? ";
+	public static final String REQUETE_PAGE_FILTRE = "SELECT computer.id, computer.name, introduced, discontinued, company.name, computer.company_id FROM computer LEFT JOIN company ON company.id = computer.company_id WHERE computer.name LIKE ? OR company.name LIKE ? LIMIT ? OFFSET ? ";
 	
 	public static final String REQUETE_PAGE_TRIE = "SELECT computer.id, computer.name, introduced, discontinued, company.name, computer.company_id FROM computer LEFT JOIN company ON company.id = computer.company_id ORDER BY computer.name LIMIT ? OFFSET ? ";
 	
-	public static final String REQUETE_PAGE_FILTRE_TRIE = "SELECT computer.id, computer.name, introduced, discontinued, company.name, computer.company_id FROM computer LEFT JOIN company ON company.id = computer.company_id WHERE computer.name LIKE ? ORDER BY computer.name LIMIT ? OFFSET ? ";
+	public static final String REQUETE_PAGE_FILTRE_TRIE = "SELECT computer.id, computer.name, introduced, discontinued, company.name, computer.company_id FROM computer LEFT JOIN company ON company.id = computer.company_id WHERE computer.name LIKE ? OR company.name LIKE ? ORDER BY computer.name LIMIT ? OFFSET ? ";
 	
 	public static final String REQUETE_DETAILS = "SELECT computer.id, computer.name, introduced, discontinued, company.name, computer.company_id FROM computer LEFT JOIN company ON company.id = computer.company_id WHERE computer.name = ?";
 	
@@ -45,6 +45,7 @@ public class ComputersInfosDao {
 
 		PreparedStatement stmt = con.prepareStatement(REQUETE_NOMBRE_FILTRE);
 		stmt.setString(1, "%"+chaine+"%");
+		stmt.setString(2, "%"+chaine+"%");
 		ResultSet rs = stmt.executeQuery();
 			
 		return rs;
@@ -77,8 +78,9 @@ public class ComputersInfosDao {
 		PreparedStatement stmt = con.prepareStatement(REQUETE_PAGE_FILTRE);
 		
 		stmt.setString(1, "%"+chaine+"%");
-		stmt.setInt(2, taillePage);
-		stmt.setInt(3, page * taillePage);
+		stmt.setString(2, "%"+chaine+"%");
+		stmt.setInt(3, taillePage);
+		stmt.setInt(4, page * taillePage);
 		
 		ResultSet rs = stmt.executeQuery();
 		return rs;
@@ -89,8 +91,9 @@ public static ResultSet computerInformationsPageFilterSorted(Connection con, int
 		PreparedStatement stmt = con.prepareStatement(REQUETE_PAGE_FILTRE_TRIE);
 		
 		stmt.setString(1, "%"+chaine+"%");
-		stmt.setInt(2, taillePage);
-		stmt.setInt(3, page * taillePage);
+		stmt.setString(2, "%"+chaine+"%");
+		stmt.setInt(3, taillePage);
+		stmt.setInt(4, page * taillePage);
 		
 		ResultSet rs = stmt.executeQuery();
 		return rs;
