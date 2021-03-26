@@ -34,24 +34,24 @@
 							class="form-control" placeholder="Search name" value="${ search }"/> 
 						<input type="submit" id="searchsubmit" value="Filter by name"
 							class="btn btn-primary" />
-					</form>
 					
+						<a class="btn btn-default" id="sortList"
+							href="?sorted=${ sorted }">Sort Computers</a>
+					</form>
 				</div>
 				
 				<div class="pull-right">
 				
-					<a class="btn btn-default" id="sortList"
-						href="?sorted=${ sorted }">Sort Computers</a>
-						
+					
 					<a class="btn btn-success" id="addComputer"
-						href="/cdb/AddComputerServlet">Add Computer</a> <a
-						class="btn btn-default" id="editComputer" href="#"
+						href="/cdb/AddComputerServlet">Add Computer</a> 
+					<a class="btn btn-default" id="editComputer" href="#"
 						onclick="$.fn.toggleEditMode();">Edit</a>
 				</div>
 			</div>
 		</div>
 
-		<form id="deleteForm" action="#" method="POST">
+		<form id="deleteForm" action="/cdb/DeleteComputerServlet" method="POST">
 			<input type="hidden" name="selection" value="">
 		</form>
 
@@ -80,19 +80,21 @@
 				</thead>
 				<!-- Browse attribute computers -->
 				<tbody id="results">
-					<c:forEach items="${ComputerList}" var="current">
-						<tr>
-							<td class="editMode"><input type="checkbox" name="cb"
-								class="cb" value="${ current.getId() }"></td>
-							<td><a href="/cdb/EditComputerServlet?id=${ current.getId() }" onclick="">
-								<c:out value="${ current.getName()}" /></a>
-							</td>
-							<td><c:out value="${current.getDateSortie()}" /></td>
-							<td><c:out value="${current.getDateRetrait()}" /></td>
-							<td><c:out value="${current.getCompany()}" /></td>
-
-						</tr>
-					</c:forEach>
+						<c:forEach items="${ComputerList}" var="current">
+							<tr>
+								<td class="editMode">
+									<input type="checkbox" name="cb"
+										class="cb" value="${ current.getId() }">	
+								</td>
+								<td><a href="/cdb/EditComputerServlet?id=${ current.getId() }" onclick="">
+									<c:out value="${ current.getName()}" /></a>
+								</td>
+								<td><c:out value="${current.getDateSortie()}" /></td>
+								<td><c:out value="${current.getDateRetrait()}" /></td>
+								<td><c:out value="${current.getCompany()}" /></td>
+	
+							</tr>
+						</c:forEach>
 				</tbody>
 			</table>
 		</div>

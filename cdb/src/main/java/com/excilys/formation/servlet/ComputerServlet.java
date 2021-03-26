@@ -16,6 +16,7 @@ import com.excilys.formation.dto.ComputerDTO;
 import com.excilys.formation.mapper.DtoMapper;
 import com.excilys.formation.model.ComputerPage;
 import com.excilys.formation.service.ComputerDataService;
+import com.excilys.formation.service.ComputerSuppressionService;
 
 @WebServlet("/ComputerServlet")
 public class ComputerServlet extends HttpServlet {
@@ -111,7 +112,6 @@ public class ComputerServlet extends HttpServlet {
 		session.setAttribute(FILTER, chaineFiltre);
 		session.setAttribute(SORTED, sorted);
 		
-		System.out.println(sorted);
 		
 		try {
 			if (sorted) {
@@ -139,7 +139,7 @@ public class ComputerServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//String id = request.getParameter("cb");
+		
 				
 		doGet(request, response);
 	}

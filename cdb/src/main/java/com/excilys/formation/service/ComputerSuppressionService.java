@@ -24,4 +24,16 @@ public class ComputerSuppressionService {
 			throw new Exception("Impossible de se connecter a la base de donnees Suppression");
 		} 
 	}
+	
+public static void supprDataOrdiId(int id) throws Exception {
+		
+		try (Connection con = AccessDatabase.getInstance();) {
+			logger.debug("Appel suppression élément " + id + " de la BDD");
+			SupprimerDatabaseDao.deleteComputer(con, id);
+			
+		} catch (SQLException e) {
+			logger.error("Erreur dans la suppression de la table");
+			throw new Exception("Impossible de se connecter a la base de donnees Suppression");
+		} 
+	}
 }
