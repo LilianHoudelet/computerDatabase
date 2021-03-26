@@ -6,7 +6,6 @@ import java.sql.SQLException;
 
 import org.slf4j.Logger;
 
-import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 /**
@@ -18,20 +17,11 @@ import com.zaxxer.hikari.HikariDataSource;
  */
 public class AccessDatabase {
 	
-	private static HikariConfig config = new HikariConfig();
-    private static HikariDataSource ds;
+    private static HikariDataSource dataSource = new HikariDataSource();
     
     static String dataBase = "computer-database-db";
-	
-    static {
-        config.setJdbcUrl( "jdbc:mysql://localhost:3306/computer-database-db" );
-        config.setUsername( "admincdb" );
-        config.setPassword( "qwerty1234" );
-        config.setDataSourceClassName("com.mysql.cj.jdbc.Driver");
-        ds = new HikariDataSource( config );
-    } 
 		
-	private static Connection instance;
+	private static AccessDatabase instance = new AccessDatabase();
 		
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(AccessDatabase.class);
 
@@ -39,22 +29,29 @@ public class AccessDatabase {
 	 * ici, une connextion a la base de donnee est cree
 	 * @throws ClassNotFoundException
 	 */
-	private AccessDatabase() throws ClassNotFoundException {
+	private AccessDatabase() {
 		try {
-			logger.info("Connection a la base de données avec les informations requises");
-			instance = ds.getConnection();
-		} catch (SQLException e) {
+			
+			dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+			dataSource.setJdbcUrl( "jdbc:mysql://localhost:3306/computer-database-db" );
+			dataSource.setUsername( "admincdb" );
+			dataSource.setPassword( "qwerty1234" );
+			
+		} catch (Exception e) {
 			logger.error("Impossible de se connecter à la base de données : Identifiants incorrects");
-			e.printStackTrace();
 		}
 	}
 	
-	public static Connection getInstance() throws ClassNotFoundException, SQLException {
-		if (instance == null || instance.isClosed()) {
+	public static AccessDatabase getInstance() {
+		if (instance == null) {
 			logger.info("Création d'une nouvelle instance");
 			new AccessDatabase();
 		}
 		logger.debug("Utilisation de l'instance");
 		return instance;
+	}
+	
+	public Connection getConnection() throws SQLException {
+		return dataSource.getConnection();
 	}
 }

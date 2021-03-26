@@ -16,8 +16,10 @@ public class ComputerDataService {
 	
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(ComputerDataService.class);
 	
+	static AccessDatabase instance = AccessDatabase.getInstance();
+	
 	public static List<Computer> recupDataOrdi() throws Exception {
-		try (Connection con = AccessDatabase.getInstance();) {
+		try (Connection con = instance.getConnection();) {
 			logger.debug("Récupération d'une liste de computer");
 			return ComputerInfos.computerInformationsMapper(ComputersInfosDao.computerInformations(con));
 		} catch (SQLException e) {
@@ -27,7 +29,7 @@ public class ComputerDataService {
 	}
 	
 	public static List<Computer> recupDataOrdiPage(int nombreParPage, int page) throws Exception {
-		try (Connection con = AccessDatabase.getInstance();) {
+		try (Connection con = instance.getConnection();) {
 			logger.debug("Récupération d'une liste de computer plus petite : Page " + page);
 			return ComputerInfos.computerInformationsMapper(ComputersInfosDao.computerInformationsPage(con, nombreParPage, page));
 		} catch (SQLException e) {
@@ -37,7 +39,7 @@ public class ComputerDataService {
 	}
 	
 	public static List<Computer> recupDataOrdiPageTrie(int nombreParPage, int page) throws Exception {
-		try (Connection con = AccessDatabase.getInstance();) {
+		try (Connection con = instance.getConnection();) {
 			logger.debug("Récupération d'une liste de computer Filtrée plus petite : Page " + page);
 			return ComputerInfos.computerInformationsMapper(ComputersInfosDao.computerInformationsPageOrdreNom(con, nombreParPage, page));
 		} catch (SQLException e) {
@@ -47,7 +49,7 @@ public class ComputerDataService {
 	}
 	
 	public static List<Computer> recupDataOrdiPageFiltre(int nombreParPage, int page, String chaine) throws Exception {
-		try (Connection con = AccessDatabase.getInstance();) {
+		try (Connection con = instance.getConnection();) {
 			logger.debug("Récupération d'une liste de computer triée plus petite : Page " + page);
 			return ComputerInfos.computerInformationsMapper(ComputersInfosDao.computerInformationsPageFilter(con, nombreParPage, page, chaine));
 		} catch (SQLException e) {
@@ -57,7 +59,7 @@ public class ComputerDataService {
 	}
 	
 	public static List<Computer> recupDataOrdiPageFiltreTrie(int nombreParPage, int page, String chaine) throws Exception {
-		try (Connection con = AccessDatabase.getInstance();) {
+		try (Connection con = instance.getConnection();) {
 			logger.debug("Récupération d'une liste de computer filtrée triée plus petite : Page " + page);
 			return ComputerInfos.computerInformationsMapper(ComputersInfosDao.computerInformationsPageFilterSorted(con, nombreParPage, page, chaine));
 		} catch (SQLException e) {
@@ -67,7 +69,7 @@ public class ComputerDataService {
 	}
 	
 	public static int recupDataOrdiNombre() throws Exception {
-		try (Connection con = AccessDatabase.getInstance();) {
+		try (Connection con = instance.getConnection();) {
 			logger.debug("Récupération du nombre de computer plus petite");
 			return ComputerInfos.computerInformationsMapperCount(ComputersInfosDao.computerInformationsNbElts(con));
 		} catch (SQLException e) {
@@ -77,7 +79,7 @@ public class ComputerDataService {
 	}
 	
 	public static int recupDataOrdiNombre(String chaine) throws Exception {
-		try (Connection con = AccessDatabase.getInstance();) {
+		try (Connection con = instance.getConnection();) {
 			logger.debug("Récupération du nombre de computer plus petite");
 			return ComputerInfos.computerInformationsMapperCount(ComputersInfosDao.computerInformationsNbEltsFiltre(con,chaine));
 		} catch (SQLException e) {

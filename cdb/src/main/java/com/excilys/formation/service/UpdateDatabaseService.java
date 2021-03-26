@@ -13,8 +13,10 @@ public class UpdateDatabaseService {
 	
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(UpdateDatabaseService.class);
 	
+	static AccessDatabase instance = AccessDatabase.getInstance();
+	
 	public static void updateDataService(Computer computer) throws Exception {
-		try (Connection newCon = AccessDatabase.getInstance();) {
+		try (Connection newCon = instance.getConnection();) {
 			logger.debug("Mise a jour de " + computer.getName() + " dans la BDD");
 			UpdateDatabaseDao.updateComputerInformations(newCon, computer);
 		} catch (SQLException e) {

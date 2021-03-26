@@ -13,10 +13,12 @@ import com.excilys.formation.model.Company;
 
 public class CompanyDataService {
 	
+	static AccessDatabase instance = AccessDatabase.getInstance();
+	
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(CompanyDataService.class);
 	
 	public static List<Company> recupDataCompany() throws Exception {
-		try (Connection con = AccessDatabase.getInstance();) {
+		try (Connection con = instance.getConnection();) {
 			logger.debug("Récupération de la liste des Company");
 			return CompanyInfos.companyInformationsMapper(CompanieInfoDao.companyInformations(con));
 		
@@ -26,7 +28,7 @@ public class CompanyDataService {
 		} 
 	}
 	public static Company recupDataCompanyId(String nomConstructeur) throws Exception {
-		try (Connection con = AccessDatabase.getInstance();) {
+		try (Connection con = instance.getConnection();) {
 			logger.debug("Récupération de l'Id de Company avec le nom");
 			return CompanyInfos.companyInformationsMapperId(CompanieInfoDao.companyInformationsId(con, nomConstructeur));
 		
