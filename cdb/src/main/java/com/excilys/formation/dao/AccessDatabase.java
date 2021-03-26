@@ -1,10 +1,13 @@
 package com.excilys.formation.dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
+//import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import org.slf4j.Logger;
+
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 /**
  * Here we are connecting to the database, the informations given are used in the connectionUrl variable
@@ -14,12 +17,22 @@ import org.slf4j.Logger;
  *
  */
 public class AccessDatabase {
-	static String username = "admincdb";
-	static String psw = "qwerty1234";
-	static String dataBase = "computer-database-db";
-	static String url = "jdbc:mysql://localhost:3306/" + dataBase;
+	
+	private static HikariConfig config = new HikariConfig();
+    private static HikariDataSource ds;
+    
+    static String dataBase = "computer-database-db";
+	
+    static {
+        config.setJdbcUrl( "jdbc:mysql://localhost:3306/computer-database-db" );
+        config.setUsername( "admincdb" );
+        config.setPassword( "qwerty1234" );
+        config.setDataSourceClassName("com.mysql.cj.jdbc.Driver");
+        ds = new HikariDataSource( config );
+    } 
 		
 	private static Connection instance;
+		
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(AccessDatabase.class);
 
 	/**
@@ -28,9 +41,8 @@ public class AccessDatabase {
 	 */
 	private AccessDatabase() throws ClassNotFoundException {
 		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
 			logger.info("Connection a la base de données avec les informations requises");
-			instance = DriverManager.getConnection(url, username, psw);
+			instance = ds.getConnection();
 		} catch (SQLException e) {
 			logger.error("Impossible de se connecter à la base de données : Identifiants incorrects");
 			e.printStackTrace();
