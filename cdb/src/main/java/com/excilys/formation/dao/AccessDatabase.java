@@ -1,10 +1,12 @@
 package com.excilys.formation.dao;
 
+
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 import org.slf4j.Logger;
+
+import com.zaxxer.hikari.HikariDataSource;
 
 /**
  * Here we are connecting to the database, the informations given are used in the connectionUrl variable
@@ -14,35 +16,39 @@ import org.slf4j.Logger;
  *
  */
 public class AccessDatabase {
-	static String username = "admincdb";
-	static String psw = "qwerty1234";
-	static String dataBase = "computer-database-db";
-	static String url = "jdbc:mysql://localhost:3306/" + dataBase;
+	
+    private static HikariDataSource dataSource = new HikariDataSource();
 		
-	private static Connection instance;
+	private static AccessDatabase instance = new AccessDatabase();
+		
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(AccessDatabase.class);
 
 	/**
 	 * ici, une connextion a la base de donnee est cree
 	 * @throws ClassNotFoundException
 	 */
-	private AccessDatabase() throws ClassNotFoundException {
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			logger.info("Connection a la base de données avec les informations requises");
-			instance = DriverManager.getConnection(url, username, psw);
-		} catch (SQLException e) {
+	private AccessDatabase() {
+		try {		
+			dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+			dataSource.setJdbcUrl( "jdbc:mysql://localhost:3306/computer-database-db" );
+			dataSource.setUsername( "admincdb" );
+			dataSource.setPassword( "qwerty1234" );
+			
+		} catch (Exception e) {
 			logger.error("Impossible de se connecter à la base de données : Identifiants incorrects");
-			e.printStackTrace();
 		}
 	}
 	
-	public static Connection getInstance() throws ClassNotFoundException, SQLException {
-		if (instance == null || instance.isClosed()) {
+	public static AccessDatabase getInstance() {
+		if (instance == null) {
 			logger.info("Création d'une nouvelle instance");
 			new AccessDatabase();
 		}
 		logger.debug("Utilisation de l'instance");
 		return instance;
+	}
+	
+	public Connection getConnection() throws SQLException {
+		return dataSource.getConnection();
 	}
 }

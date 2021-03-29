@@ -16,7 +16,6 @@ import com.excilys.formation.dto.ComputerDTO;
 import com.excilys.formation.mapper.DtoMapper;
 import com.excilys.formation.model.ComputerPage;
 import com.excilys.formation.service.ComputerDataService;
-import com.excilys.formation.service.ComputerSuppressionService;
 
 @WebServlet("/ComputerServlet")
 public class ComputerServlet extends HttpServlet {
@@ -30,8 +29,9 @@ public class ComputerServlet extends HttpServlet {
 	public static final String PAGE_INDEX = "index";
 	public static final String MAX_PAGE = "maxPage";
 	
-	public static final String SORTED = "sorted";
-	public static final String NOT_SORTED = "notSorted";
+	public static final String SORTED_ON = "sortedOn";
+	public static final String ASC_DESC = "sortingOrder";
+	
 	
 	public static final String FILTER = "search";
 	
@@ -47,7 +47,8 @@ public class ComputerServlet extends HttpServlet {
 		int pagination = 1;
 		int nbEltParPage = 10;
 		String chaineFiltre = "";
-		boolean sorted = false;
+		String sortedOn = "id";
+		boolean ascendance = true;
 		
 		int nombreElements = 0;
 		List<ComputerDTO> computers = new ArrayList<ComputerDTO>();
@@ -55,6 +56,7 @@ public class ComputerServlet extends HttpServlet {
 		ComputerPage computerPage = new ComputerPage();
 		
 		HttpSession session = request.getSession();
+		
 		
 		if (session.getAttribute(NUM_PAGE) == null) {	
 			session.setAttribute(NUM_PAGE, 1);
@@ -74,24 +76,21 @@ public class ComputerServlet extends HttpServlet {
 			chaineFiltre = (String) session.getAttribute(FILTER);
 		}
 		
-		if (session.getAttribute(SORTED) == null) {
-			session.setAttribute(SORTED, false);
+		if (session.getAttribute(SORTED_ON) == null) {
+			session.setAttribute(SORTED_ON, "id");
 		} else {
-			sorted = (boolean) session.getAttribute(SORTED);
+			sortedOn = (String) session.getAttribute(SORTED_ON);
 		}
-					
+		
+		if (session.getAttribute(ASC_DESC) == null) {
+			session.setAttribute(ASC_DESC, true);
+		} else {
+			ascendance = (boolean) session.getAttribute(ASC_DESC);
+		}
+		
 		String nbEltsParPageString = request.getParameter(NOMBRE_ELEMENTS);
 		try {
 			nbEltParPage = Integer.parseInt(nbEltsParPageString);
-		} catch (Exception e) {
-		}
-		
-		String SortedString = request.getParameter(SORTED);
-		
-		try {
-			if(SortedString != null && Boolean.parseBoolean(SortedString) != sorted) {
-				sorted = !sorted;
-			}
 		} catch (Exception e) {
 		}
 		
@@ -105,20 +104,26 @@ public class ComputerServlet extends HttpServlet {
 		String filterString = request.getParameter(FILTER);
 		if (filterString != null && !filterString.equals(chaineFiltre)) {
 			chaineFiltre = filterString;
+			sortedOn = "computerId";
+		}
+		
+		String sortingString = request.getParameter(SORTED_ON);
+		if (sortingString != null && !sortingString.equals(sortedOn)) {
+			sortedOn = sortingString;
+			ascendance = true;
+		} else if (sortingString != null && sortingString.equals(sortedOn)){
+			ascendance = !ascendance;
 		}
 		
 		session.setAttribute(NUM_PAGE, pagination);
 		session.setAttribute(NOMBRE_ELEMENTS, nbEltParPage);
 		session.setAttribute(FILTER, chaineFiltre);
-		session.setAttribute(SORTED, sorted);
-		
+		session.setAttribute(SORTED_ON, sortedOn);
+		session.setAttribute(ASC_DESC, ascendance);
 		
 		try {
-			if (sorted) {
-				computers = DtoMapper.mapComputerToComputerDTO(ComputerDataService.recupDataOrdiPageFiltreTrie(nbEltParPage, pagination-1, chaineFiltre));
-			} else {
-				computers = DtoMapper.mapComputerToComputerDTO(ComputerDataService.recupDataOrdiPageFiltre(nbEltParPage, pagination-1, chaineFiltre));
-			}
+			computers = DtoMapper.mapComputerToComputerDTO(ComputerDataService.recupDataOrdiPageFiltreTrie(nbEltParPage, pagination-1, chaineFiltre, sortedOn, ascendance));
+			
 			nombreElements = ComputerDataService.recupDataOrdiNombre(chaineFiltre);
 			
 			computerPage = new ComputerPage(nbEltParPage, nombreElements , computers);
@@ -128,7 +133,6 @@ public class ComputerServlet extends HttpServlet {
 		}
 
 		request.setAttribute(FILTER, chaineFiltre);
-		request.setAttribute(SORTED, !sorted);
 		request.setAttribute(COMPUTER_NUMBER, nombreElements);
 		request.setAttribute(LISTE_COMPUTER, computerPage.getComputerList());
 		request.setAttribute(NUM_PAGE, pagination);
@@ -138,8 +142,6 @@ public class ComputerServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
 				
 		doGet(request, response);
 	}

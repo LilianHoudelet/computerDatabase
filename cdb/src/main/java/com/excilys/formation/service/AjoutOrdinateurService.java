@@ -13,8 +13,10 @@ public class AjoutOrdinateurService {
 	
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(AjoutOrdinateurService.class);
 	
+	static AccessDatabase instance = AccessDatabase.getInstance();
+	
 	public static void ajoutDataService(Computer computer) throws Exception {
-		try (Connection newCon = AccessDatabase.getInstance();) {
+		try (Connection newCon = instance.getConnection();) {
 			AjoutOrdinateurDao.computerInformations(newCon, computer);
 			logger.debug("Ajout d'un élément dans la BDD sans problème");
 		} catch (SQLException e) {
