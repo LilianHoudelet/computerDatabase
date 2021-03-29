@@ -36,7 +36,7 @@
 							class="btn btn-primary" />
 					
 						<a class="btn btn-default" id="sortList"
-							href="?sorted=${ sorted }">Sort Computers</a>
+							href="?sortedOn=id">Reset sort</a>
 					</form>
 				</div>
 				
@@ -64,17 +64,23 @@
 
 						<th class="editMode" style="width: 60px; height: 22px;"><input
 							type="checkbox" id="selectall" /> <span
-							style="vertical-align: top;"> - <a href="#"
-								id="deleteSelected" onclick="$.fn.deleteSelected();"> <i
-									class="fa fa-trash-o fa-lg"></i>
+							style="vertical-align: top;"> - 
+							<a href="#" id="deleteSelected" onclick="$.fn.deleteSelected();"> 
+								<i class="fa fa-trash-o fa-lg"></i>
 							</a>
 						</span></th>
-						<th>Computer name</th>
-						<th>Introduced date</th>
+						
+						<th><a href="?sortedOn=computerName" onclick="">
+									<c:out value="Computer name" /></a></th>
+									
+						<th><a href="?sortedOn=introduced" onclick="">
+									<c:out value="Introduced date" /></a></th>
 						<!-- Table header for Discontinued Date -->
-						<th>Discontinued date</th>
+						<th><a href="?sortedOn=discontinued" onclick="">
+									<c:out value="Discontinued date" /></a></th>
 						<!-- Table header for Company -->
-						<th>Company</th>
+						<th><a href="?sortedOn=company" onclick="">
+									<c:out value="Company" /></a></th>
 
 					</tr>
 				</thead>

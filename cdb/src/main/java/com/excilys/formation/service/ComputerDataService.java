@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import com.excilys.formation.dao.AccessDatabase;
 import com.excilys.formation.dao.ComputersInfosDao;
 import com.excilys.formation.mapper.ComputerInfos;
+import com.excilys.formation.mapper.RequestFilterString;
 import com.excilys.formation.model.Computer;
 
 public class ComputerDataService {
@@ -38,10 +39,10 @@ public class ComputerDataService {
 		} 
 	}
 	
-	public static List<Computer> recupDataOrdiPageTrie(int nombreParPage, int page) throws Exception {
+	public static List<Computer> recupDataOrdiPageTrie(int nombreParPage, int page, String order) throws Exception {
 		try (Connection con = instance.getConnection();) {
 			logger.debug("Récupération d'une liste de computer Filtrée plus petite : Page " + page);
-			return ComputerInfos.computerInformationsMapper(ComputersInfosDao.computerInformationsPageOrdreNom(con, nombreParPage, page));
+			return ComputerInfos.computerInformationsMapper(ComputersInfosDao.computerInformationsPageOrdreNom(con, nombreParPage, page, RequestFilterString.convertOrderString(order)));
 		} catch (SQLException e) {
 			logger.error("Impossible de se connecter a la BDD, recherche page filtrée de computer");
 			throw new Exception("Impossible de se connecter a la base de donnees");
@@ -58,10 +59,10 @@ public class ComputerDataService {
 		} 
 	}
 	
-	public static List<Computer> recupDataOrdiPageFiltreTrie(int nombreParPage, int page, String chaine) throws Exception {
+	public static List<Computer> recupDataOrdiPageFiltreTrie(int nombreParPage, int page, String chaine, String order, boolean ascendance) throws Exception {
 		try (Connection con = instance.getConnection();) {
 			logger.debug("Récupération d'une liste de computer filtrée triée plus petite : Page " + page);
-			return ComputerInfos.computerInformationsMapper(ComputersInfosDao.computerInformationsPageFilterSorted(con, nombreParPage, page, chaine));
+			return ComputerInfos.computerInformationsMapper(ComputersInfosDao.computerInformationsPageFilterSorted(con, nombreParPage, page, chaine, RequestFilterString.convertOrderString(order), RequestFilterString.convertOrderbool(ascendance)));
 		} catch (SQLException e) {
 			logger.error("Impossible de se connecter a la BDD, recherche page triée filtrée de computer");
 			throw new Exception("Impossible de se connecter a la base de donnees");
@@ -70,7 +71,7 @@ public class ComputerDataService {
 	
 	public static int recupDataOrdiNombre() throws Exception {
 		try (Connection con = instance.getConnection();) {
-			logger.debug("Récupération du nombre de computer plus petite");
+			logger.debug("Récupération du nombre de computer");
 			return ComputerInfos.computerInformationsMapperCount(ComputersInfosDao.computerInformationsNbElts(con));
 		} catch (SQLException e) {
 			logger.error("Impossible de se connecter a la BDD, recherche nombre de computer");
