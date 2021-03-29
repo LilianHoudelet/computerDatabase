@@ -18,7 +18,9 @@ public class Menu {
 		System.out.println(BARRE);
 		System.out.println("|           3. Ajouter informations           |");
 		System.out.println(BARRE);
-		System.out.println("|                 4. Quitter                  |");
+		System.out.println("|            4. Supprimer Companie            |");
+		System.out.println(BARRE);
+		System.out.println("|                 5. Quitter                  |");
 		System.out.println(BARRE);
 	}
 	
