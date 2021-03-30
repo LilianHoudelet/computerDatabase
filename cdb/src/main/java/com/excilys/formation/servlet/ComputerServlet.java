@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+
 import com.excilys.formation.dto.ComputerDTO;
 import com.excilys.formation.mapper.DtoMapper;
 import com.excilys.formation.model.ComputerPage;
@@ -35,6 +37,7 @@ public class ComputerServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	
+	static Logger logger = org.slf4j.LoggerFactory.getLogger(ComputerServlet.class);
        
     public ComputerServlet() {
         super();
@@ -54,20 +57,10 @@ public class ComputerServlet extends HttpServlet {
 		String chaineFiltre = initChaineFiltre(request);
 		String sortedOn = initOrder(request);
 		boolean ascendance = initAscendance(request);
-				
-		String nbEltsParPageString = request.getParameter(NOMBRE_ELEMENTS);
-		try {
-			nbEltParPage = Integer.parseInt(nbEltsParPageString);
-		} catch (Exception e) {
-		}
+						
+		nbEltParPage = setNombreEltsParPage(request, nbEltParPage);
+		pagination = setPage(request, pagination);
 		
-		String numPageString = request.getParameter(NUM_PAGE);		
-		try {
-			pagination = Integer.parseInt(numPageString);
-		} catch (Exception e) {
-			pagination = 1;
-		}
-
 		String filterString = request.getParameter(FILTER);
 		if (filterString != null && !filterString.equals(chaineFiltre)) {
 			chaineFiltre = filterString;
@@ -96,7 +89,7 @@ public class ComputerServlet extends HttpServlet {
 			computerPage = new ComputerPage(nbEltParPage, nombreElements , computers);
 			computerPage.setNumPage(pagination);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("La recherche de la page à raté",e);
 		}
 
 		request.setAttribute(FILTER, chaineFiltre);
@@ -174,4 +167,23 @@ public class ComputerServlet extends HttpServlet {
 	
 	//##################################################################################################//
 	
+	private int setNombreEltsParPage(HttpServletRequest request, int nbEltsParPage) {
+		
+		String nbEltsParPageString = request.getParameter(NOMBRE_ELEMENTS);
+		try {
+			return Integer.parseInt(nbEltsParPageString);
+		} catch (Exception e) {
+			return nbEltsParPage;
+		}
+	}
+	
+	private int setPage(HttpServletRequest request, int pagination) {
+		
+		String numPageString = request.getParameter(NUM_PAGE);		
+		try {
+			return Integer.parseInt(numPageString);
+		} catch (Exception e) {
+			return 1;
+		}
+	}
 }
