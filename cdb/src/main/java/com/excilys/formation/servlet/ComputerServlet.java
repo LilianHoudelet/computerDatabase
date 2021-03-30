@@ -31,7 +31,6 @@ public class ComputerServlet extends HttpServlet {
 	public static final String SORTED_ON = "sortedOn";
 	public static final String ASC_DESC = "sortingOrder";
 	
-	
 	public static final String FILTER = "search";
 	
 	private static final long serialVersionUID = 1L;

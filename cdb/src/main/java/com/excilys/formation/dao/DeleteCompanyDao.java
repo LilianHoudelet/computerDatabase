@@ -14,20 +14,20 @@ public class DeleteCompanyDao {
 	
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(DeleteCompanyDao.class);
 	
-	public static void deleteCompany(Connection con, int id) throws Exception {
+	public static void deleteCompany(Connection con, int companyId) throws Exception {
 		try {
 			con.setAutoCommit(false);
 			
 			PreparedStatement stmt = con.prepareStatement(DELETE_COMPUTER);
-			stmt.setInt(1, id);
+			stmt.setInt(1, companyId);
 			stmt.executeUpdate();
 						
 			PreparedStatement stmt2 = con.prepareStatement(DELETE_COMPANY);
-			stmt2.setInt(1, id);
+			stmt2.setInt(1, companyId);
 			int nbLigneSuppr = stmt2.executeUpdate();
 			
 			if (nbLigneSuppr < 1) {
-				throw new Exception("La companie avec l'id "+id+ " n'est pas dans la base");
+				throw new Exception("La companie avec l'id "+companyId+ " n'est pas dans la base");
 			}
 			
 			con.commit();
@@ -41,7 +41,7 @@ public class DeleteCompanyDao {
 			}
 		}
 		
-		logger.debug("Suppression de l'element id et des computer associes a l'id " + id);
+		logger.debug("Suppression de l'element id et des computer associes a l'id " + companyId);
 		
 	}
 }

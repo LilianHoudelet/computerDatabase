@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.excilys.formation.dto.CompanyDTO;
 import com.excilys.formation.dto.ComputerDTO;
@@ -33,10 +34,9 @@ public class EditComputerServlet extends HttpServlet {
 	public static final String COMPUTER_NAME = "ComputerName";
 	public static final String COMPUTER_ID = "ComputerId";
 	public static final String COMPANY_NAME = "CompanyName";
-	
-	private static int id = 0;
-	
-	private ComputerDTO computerToUpdate;
+	public static final String COMPUTER_ENTER = "id";
+		
+
 	
 	private static final long serialVersionUID = 1L;
     /**
@@ -51,10 +51,14 @@ public class EditComputerServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		ComputerDTO computerToUpdate = null;
 		List<CompanyDTO> companies = new ArrayList<CompanyDTO>();
 		
-		id = Integer.parseInt(request.getParameter("id"));
+		HttpSession session = request.getSession();
 		
+		int id = Integer.parseInt(request.getParameter(COMPUTER_ENTER));
+		
+		session.setAttribute(COMPUTER_ENTER, id);
 		try {
 			computerToUpdate = DtoMapper.mapComputerToComputerDTOOne(ComputerDetailsDataService .recupDataDetailsOrdi(id));
 		} catch (Exception e1) {
@@ -82,6 +86,10 @@ public class EditComputerServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		HttpSession session = request.getSession();
+		
+		int id = (int) session.getAttribute(COMPUTER_ENTER);
 		
 		String computerName = request.getParameter("ComputerName");
 		String dateSortie = request.getParameter("ComputerDateSortie");
