@@ -11,7 +11,7 @@ import com.excilys.formation.model.Computer;
 
 public class UpdateDatabaseDao {
 	
-	public static final String REQUETE_UPDATE = "UPDATE computer SET introduced = ?, discontinued = ?, company_id = ? WHERE id = ?";
+	public static final String REQUETE_UPDATE = "UPDATE computer SET introduced = ?, discontinued = ?, company_id = ?, name = ? WHERE id = ?";
 	
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(UpdateDatabaseDao.class);
 	
@@ -34,7 +34,10 @@ public class UpdateDatabaseDao {
 		} else {
 			stmt.setNull(3, 0);
 		}
-		stmt.setInt(4, ordinateur.getId()); // ordinateur.getCompany().getId());
+		stmt.setString(4, ordinateur.getName());
+		
+		stmt.setInt(5, ordinateur.getId());
+		
 		stmt.executeUpdate();
 		logger.debug("Mise à jour de l'élément " + ordinateur.getName() + " dans la base de données");
 	}

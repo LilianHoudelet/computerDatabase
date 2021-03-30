@@ -13,13 +13,15 @@ public class UpdateDatabaseService {
 	
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(UpdateDatabaseService.class);
 	
+	static AccessDatabase instance = AccessDatabase.getInstance();
+	
 	public static void updateDataService(Computer computer) throws Exception {
-		try (Connection newCon = AccessDatabase.getInstance();) {
+		try (Connection newCon = instance.getConnection();) {
 			logger.debug("Mise a jour de " + computer.getName() + " dans la BDD");
 			UpdateDatabaseDao.updateComputerInformations(newCon, computer);
 		} catch (SQLException e) {
 			logger.error("Erreur dans la suppression dans la BDD");
-			throw new Exception("Impossible de se connecter a la base de donnees Ajout");
+			throw new Exception("Impossible de se connecter a la base de donnees Update");
 		} 
 	}
 }

@@ -22,6 +22,10 @@ public class Computer {
 		return this.id;
 	}
 	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public String getName() {
 		return this.nom;
 	}
@@ -115,4 +119,5 @@ public class Computer {
 			return false;
 		return true;
 	}
+
 }

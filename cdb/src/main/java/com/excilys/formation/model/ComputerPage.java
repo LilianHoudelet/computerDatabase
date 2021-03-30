@@ -22,6 +22,9 @@ public class ComputerPage {
 		indexPagination();
 	}
 	
+	public ComputerPage() {
+	}
+
 	public int getNumPage() {
 		return numPage;
 	}

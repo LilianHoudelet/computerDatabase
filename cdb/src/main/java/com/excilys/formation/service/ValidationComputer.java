@@ -29,9 +29,10 @@ public static boolean isComputerValid(String computerName, String dateSortie, St
 			
 			return false;
 		}
-		if (dateSortie != null) {
+		
+		if (dateSortie != null && !dateSortie.isBlank()) {
 			
-			if (dateRetrait != null && LocalDate.parse(dateRetrait).isBefore(LocalDate.parse(dateSortie))) {
+			if (dateRetrait != null && !dateRetrait.isBlank() && LocalDate.parse(dateRetrait).isBefore(LocalDate.parse(dateSortie))) {
 				
 				return false;
 			}

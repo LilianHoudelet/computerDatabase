@@ -27,27 +27,31 @@
 			<h1 id="homeTitle">${computerNumber} Computers found</h1>
 			<div id="actions" class="form-horizontal">
 				<div class="pull-left">
-					<form id="searchForm" action="#" method="GET" class="form-inline">
+				
+					<form id="searchForm" action="?search=${ search }" method="GET" class="form-inline">
 
 						<input type="search" id="searchbox" name="search"
-							class="form-control" placeholder="Search name" /> <input
-							type="submit" id="searchsubmit" value="Filter by name"
+							class="form-control" placeholder="Search name" value="${ search }"/> 
+						<input type="submit" id="searchsubmit" value="Filter by name"
 							class="btn btn-primary" />
+					
+						<a class="btn btn-default" id="sortList"
+							href="?sortedOn=id">Reset sort</a>
 					</form>
 				</div>
+				
 				<div class="pull-right">
-
-
-
+				
+					
 					<a class="btn btn-success" id="addComputer"
-						href="/cdb/AddComputerServlet">Add Computer</a> <a
-						class="btn btn-default" id="editComputer" href="#"
+						href="/cdb/AddComputerServlet">Add Computer</a> 
+					<a class="btn btn-default" id="editComputer" href="#"
 						onclick="$.fn.toggleEditMode();">Edit</a>
 				</div>
 			</div>
 		</div>
 
-		<form id="deleteForm" action="#" method="POST">
+		<form id="deleteForm" action="/cdb/DeleteComputerServlet" method="POST">
 			<input type="hidden" name="selection" value="">
 		</form>
 
@@ -60,35 +64,43 @@
 
 						<th class="editMode" style="width: 60px; height: 22px;"><input
 							type="checkbox" id="selectall" /> <span
-							style="vertical-align: top;"> - <a href="#"
-								id="deleteSelected" onclick="$.fn.deleteSelected();"> <i
-									class="fa fa-trash-o fa-lg"></i>
+							style="vertical-align: top;"> - 
+							<a href="#" id="deleteSelected" onclick="$.fn.deleteSelected();"> 
+								<i class="fa fa-trash-o fa-lg"></i>
 							</a>
 						</span></th>
-						<th>Computer name</th>
-						<th>Introduced date</th>
+						
+						<th><a href="?sortedOn=computerName" onclick="">
+									<c:out value="Computer name" /></a></th>
+									
+						<th><a href="?sortedOn=introduced" onclick="">
+									<c:out value="Introduced date" /></a></th>
 						<!-- Table header for Discontinued Date -->
-						<th>Discontinued date</th>
+						<th><a href="?sortedOn=discontinued" onclick="">
+									<c:out value="Discontinued date" /></a></th>
 						<!-- Table header for Company -->
-						<th>Company</th>
+						<th><a href="?sortedOn=company" onclick="">
+									<c:out value="Company" /></a></th>
 
 					</tr>
 				</thead>
 				<!-- Browse attribute computers -->
 				<tbody id="results">
-					<c:forEach items="${ComputerList}" var="current">
-						<tr>
-							<td class="editMode"><input type="checkbox" name="cb"
-								class="cb" value="0"></td>
-							<td><a href="/cdb/editComputer.jsp" onclick="">
-								<c:out value="${current.getName()}" /></a>
-							</td>
-							<td><c:out value="${current.getDateSortie()}" /></td>
-							<td><c:out value="${current.getDateRetrait()}" /></td>
-							<td><c:out value="${current.getCompany()}" /></td>
-
-						</tr>
-					</c:forEach>
+						<c:forEach items="${ComputerList}" var="current">
+							<tr>
+								<td class="editMode">
+									<input type="checkbox" name="cb"
+										class="cb" value="${ current.getId() }">	
+								</td>
+								<td><a href="/cdb/EditComputerServlet?id=${ current.getId() }" onclick="">
+									<c:out value="${ current.getName()}" /></a>
+								</td>
+								<td><c:out value="${current.getDateSortie()}" /></td>
+								<td><c:out value="${current.getDateRetrait()}" /></td>
+								<td><c:out value="${current.getCompany()}" /></td>
+	
+							</tr>
+						</c:forEach>
 				</tbody>
 			</table>
 		</div>
@@ -113,7 +125,9 @@
 				</c:if>
 				
 				<c:forEach var="i" begin="0" end="4" step="1">
-					<li><a href="?page=${index+i-2}">${index+i-2}</a></li>
+					<c:if test="${(index-2+i <= maxPage) && (index-2+i > 0)}">
+						<li><a href="?page=${index+i-2}">${index+i-2}</a></li>
+					</c:if>
 				</c:forEach>
 				
 				<c:if test="${page != maxPage}">

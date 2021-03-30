@@ -34,6 +34,8 @@ $(function() {
             return this.value;
         }).get().join();
         
+        console.log(str);
+        
         $(this).attr('value',str);
         
         return this;
