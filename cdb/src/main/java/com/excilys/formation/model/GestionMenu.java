@@ -10,6 +10,7 @@ import com.excilys.formation.service.CompanyDataService;
 //import main.java.com.excilys.formation.service.ComputerDataService;
 import com.excilys.formation.service.ComputerDetailsDataService;
 import com.excilys.formation.service.ComputerSuppressionService;
+import com.excilys.formation.service.DeleteCompanyService;
 import com.excilys.formation.service.UpdateDatabaseService;
 import com.excilys.formation.ui.Menu;
 
@@ -25,6 +26,7 @@ public class GestionMenu {
 	public static final int AFFICHER_INFOS_ORDINATEURS = 1;
 	public static final int AFFICHER_INFOS_CONSTRUCTEURS = 2;
 	public static final int AJOUTER_INFORMATIONS = 3;
+	public static final int SUPPRIMER_COMPANY = 4;
 
 	public static final int METTRE_A_JOUR_INFOS_ORDINATEURS = 1;
 	public static final int AFFICHER_DETAILS_ORDINATEUR = 2;
@@ -69,6 +71,17 @@ public class GestionMenu {
 			case (AFFICHER_INFOS_CONSTRUCTEURS):
 				List<Company> infosCompany = CompanyDataService.recupDataCompany();
 				Menu.printCompany(infosCompany);
+				break;
+			
+			case (SUPPRIMER_COMPANY):
+				
+				Menu.demandeEntreeNom();
+				String nomCompany = readerLine.nextLine();
+				
+				int companyId = CompanyDataService.recupDataCompanyId(nomCompany).getId();
+				
+				DeleteCompanyService.supprDataCompanyId(companyId);
+				
 				break;
 
 			case (AJOUTER_INFORMATIONS):

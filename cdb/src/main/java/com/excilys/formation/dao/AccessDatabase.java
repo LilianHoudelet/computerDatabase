@@ -17,6 +17,12 @@ import com.zaxxer.hikari.HikariDataSource;
  */
 public class AccessDatabase {
 	
+//	private static final String PROP_FILE_NAME = "db.properties";
+//	private static final String PROPERTY_URL = "db.url";
+//	private static final String PROPERTY_USER = "db.user";
+//	private static final String PROPERTY_PASSWORD = "db.password";
+//	private static final String PROPERTY_DRIVER = "db.driver";
+	
     private static HikariDataSource dataSource = new HikariDataSource();
 		
 	private static AccessDatabase instance = new AccessDatabase();
@@ -28,7 +34,7 @@ public class AccessDatabase {
 	 * @throws ClassNotFoundException
 	 */
 	private AccessDatabase() {
-		try {		
+		try {
 			dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
 			dataSource.setJdbcUrl( "jdbc:mysql://localhost:3306/computer-database-db" );
 			dataSource.setUsername( "admincdb" );

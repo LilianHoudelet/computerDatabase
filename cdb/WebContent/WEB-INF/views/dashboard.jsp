@@ -125,7 +125,7 @@
 				</c:if>
 				
 				<c:forEach var="i" begin="0" end="4" step="1">
-					<c:if test="${index-2+i <= maxPage}">
+					<c:if test="${(index-2+i <= maxPage) && (index-2+i > 0)}">
 						<li><a href="?page=${index+i-2}">${index+i-2}</a></li>
 					</c:if>
 				</c:forEach>

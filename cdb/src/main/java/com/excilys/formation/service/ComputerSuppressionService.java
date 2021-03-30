@@ -27,7 +27,7 @@ public class ComputerSuppressionService {
 		} 
 	}
 	
-public static void supprDataOrdiId(int id) throws Exception {
+	public static void supprDataOrdiId(int id) throws Exception {
 		
 		try (Connection con = instance.getConnection();) {
 			logger.debug("Appel suppression élément " + id + " de la BDD");
