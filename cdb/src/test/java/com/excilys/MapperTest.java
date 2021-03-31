@@ -6,6 +6,8 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -27,6 +29,27 @@ public class MapperTest {
 		ComputerDTO computerDTO = DtoMapper.mapComputerToComputerDTOOne(computer);
 		
 		assertTrue(computerDTO.equals(computerTest));
+	}
+	
+	@Test
+	public void computerListToComputerDTOTestList() {
+		Computer computer1 = new Computer(1, "Test", LocalDate.parse("2020-01-09"), LocalDate.parse("2020-10-01"), new Company(1,"Apple Inc."));
+		Computer computer2 = new Computer(2, "Test2", null, null,new Company(2,"Testy"));
+		
+		List<Computer> computers = new ArrayList<Computer>();
+		computers.add(computer1);
+		computers.add(computer2);
+		
+		ComputerDTO computerTest1 = new ComputerDTO("1","Test", LocalDate.parse("2020-01-09").toString(), LocalDate.parse("2020-10-01").toString(), "Apple Inc.");
+		ComputerDTO computerTest2 = new ComputerDTO("2","Test2", "Unknown", "Unknown", "Testy");
+		
+		List<ComputerDTO> computersDTO = new ArrayList<ComputerDTO>();
+		computersDTO.add(computerTest1);
+		computersDTO.add(computerTest2);
+		
+		
+		
+		assertTrue(computersDTO.equals(DtoMapper.mapComputerToComputerDTO(computers)));
 	}
 	
 	@Test

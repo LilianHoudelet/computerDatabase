@@ -2,6 +2,7 @@ package com.excilys;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertThrows;
 
 import java.time.LocalDate;
 
@@ -9,6 +10,7 @@ import org.junit.Test;
 
 import com.excilys.formation.model.Company;
 import com.excilys.formation.model.Computer;
+import com.excilys.formation.service.CheckDate;
 
 public class ModelTest {
 		
@@ -79,5 +81,13 @@ public class ModelTest {
 		assertEquals(company.toString(),"CompanyNameTest");
 		assertEquals(1,company.getId());
 		assertEquals(company.getName(),"CompanyNameTest");
+	}
+	
+	@Test
+	public void date() throws Exception {
+		
+		assertEquals(CheckDate.dateValide("2010-01-01"),LocalDate.parse("2010-01-01"));
+		assertEquals(CheckDate.dateValide("aze"),null);
+		assertThrows(Exception.class, () -> {CheckDate.dateValide("2010-13-13");});
 	}
 }
