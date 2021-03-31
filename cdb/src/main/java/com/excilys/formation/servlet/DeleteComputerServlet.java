@@ -1,27 +1,34 @@
 package com.excilys.formation.servlet;
 
 import java.io.IOException;
+
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
+
 import com.excilys.formation.service.ComputerSuppressionService;
 
 /**
  * Servlet implementation class DeleteComuterServlet
  */
+@Component
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 @WebServlet("/DeleteComputerServlet")
 public class DeleteComputerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public DeleteComputerServlet() {
-		super();
-		// TODO Auto-generated constructor stub
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
+		super.init(config);
 	}
 
 	/**

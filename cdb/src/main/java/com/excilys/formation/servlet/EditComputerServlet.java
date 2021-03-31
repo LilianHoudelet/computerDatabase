@@ -4,12 +4,18 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.excilys.formation.dto.CompanyDTO;
 import com.excilys.formation.dto.ComputerDTO;
@@ -24,6 +30,9 @@ import com.excilys.formation.service.ValidationComputer;
 /**
  * Servlet implementation class EditComputerServlet
  */
+
+@Component
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 @WebServlet("/EditComputerServlet")
 public class EditComputerServlet extends HttpServlet {
 	
@@ -39,13 +48,12 @@ public class EditComputerServlet extends HttpServlet {
 
 	
 	private static final long serialVersionUID = 1L;
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public EditComputerServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
+		super.init(config);
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)

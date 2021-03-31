@@ -4,12 +4,17 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.slf4j.Logger;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import com.excilys.formation.dao.AccessDatabase;
 import com.excilys.formation.dao.ComputersInfosDao;
 import com.excilys.formation.mapper.ComputerInfos;
 import com.excilys.formation.model.Computer;
 
+@Component
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class ComputerDetailsDataService {
 	
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(ComputerDetailsDataService.class);

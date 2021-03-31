@@ -5,12 +5,17 @@ import java.sql.SQLException;
 import java.util.List;
 
 import org.slf4j.Logger;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import com.excilys.formation.dao.AccessDatabase;
 import com.excilys.formation.dao.CompanieInfoDao;
 import com.excilys.formation.mapper.CompanyInfos;
 import com.excilys.formation.model.Company;
 
+@Component
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class CompanyDataService {
 	
 	static AccessDatabase instance = AccessDatabase.getInstance();

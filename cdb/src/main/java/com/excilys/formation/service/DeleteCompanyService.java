@@ -4,10 +4,15 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.slf4j.Logger;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import com.excilys.formation.dao.AccessDatabase;
 import com.excilys.formation.dao.DeleteCompanyDao;
 
+@Component
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class DeleteCompanyService {
 
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(DeleteCompanyService.class);
