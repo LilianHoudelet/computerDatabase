@@ -23,6 +23,7 @@ public class DaoTests {
 		assertNotEquals(2,CompanyDataService.recupDataCompanyId("Apple Inc.").getId());
 		
 		assertEquals(0,CompanyDataService.recupDataCompanyId("Test").getId());
+		assertEquals(CompanyDataService.recupDataCompany().size(), 42);
 	}
 	
 	@Test

@@ -5,6 +5,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.slf4j.Logger;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -15,6 +18,9 @@ import com.zaxxer.hikari.HikariDataSource;
  * @author Lilian Houdelet
  *
  */
+
+@Component
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class AccessDatabase {
 	
 //	private static final String PROP_FILE_NAME = "db.properties";

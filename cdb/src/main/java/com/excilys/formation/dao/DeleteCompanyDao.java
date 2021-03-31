@@ -5,7 +5,12 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 import org.slf4j.Logger;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
+@Component
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class DeleteCompanyDao {
 	
 	public final static String DELETE_COMPANY = "DELETE FROM company WHERE id = ?";

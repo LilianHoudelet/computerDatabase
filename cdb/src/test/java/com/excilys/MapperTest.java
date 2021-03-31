@@ -1,6 +1,8 @@
 package com.excilys;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.time.LocalDate;
@@ -10,6 +12,7 @@ import org.junit.Test;
 import com.excilys.formation.dto.ComputerDTO;
 import com.excilys.formation.mapper.DtoMapper;
 import com.excilys.formation.mapper.MapStringToComputer;
+import com.excilys.formation.mapper.RequestFilterString;
 import com.excilys.formation.model.Company;
 import com.excilys.formation.model.Computer;
 import com.excilys.formation.service.ValidationComputer;
@@ -55,6 +58,22 @@ public class MapperTest {
 	public void isComputerValidTest() {
 		Computer computer = new Computer(1,"Test",LocalDate.parse("2020-09-01"), null,new Company(1,"Apple Inc."));			
 		assertTrue(ValidationComputer.isComputerValid(computer));
+	}
+	
+	@Test
+	public void mapperFilterTest() {	
+		assertEquals(RequestFilterString.convertOrderbool(true)," ASC ");
+		assertNotEquals(RequestFilterString.convertOrderbool(true)," DESC ");
+	}
+	
+	@Test
+	public void mapperFilterTestCol() {	
+		assertEquals(RequestFilterString.convertOrderString("introduced"),"introduced");
+		assertEquals(RequestFilterString.convertOrderString("discontinued"),"discontinued");
+		assertEquals(RequestFilterString.convertOrderString("computerName"),"computer.name");
+		assertEquals(RequestFilterString.convertOrderString("company"),"company.name");
+		assertEquals(RequestFilterString.convertOrderString(""),"computer.id");
+		assertEquals(RequestFilterString.convertOrderString(null),"computer.id");
 	}
 	
 	
