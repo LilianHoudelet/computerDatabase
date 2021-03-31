@@ -11,7 +11,7 @@ public class GestionPages {
 	public static void affichePage() throws Exception {
 		int taillePage = 10;
 		
-		int pageMax = ComputerDataService.recupDataOrdiNombre() / taillePage ;
+		int pageMax = ComputerDataService.recupDataOrdiNombre("") / taillePage ;
 		
 		int page = 0;
 		

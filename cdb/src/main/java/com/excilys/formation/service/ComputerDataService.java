@@ -35,35 +35,9 @@ public class ComputerDataService {
 	}
 	
 	public static List<Computer> recupDataOrdiPage(int nombreParPage, int page) throws Exception {
-		try (Connection con = instance.getConnection();) {
-			logger.debug("Récupération d'une liste de computer plus petite : Page " + page);
-			return ComputerInfos.computerInformationsMapper(ComputersInfosDao.computerInformationsPage(con, nombreParPage, page));
-		} catch (SQLException e) {
-			logger.error("Impossible de se connecter a la BDD, recherche page de computer");
-			throw new Exception("Impossible de se connecter a la base de donnees");
-		} 
+		return recupDataOrdiPageFiltreTrie(nombreParPage, page, "", "id", true);
 	}
-	
-	public static List<Computer> recupDataOrdiPageTrie(int nombreParPage, int page, String order) throws Exception {
-		try (Connection con = instance.getConnection();) {
-			logger.debug("Récupération d'une liste de computer Filtrée plus petite : Page " + page);
-			return ComputerInfos.computerInformationsMapper(ComputersInfosDao.computerInformationsPageOrdreNom(con, nombreParPage, page, RequestFilterString.convertOrderString(order)));
-		} catch (SQLException e) {
-			logger.error("Impossible de se connecter a la BDD, recherche page filtrée de computer");
-			throw new Exception("Impossible de se connecter a la base de donnees");
-		} 
-	}
-	
-	public static List<Computer> recupDataOrdiPageFiltre(int nombreParPage, int page, String chaine) throws Exception {
-		try (Connection con = instance.getConnection();) {
-			logger.debug("Récupération d'une liste de computer triée plus petite : Page " + page);
-			return ComputerInfos.computerInformationsMapper(ComputersInfosDao.computerInformationsPageFilter(con, nombreParPage, page, chaine));
-		} catch (SQLException e) {
-			logger.error("Impossible de se connecter a la BDD, recherche page de computer");
-			throw new Exception("Impossible de se connecter a la base de donnees");
-		} 
-	}
-	
+			
 	public static List<Computer> recupDataOrdiPageFiltreTrie(int nombreParPage, int page, String chaine, String order, boolean ascendance) throws Exception {
 		try (Connection con = instance.getConnection();) {
 			logger.debug("Récupération d'une liste de computer filtrée triée plus petite : Page " + page);
@@ -73,17 +47,7 @@ public class ComputerDataService {
 			throw new Exception("Impossible de se connecter a la base de donnees");
 		} 
 	}
-	
-	public static int recupDataOrdiNombre() throws Exception {
-		try (Connection con = instance.getConnection();) {
-			logger.debug("Récupération du nombre de computer");
-			return ComputerInfos.computerInformationsMapperCount(ComputersInfosDao.computerInformationsNbElts(con));
-		} catch (SQLException e) {
-			logger.error("Impossible de se connecter a la BDD, recherche nombre de computer");
-			throw new Exception("Impossible de se connecter a la base de donnees Compte");
-		} 
-	}
-	
+
 	public static int recupDataOrdiNombre(String chaine) throws Exception {
 		try (Connection con = instance.getConnection();) {
 			logger.debug("Récupération du nombre de computer plus petite");

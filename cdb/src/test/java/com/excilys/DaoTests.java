@@ -29,9 +29,9 @@ public class DaoTests {
 	public void daoComputerTest() throws Exception {
 		String chaine = "DEC";
 		
-		assertEquals(ComputerDataService.recupDataOrdiNombre(),ComputerDataService.recupDataOrdi().size());
+		assertEquals(ComputerDataService.recupDataOrdiNombre(""),ComputerDataService.recupDataOrdi().size());
 		assertEquals(ComputerDetailsDataService.recupDataDetailsOrdi("Wii"),new Computer(229,"Wii",LocalDate.parse("2006-11-19"),null, new Company(24,"Nintendo")));
 		assertEquals(ComputerDetailsDataService.recupDataDetailsOrdi(229),new Computer(229,"Wii",LocalDate.parse("2006-11-19"),null, new Company(24,"Nintendo")));
-		assertEquals(ComputerDataService.recupDataOrdiNombre(chaine),ComputerDataService.recupDataOrdiPageFiltre(500,0,chaine).size()); // 14 entrées acutuellement
+		assertEquals(ComputerDataService.recupDataOrdiNombre(chaine),ComputerDataService.recupDataOrdiPageFiltreTrie(500,0,chaine, chaine, false).size()); // 14 entrées acutuellement
 	}	
 }

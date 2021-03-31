@@ -19,7 +19,7 @@ public class RequestFilterString {
 	}
 	
 	public static String convertOrderbool(boolean upDown) {
-		return (upDown ? " ASC " : " DESC ");	
+		return (upDown ? " ASC " : " DESC ");
 	}
 
 }

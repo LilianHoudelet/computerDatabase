@@ -10,19 +10,8 @@ public class ComputersInfosDao {
 	public static final String REQUETE_TOUT = "SELECT computer.id, computer.name, introduced, discontinued, company.name, computer.company_id FROM computer "
 			+ "LEFT JOIN company ON company.id = computer.company_id";
 	
-	public static final String REQUETE_NOMBRE = "SELECT COUNT(id) from computer";
-	
 	public static final String REQUETE_NOMBRE_FILTRE = "SELECT count(computer.id) FROM computer "
 			+ "LEFT JOIN company ON company.id = computer.company_id WHERE computer.name LIKE ? OR company.name LIKE ?";
-	
-	public static final String REQUETE_PAGE = "SELECT computer.id, computer.name, introduced, discontinued, company.name, computer.company_id FROM computer "
-			+ "LEFT JOIN company ON company.id = computer.company_id LIMIT ? OFFSET ?";
-
-	public static final String REQUETE_PAGE_FILTRE = "SELECT computer.id, computer.name, introduced, discontinued, company.name, computer.company_id FROM computer "
-			+ "LEFT JOIN company ON company.id = computer.company_id WHERE computer.name LIKE ? OR company.name LIKE ? LIMIT ? OFFSET ? ";
-	
-	public static final String REQUETE_PAGE_TRIE = "SELECT computer.id, computer.name, introduced, discontinued, company.name, computer.company_id FROM computer "
-			+ "LEFT JOIN company ON company.id = computer.company_id ORDER BY ? LIMIT ? OFFSET ? ";
 	
 	public static final String REQUETE_PAGE_FILTRE_TRIE = "SELECT computer.id, computer.name, introduced, discontinued, company.name, computer.company_id FROM computer "
 			+ "LEFT JOIN company ON company.id = computer.company_id WHERE computer.name LIKE ? OR company.name LIKE ? ORDER BY ";
@@ -44,15 +33,6 @@ public class ComputersInfosDao {
 		return rs;
 	}
 	
-	// Encore Utile ?
-	public static ResultSet computerInformationsNbElts(Connection con) throws ClassNotFoundException, SQLException {
-
-		Statement stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery(REQUETE_NOMBRE);
-			
-		return rs;
-	}
-	
 	public static ResultSet computerInformationsNbEltsFiltre(Connection con, String chaine) throws ClassNotFoundException, SQLException {
 
 		PreparedStatement stmt = con.prepareStatement(REQUETE_NOMBRE_FILTRE);
@@ -62,44 +42,7 @@ public class ComputersInfosDao {
 			
 		return rs;
 	}
-	
-	// Encore Utile ?
-	public static ResultSet computerInformationsPage(Connection con, int taillePage, int page) throws SQLException {
-				
-		PreparedStatement stmt = con.prepareStatement(REQUETE_PAGE);
 		
-		stmt.setInt(1, taillePage);
-		stmt.setInt(2, page * taillePage);
-		
-		ResultSet rs = stmt.executeQuery();
-		return rs;
-	}
-	
-	public static ResultSet computerInformationsPageOrdreNom(Connection con, int taillePage, int page, String order) throws SQLException {
-		
-		PreparedStatement stmt = con.prepareStatement(REQUETE_PAGE_TRIE);
-		
-		stmt.setString(1, order);
-		stmt.setInt(2, taillePage);
-		stmt.setInt(3, page * taillePage);
-		
-		ResultSet rs = stmt.executeQuery();
-		return rs;
-	}
-	
-	public static ResultSet computerInformationsPageFilter(Connection con, int taillePage, int page, String chaine) throws SQLException {
-		
-		PreparedStatement stmt = con.prepareStatement(REQUETE_PAGE_FILTRE);
-		
-		stmt.setString(1, "%"+chaine+"%");
-		stmt.setString(2, "%"+chaine+"%");
-		stmt.setInt(3, taillePage);
-		stmt.setInt(4, page * taillePage);
-		
-		ResultSet rs = stmt.executeQuery();
-		return rs;
-	}
-	
 public static ResultSet computerInformationsPageFilterSorted(Connection con, int taillePage, int page, String chaine, String order, String upOrDown) throws SQLException {
 		
 		PreparedStatement stmt = con.prepareStatement(REQUETE_PAGE_FILTRE_TRIE + order + upOrDown + LIMIT_OFFSET);
@@ -112,6 +55,7 @@ public static ResultSet computerInformationsPageFilterSorted(Connection con, int
 		ResultSet rs = stmt.executeQuery();
 		return rs;
 	}
+
 
 	public static ResultSet computerInformationsDetails(Connection con, String nomMachine) throws ClassNotFoundException, SQLException {
 
