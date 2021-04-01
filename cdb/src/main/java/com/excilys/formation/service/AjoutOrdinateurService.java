@@ -7,12 +7,10 @@ import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 
-import com.excilys.formation.dao.AccessDatabase;
 //import com.excilys.formation.dao.AccessDatabase;
 import com.excilys.formation.dao.AjoutOrdinateurDao;
 import com.excilys.formation.model.Computer;

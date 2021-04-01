@@ -11,15 +11,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
-import com.excilys.formation.dao.AccessDatabase;
 import com.excilys.formation.dao.ComputersInfosDao;
 import com.excilys.formation.mapper.ComputerInfos;
 import com.excilys.formation.mapper.RequestFilterString;
 import com.excilys.formation.model.Computer;
 
-@Repository
+@Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class ComputerDataService {
 	

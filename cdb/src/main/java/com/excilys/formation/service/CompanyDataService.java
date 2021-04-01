@@ -11,20 +11,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
-import com.excilys.formation.dao.AccessDatabase;
 import com.excilys.formation.dao.CompanieInfoDao;
 import com.excilys.formation.mapper.CompanyInfos;
 import com.excilys.formation.model.Company;
 
-@Repository
+@Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class CompanyDataService {
 	
 	@Autowired
 	private DataSource dataSource;
-	//static AccessDatabase instance = AccessDatabase.getInstance();
 	
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(CompanyDataService.class);
 	
