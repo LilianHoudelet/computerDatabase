@@ -4,26 +4,32 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.excilys.formation.dao.AccessDatabase;
 import com.excilys.formation.dao.CompanieInfoDao;
 import com.excilys.formation.mapper.CompanyInfos;
 import com.excilys.formation.model.Company;
 
-@Component
+@Repository
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class CompanyDataService {
 	
-	static AccessDatabase instance = AccessDatabase.getInstance();
+	@Autowired
+	private DataSource dataSource;
+	//static AccessDatabase instance = AccessDatabase.getInstance();
 	
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(CompanyDataService.class);
 	
-	public static List<Company> recupDataCompany() throws Exception {
-		try (Connection con = instance.getConnection();) {
+	public List<Company> recupDataCompany() throws Exception {
+		try (Connection con = dataSource.getConnection();) {
 			logger.debug("Récupération de la liste des Company");
 			return CompanyInfos.companyInformationsMapper(CompanieInfoDao.companyInformations(con));
 		
@@ -32,8 +38,8 @@ public class CompanyDataService {
 			throw new Exception("Impossible de se connecter a la base de donnees");
 		} 
 	}
-	public static Company recupDataCompanyId(String nomConstructeur) throws Exception {
-		try (Connection con = instance.getConnection();) {
+	public Company recupDataCompanyId(String nomConstructeur) throws Exception {
+		try (Connection con = dataSource.getConnection();) {
 			logger.debug("Récupération de l'Id de Company avec le nom");
 			return CompanyInfos.companyInformationsMapperId(CompanieInfoDao.companyInformationsId(con, nomConstructeur));
 		

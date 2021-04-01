@@ -3,25 +3,32 @@ package com.excilys.formation.service;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
 import org.slf4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 
 import com.excilys.formation.dao.AccessDatabase;
+//import com.excilys.formation.dao.AccessDatabase;
 import com.excilys.formation.dao.AjoutOrdinateurDao;
 import com.excilys.formation.model.Computer;
 
-@Component
+@Repository
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class AjoutOrdinateurService {
 	
+	@Autowired
+	private DataSource dataSource;
+	//static AccessDatabase instance = AccessDatabase.getInstance();
+
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(AjoutOrdinateurService.class);
-	
-	static AccessDatabase instance = AccessDatabase.getInstance();
-	
-	public static void ajoutDataService(Computer computer) throws Exception {
-		try (Connection newCon = instance.getConnection();) {
+		
+	public void ajoutDataService(Computer computer) throws Exception {
+		try (Connection newCon = dataSource.getConnection();) {
 			AjoutOrdinateurDao.computerInformations(newCon, computer);
 			logger.debug("Ajout d'un élément dans la BDD sans problème");
 		} catch (SQLException e) {

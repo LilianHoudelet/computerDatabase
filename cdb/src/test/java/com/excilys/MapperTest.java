@@ -11,6 +11,7 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.excilys.formation.dto.CompanyDTO;
 import com.excilys.formation.dto.ComputerDTO;
 import com.excilys.formation.mapper.DtoMapper;
 import com.excilys.formation.mapper.MapStringToComputer;
@@ -50,6 +51,25 @@ public class MapperTest {
 		
 		
 		assertTrue(computersDTO.equals(DtoMapper.mapComputerToComputerDTO(computers)));
+	}
+	
+	@Test
+	public void companyListToCompanyDTOTestList() {
+		Company company1 = new Company(1,"Test1");
+		Company company2 = new Company(2,"Test2");
+		
+		List<Company> companies = new ArrayList<Company>();
+		companies.add(company1);
+		companies.add(company2);
+		
+		CompanyDTO companydto1 = new CompanyDTO(1,"Test1");
+		CompanyDTO companydto2 = new CompanyDTO(2,"Test2");
+		
+		List<CompanyDTO> companiesDTO = new ArrayList<CompanyDTO>();
+		companiesDTO.add(companydto1);
+		companiesDTO.add(companydto2);
+		
+		assertTrue(companiesDTO.equals(DtoMapper.mapCompanyToCompanyDTO(companies)));
 	}
 	
 	@Test

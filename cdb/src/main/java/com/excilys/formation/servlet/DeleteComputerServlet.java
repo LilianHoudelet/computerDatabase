@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -24,6 +25,9 @@ import com.excilys.formation.service.ComputerSuppressionService;
 @WebServlet("/DeleteComputerServlet")
 public class DeleteComputerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	@Autowired
+	private ComputerSuppressionService supprComputerService;
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
@@ -55,7 +59,7 @@ public class DeleteComputerServlet extends HttpServlet {
 		} else {
 			for (String id : ids) {
 				try {
-					ComputerSuppressionService.supprDataOrdiId(Integer.parseInt(id));
+					supprComputerService.supprDataOrdiId(Integer.parseInt(id));
 				} catch (NumberFormatException e) {
 					e.printStackTrace();
 				} catch (Exception e) {

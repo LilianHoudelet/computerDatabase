@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -35,6 +36,13 @@ public class AddComputerServlet extends HttpServlet {
 	public static final String LISTE_COMPANIES = "CompanyList";
 	
 	private static final long serialVersionUID = 1L;
+	
+	@Autowired
+	private AjoutOrdinateurService ComputerService;
+	
+	@Autowired
+	private CompanyDataService CompanyService;
+	
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -55,7 +63,7 @@ public class AddComputerServlet extends HttpServlet {
 		List<CompanyDTO> companies = new ArrayList<CompanyDTO>();
 		
 		try {
-			companies = DtoMapper.mapCompanyToCompanyDTO(CompanyDataService.recupDataCompany());
+			companies = DtoMapper.mapCompanyToCompanyDTO(CompanyService.recupDataCompany());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -78,7 +86,7 @@ public class AddComputerServlet extends HttpServlet {
 		try {
 			if (ValidationComputer.isComputerValid(computerName, dateSortie, dateRetrait)) {
 				Computer addedComputer = MapStringToComputer.ComputerStringToComputer(computerName, dateSortie, dateRetrait, company);
-				AjoutOrdinateurService.ajoutDataService(addedComputer);
+				ComputerService.ajoutDataService(addedComputer);
 			} else {
 				System.out.println("Ordinateur non valide");
 			}

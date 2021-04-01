@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -49,6 +50,13 @@ public class EditComputerServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	
+	@Autowired
+	private ComputerDetailsDataService computerDetails;
+	@Autowired
+	private CompanyDataService companyService;
+	@Autowired
+	private UpdateDatabaseService updateComputerService;
+	
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
@@ -68,13 +76,13 @@ public class EditComputerServlet extends HttpServlet {
 		
 		session.setAttribute(COMPUTER_ENTER, id);
 		try {
-			computerToUpdate = DtoMapper.mapComputerToComputerDTOOne(ComputerDetailsDataService .recupDataDetailsOrdi(id));
+			computerToUpdate = DtoMapper.mapComputerToComputerDTOOne(computerDetails.recupDataDetailsOrdi(id));
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 		
 		try {
-			companies = DtoMapper.mapCompanyToCompanyDTO(CompanyDataService.recupDataCompany());
+			companies = DtoMapper.mapCompanyToCompanyDTO(companyService.recupDataCompany());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -109,7 +117,7 @@ public class EditComputerServlet extends HttpServlet {
 				Computer updatedComputer = MapStringToComputer.ComputerStringToComputer(computerName, dateSortie, dateRetrait, company);
 				updatedComputer.setId(id);
 				
-				UpdateDatabaseService.updateDataService(updatedComputer);
+				updateComputerService.updateDataService(updatedComputer);
 				
 			} else {
 				System.out.println("Ordinateur non valide");

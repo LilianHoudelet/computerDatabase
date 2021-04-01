@@ -4,10 +4,14 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.sql.DataSource;
+
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.excilys.formation.dao.AccessDatabase;
 import com.excilys.formation.dao.ComputersInfosDao;
@@ -15,17 +19,19 @@ import com.excilys.formation.mapper.ComputerInfos;
 import com.excilys.formation.mapper.RequestFilterString;
 import com.excilys.formation.model.Computer;
 
-@Component
+@Repository
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class ComputerDataService {
 	
 	
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(ComputerDataService.class);
 	
-	static AccessDatabase instance = AccessDatabase.getInstance();
+	@Autowired
+	private DataSource dataSource;
+	//static AccessDatabase instance = AccessDatabase.getInstance();
 	
-	public static List<Computer> recupDataOrdi() throws Exception {
-		try (Connection con = instance.getConnection();) {
+	public List<Computer> recupDataOrdi() throws Exception {
+		try (Connection con = dataSource.getConnection();) {
 			logger.debug("Récupération d'une liste de computer");
 			return ComputerInfos.computerInformationsMapper(ComputersInfosDao.computerInformations(con));
 		} catch (SQLException e) {
@@ -34,12 +40,12 @@ public class ComputerDataService {
 		} 
 	}
 	
-	public static List<Computer> recupDataOrdiPage(int nombreParPage, int page) throws Exception {
+	public List<Computer> recupDataOrdiPage(int nombreParPage, int page) throws Exception {
 		return recupDataOrdiPageFiltreTrie(nombreParPage, page, "", "id", true);
 	}
 			
-	public static List<Computer> recupDataOrdiPageFiltreTrie(int nombreParPage, int page, String chaine, String order, boolean ascendance) throws Exception {
-		try (Connection con = instance.getConnection();) {
+	public List<Computer> recupDataOrdiPageFiltreTrie(int nombreParPage, int page, String chaine, String order, boolean ascendance) throws Exception {
+		try (Connection con = dataSource.getConnection();) {
 			logger.debug("Récupération d'une liste de computer filtrée triée plus petite : Page " + page);
 			return ComputerInfos.computerInformationsMapper(ComputersInfosDao.computerInformationsPageFilterSorted(con, nombreParPage, page, chaine, RequestFilterString.convertOrderString(order), RequestFilterString.convertOrderbool(ascendance)));
 		} catch (SQLException e) {
@@ -48,8 +54,8 @@ public class ComputerDataService {
 		} 
 	}
 
-	public static int recupDataOrdiNombre(String chaine) throws Exception {
-		try (Connection con = instance.getConnection();) {
+	public int recupDataOrdiNombre(String chaine) throws Exception {
+		try (Connection con = dataSource.getConnection();) {
 			logger.debug("Récupération du nombre de computer plus petite");
 			return ComputerInfos.computerInformationsMapperCount(ComputersInfosDao.computerInformationsNbEltsFiltre(con,chaine));
 		} catch (SQLException e) {

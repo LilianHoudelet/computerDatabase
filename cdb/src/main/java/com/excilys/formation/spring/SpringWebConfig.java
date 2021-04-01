@@ -1,30 +1,31 @@
 package com.excilys.formation.spring;
 
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.context.AbstractContextLoaderInitializer;
-import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-
-import com.zaxxer.hikari.HikariDataSource;
-
+import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.WebApplicationInitializer;
+import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+
+//import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
-@EnableWebMvc
 @ComponentScan( basePackages = { "com.excilys.formation.dao","com.excilys.formation.service","com.excilys.formation.servlet","com.excilys.formation.model"})
-public class SpringConfig extends AbstractContextLoaderInitializer {
+public class SpringWebConfig implements WebApplicationInitializer {
+	
+	//private static final String PROP_FILE_NAME = "/config/db.properties";
 	
 	@Override
-	protected WebApplicationContext createRootApplicationContext() {
+	public void onStartup(ServletContext servletContext) throws ServletException {
 		AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
-		context.register(SpringConfig.class);
-		return context;
+	    context.register(SpringWebConfig.class);
+	    context.setServletContext(servletContext);
 	}
-	
+
 	@Bean
 	public DataSource getDataSource() {
 		HikariDataSource dataSource = new HikariDataSource();
@@ -33,5 +34,8 @@ public class SpringConfig extends AbstractContextLoaderInitializer {
 		dataSource.setUsername( "admincdb" );
 		dataSource.setPassword( "qwerty1234" );
 		return dataSource;
+		//return new HikariDataSource(new HikariConfig(PROP_FILE_NAME));
 	}
+
+	
 }
