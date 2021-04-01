@@ -2,11 +2,17 @@ package com.excilys.formation.service;
 
 import java.time.LocalDate;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Repository;
+
 import com.excilys.formation.model.Computer;
 
+@Repository
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class ValidationComputer {
 
-	public static boolean isComputerValid(Computer computer) {
+	public boolean isComputerValid(Computer computer) {
 
 		if (computer.getName() == null || computer.getName().isBlank()) {
 
@@ -23,7 +29,7 @@ public class ValidationComputer {
 		return true;
 	}
 
-	public static boolean isComputerValid(String computerName, String dateSortie, String dateRetrait) {
+	public boolean isComputerValid(String computerName, String dateSortie, String dateRetrait) {
 
 		if (computerName == null || computerName.isBlank()) {
 

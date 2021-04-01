@@ -49,6 +49,8 @@ public class ComputerServlet extends HttpServlet {
 	
 	@Autowired
 	private ComputerDataService computerService;
+	@Autowired
+	private DtoMapper dtoMapper;
        
 	@Override
 	public void init(ServletConfig config) throws ServletException {
@@ -95,7 +97,7 @@ public class ComputerServlet extends HttpServlet {
 		session.setAttribute(ASC_DESC, ascendance);
 		
 		try {
-			computers = DtoMapper.mapComputerToComputerDTO(computerService.recupDataOrdiPageFiltreTrie(nbEltParPage, pagination-1, chaineFiltre, sortedOn, ascendance));
+			computers = dtoMapper.mapComputerToComputerDTO(computerService.recupDataOrdiPageFiltreTrie(nbEltParPage, pagination-1, chaineFiltre, sortedOn, ascendance));
 			
 			nombreElements = computerService.recupDataOrdiNombre(chaineFiltre);
 			

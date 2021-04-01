@@ -23,12 +23,15 @@ public class CompanyDataService {
 	@Autowired
 	private DataSource dataSource;
 	
+	@Autowired
+	private CompanyInfos companyMapper;
+	
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(CompanyDataService.class);
 	
 	public List<Company> recupDataCompany() throws Exception {
 		try (Connection con = dataSource.getConnection();) {
 			logger.debug("Récupération de la liste des Company");
-			return CompanyInfos.companyInformationsMapper(CompanieInfoDao.companyInformations(con));
+			return companyMapper.companyInformationsMapper(CompanieInfoDao.companyInformations(con));
 		
 		} catch (SQLException e) {
 			logger.error("Erreur sur l'accès a la base de données ou sur le mappage des informations");
@@ -38,7 +41,7 @@ public class CompanyDataService {
 	public Company recupDataCompanyId(String nomConstructeur) throws Exception {
 		try (Connection con = dataSource.getConnection();) {
 			logger.debug("Récupération de l'Id de Company avec le nom");
-			return CompanyInfos.companyInformationsMapperId(CompanieInfoDao.companyInformationsId(con, nomConstructeur));
+			return companyMapper.companyInformationsMapperId(CompanieInfoDao.companyInformationsId(con, nomConstructeur));
 		
 		} catch (Exception e) {
 			logger.error("Erreur sur l'accès a la base de données ou sur la récupération de l'Id");

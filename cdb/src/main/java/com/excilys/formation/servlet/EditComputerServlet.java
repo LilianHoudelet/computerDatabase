@@ -56,6 +56,12 @@ public class EditComputerServlet extends HttpServlet {
 	private CompanyDataService companyService;
 	@Autowired
 	private UpdateDatabaseService updateComputerService;
+	@Autowired
+	private ValidationComputer validator;
+	@Autowired
+	private DtoMapper dtoMapper;
+	@Autowired
+	private MapStringToComputer mapStringToComputer;
 	
 	@Override
 	public void init(ServletConfig config) throws ServletException {
@@ -76,13 +82,13 @@ public class EditComputerServlet extends HttpServlet {
 		
 		session.setAttribute(COMPUTER_ENTER, id);
 		try {
-			computerToUpdate = DtoMapper.mapComputerToComputerDTOOne(computerDetails.recupDataDetailsOrdi(id));
+			computerToUpdate = dtoMapper.mapComputerToComputerDTOOne(computerDetails.recupDataDetailsOrdi(id));
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 		
 		try {
-			companies = DtoMapper.mapCompanyToCompanyDTO(companyService.recupDataCompany());
+			companies = dtoMapper.mapCompanyToCompanyDTO(companyService.recupDataCompany());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -113,8 +119,8 @@ public class EditComputerServlet extends HttpServlet {
 		String company = request.getParameter("CompanyId");
 		
 		try {
-			if (ValidationComputer.isComputerValid(computerName, dateSortie, dateRetrait)) {
-				Computer updatedComputer = MapStringToComputer.ComputerStringToComputer(computerName, dateSortie, dateRetrait, company);
+			if (validator.isComputerValid(computerName, dateSortie, dateRetrait)) {
+				Computer updatedComputer = mapStringToComputer.ComputerStringToComputer(computerName, dateSortie, dateRetrait, company);
 				updatedComputer.setId(id);
 				
 				updateComputerService.updateDataService(updatedComputer);

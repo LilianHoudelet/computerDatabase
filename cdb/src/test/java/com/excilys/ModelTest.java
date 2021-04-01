@@ -13,6 +13,8 @@ import com.excilys.formation.model.Computer;
 import com.excilys.formation.service.CheckDate;
 
 public class ModelTest {
+	
+	CheckDate checkDate;
 		
 	@Test
 	public void computerGetterTest() {
@@ -86,8 +88,8 @@ public class ModelTest {
 	@Test
 	public void date() throws Exception {
 		
-		assertEquals(CheckDate.dateValide("2010-01-01"),LocalDate.parse("2010-01-01"));
-		assertEquals(CheckDate.dateValide("aze"),null);
-		assertThrows(Exception.class, () -> {CheckDate.dateValide("2010-13-13");});
+		assertEquals(checkDate.dateValide("2010-01-01"),LocalDate.parse("2010-01-01"));
+		assertEquals(checkDate.dateValide("aze"),null);
+		assertThrows(Exception.class, () -> {checkDate.dateValide("2010-13-13");});
 	}
 }

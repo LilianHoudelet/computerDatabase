@@ -14,11 +14,12 @@ import com.excilys.formation.model.Company;
 
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
+
 public class CompanyInfos {
 	
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(CompanyInfos.class);
 	
-	public static List<Company> companyInformationsMapper(ResultSet companyInformations) throws SQLException {
+	public List<Company> companyInformationsMapper(ResultSet companyInformations) throws SQLException {
 		List<Company> list = new ArrayList<Company>();
 		
 		while (companyInformations.next()) {
@@ -28,7 +29,7 @@ public class CompanyInfos {
 		return list; 
 	}
 	
-	public static Company companyInformationsMapperId(ResultSet companyInformations) throws Exception {
+	public Company companyInformationsMapperId(ResultSet companyInformations) throws Exception {
 		if (companyInformations.next()) {
 			logger.debug("Création d'un objet Company avec les informations de la requête");
 			return new Company(companyInformations.getInt(1), companyInformations.getString(2));	

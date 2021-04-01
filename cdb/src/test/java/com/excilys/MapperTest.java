@@ -23,6 +23,8 @@ import com.excilys.formation.service.ValidationComputer;
 
 public class MapperTest {
 	
+	ValidationComputer validator;
+	
 	@Test
 	public void computerToComputerDTOTest() {
 		Computer computer = new Computer(1,"Test",LocalDate.parse("2020-01-09"), LocalDate.parse("2020-10-01"),new Company(1,"Apple Inc."));
@@ -82,25 +84,25 @@ public class MapperTest {
 	
 	@Test
 	public void computerValidTestString() {
-		assertTrue(ValidationComputer.isComputerValid("Test","2020-09-01","2020-10-01"));
+		assertTrue(validator.isComputerValid("Test","2020-09-01","2020-10-01"));
 	}
 	
 	@Test
 	public void computerValidTest() {
 		Computer computer = new Computer(1,"Test",LocalDate.parse("2020-09-01"), LocalDate.parse("2020-10-01"),new Company(1,"Apple Inc."));		
-		assertTrue(ValidationComputer.isComputerValid(computer));
+		assertTrue(validator.isComputerValid(computer));
 	}
 	
 	@Test
 	public void computerNotValidTest() {
 		Computer computer = new Computer(1,"Test",LocalDate.parse("2020-09-01"), LocalDate.parse("2020-08-01"),new Company(1,"Apple Inc."));		
-		assertFalse(ValidationComputer.isComputerValid(computer));
+		assertFalse(validator.isComputerValid(computer));
 	}
 	
 	@Test
 	public void isComputerValidTest() {
 		Computer computer = new Computer(1,"Test",LocalDate.parse("2020-09-01"), null,new Company(1,"Apple Inc."));			
-		assertTrue(ValidationComputer.isComputerValid(computer));
+		assertTrue(validator.isComputerValid(computer));
 	}
 	
 	@Test

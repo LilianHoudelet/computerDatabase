@@ -58,6 +58,9 @@ public class GestionMenu {
 	
 	@Autowired
 	private AjoutOrdinateurService addComputerService;
+	
+	@Autowired
+	private CheckDate checkDate;
 
 	/**
 	 * Appelle les différentes fonctions pour afficher le menu, récupérer les
@@ -128,14 +131,14 @@ public class GestionMenu {
 				do {
 					Menu.demandeEntreeDateSortie();
 					dateSortieString = readerLine.nextLine();
-					dateSortie = CheckDate.dateValide(dateSortieString);
+					dateSortie = checkDate.dateValide(dateSortieString);
 
 				} while (!(dateSortieString.isEmpty() || dateSortie != null));
 
 				do {
 					Menu.demandeEntreeDateRetrait();
 					dateRetraitString = readerLine.nextLine();
-					dateRetrait = CheckDate.dateValide(dateRetraitString);
+					dateRetrait = checkDate.dateValide(dateRetraitString);
 
 				} while (!(dateRetraitString.isEmpty() || dateRetrait != null));
 
@@ -203,7 +206,7 @@ public class GestionMenu {
 					do {
 						Menu.demandeEntreeDateSortie();
 						dateSortieString = readerLine.nextLine();
-						dateSortie = CheckDate.dateValide(dateSortieString);
+						dateSortie = checkDate.dateValide(dateSortieString);
 						if (dateSortieString.isEmpty()) {
 							dateSortie = details.getDateSortie();
 						}
@@ -212,7 +215,7 @@ public class GestionMenu {
 					do {
 						Menu.demandeEntreeDateRetrait();
 						dateRetraitString = readerLine.nextLine();
-						dateRetrait = CheckDate.dateValide(dateRetraitString);
+						dateRetrait = checkDate.dateValide(dateRetraitString);
 						if (dateRetraitString.isEmpty()) {
 							dateRetrait = details.getDateRetrait();
 						}

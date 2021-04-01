@@ -43,6 +43,14 @@ public class AddComputerServlet extends HttpServlet {
 	@Autowired
 	private CompanyDataService CompanyService;
 	
+	@Autowired
+	private ValidationComputer validator;
+	
+	@Autowired
+	private DtoMapper dtoMapper;
+	
+	@Autowired
+	private MapStringToComputer mapStringToComputer;
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -63,7 +71,7 @@ public class AddComputerServlet extends HttpServlet {
 		List<CompanyDTO> companies = new ArrayList<CompanyDTO>();
 		
 		try {
-			companies = DtoMapper.mapCompanyToCompanyDTO(CompanyService.recupDataCompany());
+			companies = dtoMapper.mapCompanyToCompanyDTO(CompanyService.recupDataCompany());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -84,8 +92,8 @@ public class AddComputerServlet extends HttpServlet {
 		String company = request.getParameter("CompanyId");
 		
 		try {
-			if (ValidationComputer.isComputerValid(computerName, dateSortie, dateRetrait)) {
-				Computer addedComputer = MapStringToComputer.ComputerStringToComputer(computerName, dateSortie, dateRetrait, company);
+			if (validator.isComputerValid(computerName, dateSortie, dateRetrait)) {
+				Computer addedComputer = mapStringToComputer.ComputerStringToComputer(computerName, dateSortie, dateRetrait, company);
 				ComputerService.ajoutDataService(addedComputer);
 			} else {
 				System.out.println("Ordinateur non valide");
