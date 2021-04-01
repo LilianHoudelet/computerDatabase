@@ -20,7 +20,7 @@ public class UpdateDatabaseDao {
 	
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(UpdateDatabaseDao.class);
 	
-	public static void updateComputerInformations(Connection con, Computer ordinateur) throws ClassNotFoundException, SQLException {
+	public void updateComputerInformations(Connection con, Computer ordinateur) throws ClassNotFoundException, SQLException {
 
 		PreparedStatement stmt = con.prepareStatement(REQUETE_UPDATE);
 		

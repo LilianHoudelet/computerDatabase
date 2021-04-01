@@ -21,14 +21,15 @@ public class DeleteCompanyService {
 	
 	@Autowired
 	private DataSource dataSource;
-	//static AccessDatabase instance = AccessDatabase.getInstance();
+	@Autowired
+	private DeleteCompanyDao deleteCompanyDao;
 
 	public void supprDataCompanyId(int id) throws Exception {
 
 		try (Connection con = dataSource.getConnection();) {
 			logger.debug("Appel suppression company " + id + " de la BDD");
 			
-			DeleteCompanyDao.deleteCompany(con, id);
+			deleteCompanyDao.deleteCompany(con, id);
 
 		} catch (SQLException e) {
 			logger.error("Erreur dans la suppression de la table");

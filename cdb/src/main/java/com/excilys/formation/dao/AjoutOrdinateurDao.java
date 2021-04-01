@@ -20,7 +20,7 @@ public class AjoutOrdinateurDao {
 
 	public static final String REQUETE_AJOUTER_COMPLET = "INSERT INTO computer (id, name, introduced, discontinued, company_id) VALUES (?,?,?,?,?)";
 
-	public static void computerInformations(Connection con, Computer ordinateur)
+	public void computerInformations(Connection con, Computer ordinateur)
 			throws ClassNotFoundException, SQLException {
 
 		PreparedStatement stmt = con.prepareStatement(REQUETE_AJOUTER_COMPLET);

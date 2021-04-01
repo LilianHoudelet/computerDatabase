@@ -21,7 +21,7 @@ public class CompanieInfoDao {
 	
 	public static final String REQUETE_ID = "SELECT id, name FROM company WHERE name = ?";
 	
-	public static ResultSet companyInformations(Connection con) throws ClassNotFoundException, SQLException {
+	public ResultSet companyInformations(Connection con) throws ClassNotFoundException, SQLException {
 		
 		
 		Statement stmt = con.createStatement();
@@ -32,7 +32,7 @@ public class CompanieInfoDao {
 		return rs;
 	}
 	
-	public static ResultSet companyInformationsId(Connection con, String name) throws ClassNotFoundException, SQLException {
+	public ResultSet companyInformationsId(Connection con, String name) throws ClassNotFoundException, SQLException {
 
 		PreparedStatement stmt = con.prepareStatement(REQUETE_ID);
 		stmt.setString(1, name);

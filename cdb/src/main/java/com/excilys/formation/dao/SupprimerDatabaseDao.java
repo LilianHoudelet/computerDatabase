@@ -21,7 +21,7 @@ public class SupprimerDatabaseDao {
 	
 	public static final String REQUETE_SUPPRIMER_PAR_ID = "DELETE FROM computer WHERE id = ?";
 	
-	public static void computerInformations(Connection con, Computer ordinateur) throws ClassNotFoundException, SQLException {
+	public void computerInformations(Connection con, Computer ordinateur) throws ClassNotFoundException, SQLException {
 
 		PreparedStatement stmt = con.prepareStatement(REQUETE_SUPPRIMER);
 		stmt.setString(1, ordinateur.getName());
@@ -29,7 +29,7 @@ public class SupprimerDatabaseDao {
 		logger.debug("Suppression de l'élément " + ordinateur.getName() + " de la base de données");
 	}
 	
-	public static void deleteComputer(Connection con, int id) throws ClassNotFoundException, SQLException {
+	public void deleteComputer(Connection con, int id) throws ClassNotFoundException, SQLException {
 
 		PreparedStatement stmt = con.prepareStatement(REQUETE_SUPPRIMER_PAR_ID);
 		stmt.setInt(1, id);

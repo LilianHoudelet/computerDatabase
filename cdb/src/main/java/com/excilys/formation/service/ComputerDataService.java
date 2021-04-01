@@ -33,10 +33,13 @@ public class ComputerDataService {
 	@Autowired
 	private ComputerInfos computerMapper;
 	
+	@Autowired
+	private ComputersInfosDao computersInfosDao;
+	
 	public List<Computer> recupDataOrdi() throws Exception {
 		try (Connection con = dataSource.getConnection();) {
 			logger.debug("Récupération d'une liste de computer");
-			return computerMapper.computerInformationsMapper(ComputersInfosDao.computerInformations(con));
+			return computerMapper.computerInformationsMapper(computersInfosDao.computerInformations(con));
 		} catch (SQLException e) {
 			logger.error("Impossible de se connecter a la BDD, recherche de computer");
 			throw new Exception("Impossible de se connecter a la base de donnees");
@@ -50,7 +53,7 @@ public class ComputerDataService {
 	public List<Computer> recupDataOrdiPageFiltreTrie(int nombreParPage, int page, String chaine, String order, boolean ascendance) throws Exception {
 		try (Connection con = dataSource.getConnection();) {
 			logger.debug("Récupération d'une liste de computer filtrée triée plus petite : Page " + page);
-			return computerMapper.computerInformationsMapper(ComputersInfosDao.computerInformationsPageFilterSorted(con, nombreParPage, page, chaine, sortingString.convertOrderString(order), sortingString.convertOrderbool(ascendance)));
+			return computerMapper.computerInformationsMapper(computersInfosDao.computerInformationsPageFilterSorted(con, nombreParPage, page, chaine, sortingString.convertOrderString(order), sortingString.convertOrderbool(ascendance)));
 		} catch (SQLException e) {
 			logger.error("Impossible de se connecter a la BDD, recherche page triée filtrée de computer");
 			throw new Exception("Impossible de se connecter a la base de donnees");
@@ -60,7 +63,7 @@ public class ComputerDataService {
 	public int recupDataOrdiNombre(String chaine) throws Exception {
 		try (Connection con = dataSource.getConnection();) {
 			logger.debug("Récupération du nombre de computer plus petite");
-			return computerMapper.computerInformationsMapperCount(ComputersInfosDao.computerInformationsNbEltsFiltre(con,chaine));
+			return computerMapper.computerInformationsMapperCount(computersInfosDao.computerInformationsNbEltsFiltre(con,chaine));
 		} catch (SQLException e) {
 			logger.error("Impossible de se connecter a la BDD, recherche nombre de computer");
 			throw new Exception("Impossible de se connecter a la base de donnees Compte");

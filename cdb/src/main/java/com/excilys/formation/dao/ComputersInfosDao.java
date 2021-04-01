@@ -31,7 +31,7 @@ public class ComputersInfosDao {
 			+ "LEFT JOIN company ON company.id = computer.company_id WHERE computer.id = ?";
 	
 	// Encore Utile ?
-	public static ResultSet computerInformations(Connection con) throws ClassNotFoundException, SQLException {
+	public ResultSet computerInformations(Connection con) throws ClassNotFoundException, SQLException {
 
 		Statement stmt = con.createStatement();
 		ResultSet rs = stmt.executeQuery(REQUETE_TOUT);
@@ -39,7 +39,7 @@ public class ComputersInfosDao {
 		return rs;
 	}
 	
-	public static ResultSet computerInformationsNbEltsFiltre(Connection con, String chaine) throws ClassNotFoundException, SQLException {
+	public ResultSet computerInformationsNbEltsFiltre(Connection con, String chaine) throws ClassNotFoundException, SQLException {
 
 		PreparedStatement stmt = con.prepareStatement(REQUETE_NOMBRE_FILTRE);
 		stmt.setString(1, "%"+chaine+"%");
@@ -49,7 +49,7 @@ public class ComputersInfosDao {
 		return rs;
 	}
 		
-public static ResultSet computerInformationsPageFilterSorted(Connection con, int taillePage, int page, String chaine, String order, String upOrDown) throws SQLException {
+	public ResultSet computerInformationsPageFilterSorted(Connection con, int taillePage, int page, String chaine, String order, String upOrDown) throws SQLException {
 		
 		PreparedStatement stmt = con.prepareStatement(REQUETE_PAGE_FILTRE_TRIE + order + upOrDown + LIMIT_OFFSET);
 				
@@ -63,7 +63,7 @@ public static ResultSet computerInformationsPageFilterSorted(Connection con, int
 	}
 
 
-	public static ResultSet computerInformationsDetails(Connection con, String nomMachine) throws ClassNotFoundException, SQLException {
+	public ResultSet computerInformationsDetails(Connection con, String nomMachine) throws ClassNotFoundException, SQLException {
 
 		PreparedStatement stmt = con.prepareStatement(REQUETE_DETAILS);
 		stmt.setString(1, nomMachine);
@@ -72,7 +72,7 @@ public static ResultSet computerInformationsPageFilterSorted(Connection con, int
 		return rs;
 	}
 
-	public static ResultSet computerInformationsDetails(Connection con, int id) throws SQLException {
+	public ResultSet computerInformationsDetails(Connection con, int id) throws SQLException {
 		PreparedStatement stmt = con.prepareStatement(REQUETE_DETAILS_ID);
 		stmt.setInt(1, id);
 		ResultSet rs = stmt.executeQuery();

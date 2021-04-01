@@ -19,7 +19,7 @@ public class DeleteCompanyDao {
 	
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(DeleteCompanyDao.class);
 	
-	public static void deleteCompany(Connection con, int companyId) throws Exception {
+	public void deleteCompany(Connection con, int companyId) throws Exception {
 		try {
 			con.setAutoCommit(false);
 			

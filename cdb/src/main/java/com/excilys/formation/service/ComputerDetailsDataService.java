@@ -26,12 +26,14 @@ public class ComputerDetailsDataService {
 	
 	@Autowired
 	private ComputerInfos computerMapper;
+	@Autowired
+	private ComputersInfosDao computersInfosDao;
 	
 	public Computer recupDataDetailsOrdi(String nomMachine) throws Exception {
 		
 		try (Connection newCon = dataSource.getConnection();) {
 			logger.debug("récupération des détails de la machine "+ nomMachine);
-			return computerMapper.computerDetailsMapper(ComputersInfosDao.computerInformationsDetails(newCon, nomMachine));
+			return computerMapper.computerDetailsMapper(computersInfosDao.computerInformationsDetails(newCon, nomMachine));
 		} catch (SQLException e) {
 			logger.error("Impossible de se connecter a la BDD, recherche détails de computer");
 			throw new Exception("Impossible de se connecter a la base de donnees Details");
@@ -42,7 +44,7 @@ public class ComputerDetailsDataService {
 		
 		try (Connection newCon = dataSource.getConnection();) {
 			logger.debug("récupération des détails de la machine "+ id);
-			return computerMapper.computerDetailsMapper(ComputersInfosDao.computerInformationsDetails(newCon, id));
+			return computerMapper.computerDetailsMapper(computersInfosDao.computerInformationsDetails(newCon, id));
 		} catch (SQLException e) {
 			logger.error("Impossible de se connecter a la BDD, recherche détails de computer");
 			throw new Exception("Impossible de se connecter a la base de donnees Details");

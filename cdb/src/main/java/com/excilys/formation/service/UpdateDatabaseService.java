@@ -22,12 +22,13 @@ public class UpdateDatabaseService {
 	
 	@Autowired
 	private DataSource dataSource;
-	//static AccessDatabase instance = AccessDatabase.getInstance();
+	@Autowired
+	private UpdateDatabaseDao updateDatabaseDao;
 	
 	public void updateDataService(Computer computer) throws Exception {
 		try (Connection newCon = dataSource.getConnection();) {
 			logger.debug("Mise a jour de " + computer.getName() + " dans la BDD");
-			UpdateDatabaseDao.updateComputerInformations(newCon, computer);
+			updateDatabaseDao.updateComputerInformations(newCon, computer);
 		} catch (SQLException e) {
 			logger.error("Erreur dans la suppression dans la BDD");
 			throw new Exception("Impossible de se connecter a la base de donnees Update");

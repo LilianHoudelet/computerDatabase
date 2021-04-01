@@ -22,13 +22,14 @@ public class ComputerSuppressionService {
 	
 	@Autowired
 	private DataSource dataSource;
-	//static AccessDatabase instance = AccessDatabase.getInstance();
+	@Autowired
+	private SupprimerDatabaseDao supprimerDatabaseDao;
 	
 	public void supprDataOrdi(Computer computer) throws Exception {
 		
 		try (Connection con = dataSource.getConnection();) {
 			logger.debug("Appel suppression élément " + computer.getName() + " de la BDD");
-			SupprimerDatabaseDao.computerInformations(con, computer);
+			supprimerDatabaseDao.computerInformations(con, computer);
 			
 		} catch (SQLException e) {
 			logger.error("Erreur dans la suppression de la table");
@@ -40,7 +41,7 @@ public class ComputerSuppressionService {
 		
 		try (Connection con = dataSource.getConnection();) {
 			logger.debug("Appel suppression élément " + id + " de la BDD");
-			SupprimerDatabaseDao.deleteComputer(con, id);
+			supprimerDatabaseDao.deleteComputer(con, id);
 			
 		} catch (SQLException e) {
 			logger.error("Erreur dans la suppression de la table");

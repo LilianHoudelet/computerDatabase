@@ -21,13 +21,15 @@ public class AjoutOrdinateurService {
 	
 	@Autowired
 	private DataSource dataSource;
-	//static AccessDatabase instance = AccessDatabase.getInstance();
+	
+	@Autowired
+	private AjoutOrdinateurDao ajoutOrdinateurDao;
 
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(AjoutOrdinateurService.class);
 		
 	public void ajoutDataService(Computer computer) throws Exception {
 		try (Connection newCon = dataSource.getConnection();) {
-			AjoutOrdinateurDao.computerInformations(newCon, computer);
+			ajoutOrdinateurDao.computerInformations(newCon, computer);
 			logger.debug("Ajout d'un élément dans la BDD sans problème");
 		} catch (SQLException e) {
 			logger.error("Un problème est survenu lors de l'ajout d'un élément ou de l'accès a la base de données");
