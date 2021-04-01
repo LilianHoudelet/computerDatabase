@@ -57,9 +57,6 @@ public class GestionMenu {
 	private DeleteCompanyService deleteCompanyService;
 	
 	@Autowired
-	private static GestionMenu gestionMenu;
-	
-	@Autowired
 	private AjoutOrdinateurService addComputerService;
 
 	/**
@@ -262,7 +259,7 @@ public class GestionMenu {
 
 	}
 
-	public static void main(String[] args) throws Exception {
-		gestionMenu.menu1();
+	public void run() throws Exception {
+		menu1();
 	}
 }
