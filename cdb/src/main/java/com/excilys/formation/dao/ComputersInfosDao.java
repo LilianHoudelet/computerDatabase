@@ -30,7 +30,6 @@ public class ComputersInfosDao {
 	public static final String REQUETE_DETAILS_ID = "SELECT computer.id, computer.name, introduced, discontinued, company.name, computer.company_id FROM computer "
 			+ "LEFT JOIN company ON company.id = computer.company_id WHERE computer.id = ?";
 	
-	// Encore Utile ?
 	public ResultSet computerInformations(Connection con) throws ClassNotFoundException, SQLException {
 
 		Statement stmt = con.createStatement();
@@ -38,7 +37,7 @@ public class ComputersInfosDao {
 					
 		return rs;
 	}
-	
+
 	public ResultSet computerInformationsNbEltsFiltre(Connection con, String chaine) throws ClassNotFoundException, SQLException {
 
 		PreparedStatement stmt = con.prepareStatement(REQUETE_NOMBRE_FILTRE);

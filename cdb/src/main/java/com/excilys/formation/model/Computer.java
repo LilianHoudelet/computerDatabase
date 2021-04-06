@@ -8,6 +8,10 @@ public class Computer {
 	LocalDate dateSortie; 
 	LocalDate dateRetrait;
 	Company company;
+	
+	public Computer() {
+		super();
+	}
 
 	public Computer(int id, String nom, LocalDate dateSortie, LocalDate dateRetrait, Company company) {
 		this.id = id;

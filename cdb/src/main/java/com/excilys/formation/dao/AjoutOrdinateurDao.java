@@ -44,6 +44,7 @@ public class AjoutOrdinateurDao {
 		}
 
 		stmt.executeUpdate();
+		
 		logger.debug("Ajout d'un élément dans la base de données");
 	}
 }
