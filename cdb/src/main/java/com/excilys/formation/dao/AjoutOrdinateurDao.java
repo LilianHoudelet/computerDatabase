@@ -65,7 +65,7 @@ public class AjoutOrdinateurDao {
 				computer.getId(), 
 				computer.getName(), 
 				computer.getDateSortie() != null ? computer.getDateSortie() : null, 
-				computer.getDateRetrait()!= null ? computer.getDateRetrait() : null, 
+				computer.getDateRetrait() != null ? computer.getDateRetrait() : null, 
 				computer.getCompany().getId() != 0 ? computer.getCompany().getId() : null });
 		
 	}

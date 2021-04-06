@@ -1,7 +1,5 @@
 package com.excilys.formation.service;
 
-import java.sql.Connection;
-import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
@@ -18,36 +16,20 @@ import com.excilys.formation.model.Computer;
 public class ComputerSuppressionService {
 	
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(ComputerSuppressionService.class);
-	
-	private DataSource dataSource;
+
 	private SupprimerDatabaseDao supprimerDatabaseDao;
 	
 	public ComputerSuppressionService(DataSource dataSource, SupprimerDatabaseDao supprimerDatabaseDao) {
-		this.dataSource = dataSource;
 		this.supprimerDatabaseDao = supprimerDatabaseDao;
 	}
 	
 	public void supprDataOrdi(Computer computer) throws Exception {
-		
-		try (Connection con = dataSource.getConnection();) {
-			logger.debug("Appel suppression élément " + computer.getName() + " de la BDD");
-			supprimerDatabaseDao.computerInformations(con, computer);
-			
-		} catch (SQLException e) {
-			logger.error("Erreur dans la suppression de la table");
-			throw new Exception("Impossible de se connecter a la base de donnees Suppression");
-		} 
+		logger.debug("Appel suppression élément " + computer.getName() + " de la BDD");
+		supprimerDatabaseDao.deleteComputer(computer.getName());
+	}
+	public void supprDataOrdiId(int id) throws Exception {
+		logger.debug("Appel suppression élément " + id + " de la BDD");
+		supprimerDatabaseDao.deleteComputer(id);
 	}
 	
-	public void supprDataOrdiId(int id) throws Exception {
-		
-		try (Connection con = dataSource.getConnection();) {
-			logger.debug("Appel suppression élément " + id + " de la BDD");
-			supprimerDatabaseDao.deleteComputer(con, id);
-			
-		} catch (SQLException e) {
-			logger.error("Erreur dans la suppression de la table");
-			throw new Exception("Impossible de se connecter a la base de donnees Suppression");
-		} 
-	}
 }
