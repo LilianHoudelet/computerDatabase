@@ -9,15 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import com.excilys.formation.model.Company;
 import com.excilys.formation.model.Computer;
 
+@Component
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class ComputerInfos {
 	
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(ComputerInfos.class);
 	
-	public static List<Computer> computerInformationsMapper(ResultSet computerInformations) throws SQLException {
+	public List<Computer> computerInformationsMapper(ResultSet computerInformations) throws SQLException {
 		List<Computer> list = new ArrayList<Computer>();
 		
 		while (computerInformations.next()) {
@@ -30,7 +35,7 @@ public class ComputerInfos {
 		return list; 
 	}
 	
-	public static int computerInformationsMapperCount(ResultSet computerCount) throws SQLException {
+	public int computerInformationsMapperCount(ResultSet computerCount) throws SQLException {
 		int compte = 0;
 		if (computerCount.next()) {
 			compte = computerCount.getInt(1);
@@ -39,7 +44,7 @@ public class ComputerInfos {
 		return compte;
 	}
 
-	public static Computer computerDetailsMapper(ResultSet computerInformations) throws SQLException, Exception {
+	public Computer computerDetailsMapper(ResultSet computerInformations) throws SQLException, Exception {
 		if (computerInformations.next()) {
 			LocalDate dateSortie = computerInformations.getDate(3) != null ? computerInformations.getDate(3).toLocalDate() : null;
 			LocalDate dateRetrait = computerInformations.getDate(4) != null ? computerInformations.getDate(4).toLocalDate() : null;

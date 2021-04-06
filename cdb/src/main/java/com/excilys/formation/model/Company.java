@@ -4,6 +4,10 @@ public class Company {
 	int id;
 	String nom;
 	
+	public Company() {
+		super();
+	}
+	
 	public Company(int id, String nom) {
 		this.id = id;
 		this.nom = nom;

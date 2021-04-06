@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,12 +13,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.excilys.formation.dto.ComputerDTO;
 import com.excilys.formation.mapper.DtoMapper;
 import com.excilys.formation.model.ComputerPage;
 import com.excilys.formation.service.ComputerDataService;
 
+@Component
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 @WebServlet("/ComputerServlet")
 public class ComputerServlet extends HttpServlet {
 	
@@ -38,10 +46,22 @@ public class ComputerServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(ComputerServlet.class);
+	
+	@Autowired
+	private ComputerDataService computerService;
+	@Autowired
+	private DtoMapper dtoMapper;
        
-    public ComputerServlet() {
-        super();
-    }
+//	public ComputerServlet(ComputerDataService computerService, DtoMapper dtoMapper) {
+//		this.computerService = computerService;
+//		this.dtoMapper = dtoMapper;
+//	}
+
+	@Override
+	public void init(ServletConfig config) throws ServletException {
+		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
+		super.init(config);
+	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 			
@@ -82,9 +102,9 @@ public class ComputerServlet extends HttpServlet {
 		session.setAttribute(ASC_DESC, ascendance);
 		
 		try {
-			computers = DtoMapper.mapComputerToComputerDTO(ComputerDataService.recupDataOrdiPageFiltreTrie(nbEltParPage, pagination-1, chaineFiltre, sortedOn, ascendance));
+			computers = dtoMapper.mapComputerToComputerDTO(computerService.recupDataOrdiPageFiltreTrie(nbEltParPage, pagination-1, chaineFiltre, sortedOn, ascendance));
 			
-			nombreElements = ComputerDataService.recupDataOrdiNombre(chaineFiltre);
+			nombreElements = computerService.recupDataOrdiNombre(chaineFiltre);
 			
 			computerPage = new ComputerPage(nbEltParPage, nombreElements , computers);
 			computerPage.setNumPage(pagination);

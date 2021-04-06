@@ -1,8 +1,14 @@
 package com.excilys.formation.mapper;
 
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+@Component
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class RequestFilterString {
 
-	public static String convertOrderString(String entry) {
+	public String convertOrderString(String entry) {
 		if (entry == null || entry.isBlank()) {
 			return "computer.id";
 		} else if ("computerName".equals(entry)) {
@@ -18,8 +24,8 @@ public class RequestFilterString {
 		}
 	}
 	
-	public static String convertOrderbool(boolean upDown) {
-		return (upDown ? " ASC " : " DESC ");	
+	public String convertOrderbool(boolean upDown) {
+		return (upDown ? " ASC " : " DESC ");
 	}
 
 }

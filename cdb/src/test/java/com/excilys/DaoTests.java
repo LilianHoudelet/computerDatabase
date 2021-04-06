@@ -16,22 +16,26 @@ import com.excilys.formation.service.ComputerDetailsDataService;
 
 public class DaoTests {
 	
+	CompanyDataService companyService;
+	ComputerDataService computerService;
+	ComputerDetailsDataService computerDetailsService;
 	
 	@Test
 	public void daoCompanyTest() throws Exception {
-		assertEquals(24,CompanyDataService.recupDataCompanyId("Nintendo").getId());
-		assertNotEquals(2,CompanyDataService.recupDataCompanyId("Apple Inc.").getId());
+		assertEquals(24,companyService.recupDataCompanyId("Nintendo").getId());
+		assertNotEquals(2,companyService.recupDataCompanyId("Apple Inc.").getId());
 		
-		assertEquals(0,CompanyDataService.recupDataCompanyId("Test").getId());
+		assertEquals(0,companyService.recupDataCompanyId("Test").getId());
+		assertEquals(companyService.recupDataCompany().size(), 42);
 	}
 	
 	@Test
 	public void daoComputerTest() throws Exception {
 		String chaine = "DEC";
 		
-		assertEquals(ComputerDataService.recupDataOrdiNombre(),ComputerDataService.recupDataOrdi().size());
-		assertEquals(ComputerDetailsDataService.recupDataDetailsOrdi("Wii"),new Computer(229,"Wii",LocalDate.parse("2006-11-19"),null, new Company(24,"Nintendo")));
-		assertEquals(ComputerDetailsDataService.recupDataDetailsOrdi(229),new Computer(229,"Wii",LocalDate.parse("2006-11-19"),null, new Company(24,"Nintendo")));
-		assertEquals(ComputerDataService.recupDataOrdiNombre(chaine),ComputerDataService.recupDataOrdiPageFiltre(500,0,chaine).size()); // 14 entrées acutuellement
+		assertEquals(computerService.recupDataOrdiNombre(""),computerService.recupDataOrdi().size());
+		assertEquals(computerDetailsService.recupDataDetailsOrdi("Wii"),new Computer(229,"Wii",LocalDate.parse("2006-11-19"),null, new Company(24,"Nintendo")));
+		assertEquals(computerDetailsService.recupDataDetailsOrdi(229),new Computer(229,"Wii",LocalDate.parse("2006-11-19"),null, new Company(24,"Nintendo")));
+		assertEquals(computerService.recupDataOrdiNombre(chaine),computerService.recupDataOrdiPageFiltreTrie(500,0,chaine, chaine, false).size()); // 14 entrées acutuellement
 	}	
 }

@@ -7,7 +7,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import org.slf4j.Logger;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
+@Component
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class CompanieInfoDao {
 	
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(CompanieInfoDao.class);
@@ -16,7 +21,7 @@ public class CompanieInfoDao {
 	
 	public static final String REQUETE_ID = "SELECT id, name FROM company WHERE name = ?";
 	
-	public static ResultSet companyInformations(Connection con) throws ClassNotFoundException, SQLException {
+	public ResultSet companyInformations(Connection con) throws ClassNotFoundException, SQLException {
 		
 		
 		Statement stmt = con.createStatement();
@@ -27,7 +32,7 @@ public class CompanieInfoDao {
 		return rs;
 	}
 	
-	public static ResultSet companyInformationsId(Connection con, String name) throws ClassNotFoundException, SQLException {
+	public ResultSet companyInformationsId(Connection con, String name) throws ClassNotFoundException, SQLException {
 
 		PreparedStatement stmt = con.prepareStatement(REQUETE_ID);
 		stmt.setString(1, name);

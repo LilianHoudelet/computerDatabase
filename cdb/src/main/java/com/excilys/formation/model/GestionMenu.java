@@ -4,10 +4,14 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import com.excilys.formation.service.AjoutOrdinateurService;
 import com.excilys.formation.service.CheckDate;
 import com.excilys.formation.service.CompanyDataService;
-//import main.java.com.excilys.formation.service.ComputerDataService;
 import com.excilys.formation.service.ComputerDetailsDataService;
 import com.excilys.formation.service.ComputerSuppressionService;
 import com.excilys.formation.service.DeleteCompanyService;
@@ -19,6 +23,8 @@ import com.excilys.formation.ui.Menu;
  * @author excilys
  *
  */
+@Component
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class GestionMenu {
 
 	boolean exit = true;
@@ -31,6 +37,30 @@ public class GestionMenu {
 	public static final int METTRE_A_JOUR_INFOS_ORDINATEURS = 1;
 	public static final int AFFICHER_DETAILS_ORDINATEUR = 2;
 	public static final int SUPPRIMER_INFORMATIONS = 3;
+	
+	private CompanyDataService companyService;
+	private ComputerDetailsDataService computerService;
+	private ComputerSuppressionService supprComputerService;
+	private UpdateDatabaseService updateComputerService;
+	private GestionPages gestionPage;
+	private DeleteCompanyService deleteCompanyService;
+	private AjoutOrdinateurService addComputerService;
+	private CheckDate checkDate;
+	
+	@Autowired
+	public GestionMenu(CompanyDataService companyService, ComputerDetailsDataService computerService,
+			ComputerSuppressionService supprComputerService, UpdateDatabaseService updateComputerService,
+			GestionPages gestionPage, DeleteCompanyService deleteCompanyService,
+			AjoutOrdinateurService addComputerService, CheckDate checkDate) {
+		this.companyService = companyService;
+		this.computerService = computerService;
+		this.supprComputerService = supprComputerService;
+		this.updateComputerService = updateComputerService;
+		this.gestionPage = gestionPage;
+		this.deleteCompanyService = deleteCompanyService;
+		this.addComputerService = addComputerService;
+		this.checkDate = checkDate;
+	}
 
 	/**
 	 * Appelle les différentes fonctions pour afficher le menu, récupérer les
@@ -38,7 +68,7 @@ public class GestionMenu {
 	 * 
 	 * @throws Exception
 	 */
-	public static void menu1() throws Exception {
+	public void menu1() throws Exception {
 		int entreeMenuInt = 0;
 		String entreeMenu1;
 		boolean sortieMenu = true;
@@ -64,12 +94,12 @@ public class GestionMenu {
 				// List<Computer> infos = ComputerDataService.recupDataOrdi();
 				// Menu.printComputer(infos);
 
-				GestionPages.affichePage();
+				gestionPage.affichePage();
 				menu2();
 				break;
 
 			case (AFFICHER_INFOS_CONSTRUCTEURS):
-				List<Company> infosCompany = CompanyDataService.recupDataCompany();
+				List<Company> infosCompany = companyService.recupDataCompany();
 				Menu.printCompany(infosCompany);
 				break;
 			
@@ -78,9 +108,9 @@ public class GestionMenu {
 				Menu.demandeEntreeNom();
 				String nomCompany = readerLine.nextLine();
 				
-				int companyId = CompanyDataService.recupDataCompanyId(nomCompany).getId();
+				int companyId = companyService.recupDataCompanyId(nomCompany).getId();
 				
-				DeleteCompanyService.supprDataCompanyId(companyId);
+				deleteCompanyService.supprDataCompanyId(companyId);
 				
 				break;
 
@@ -101,24 +131,23 @@ public class GestionMenu {
 				do {
 					Menu.demandeEntreeDateSortie();
 					dateSortieString = readerLine.nextLine();
-					dateSortie = CheckDate.dateValide(dateSortieString);
+					dateSortie = checkDate.dateValide(dateSortieString);
 
 				} while (!(dateSortieString.isEmpty() || dateSortie != null));
 
 				do {
 					Menu.demandeEntreeDateRetrait();
 					dateRetraitString = readerLine.nextLine();
-					dateRetrait = CheckDate.dateValide(dateRetraitString);
+					dateRetrait = checkDate.dateValide(dateRetraitString);
 
 				} while (!(dateRetraitString.isEmpty() || dateRetrait != null));
 
 				if (dateRetrait != null && dateSortie != null && dateSortie.compareTo(dateRetrait) > 0) {
 					Menu.avertissementDate();
 				} else {
-					Company company = CompanyDataService.recupDataCompanyId(nomConstructeur);
+					Company company = companyService.recupDataCompanyId(nomConstructeur);
 
-					AjoutOrdinateurService
-							.ajoutDataService(new Computer(0, nomMachine, dateSortie, dateRetrait, company));
+					addComputerService.ajoutDataService(new Computer(0, nomMachine, dateSortie, dateRetrait, company));
 				}
 				break;
 
@@ -133,7 +162,7 @@ public class GestionMenu {
 	}
 
 	@SuppressWarnings("resource")
-	public static void menu2() throws Exception {
+	public void menu2() throws Exception {
 		int entreeMenuInt = 0;
 		String entreeMenu2;
 		boolean sortieMenu = true;
@@ -160,7 +189,7 @@ public class GestionMenu {
 
 				String nomMachine = readerLine.nextLine();
 
-				Computer details = ComputerDetailsDataService.recupDataDetailsOrdi(nomMachine);
+				Computer details = computerService.recupDataDetailsOrdi(nomMachine);
 
 				Menu.afficheDetails(details);
 
@@ -177,7 +206,7 @@ public class GestionMenu {
 					do {
 						Menu.demandeEntreeDateSortie();
 						dateSortieString = readerLine.nextLine();
-						dateSortie = CheckDate.dateValide(dateSortieString);
+						dateSortie = checkDate.dateValide(dateSortieString);
 						if (dateSortieString.isEmpty()) {
 							dateSortie = details.getDateSortie();
 						}
@@ -186,15 +215,15 @@ public class GestionMenu {
 					do {
 						Menu.demandeEntreeDateRetrait();
 						dateRetraitString = readerLine.nextLine();
-						dateRetrait = CheckDate.dateValide(dateRetraitString);
+						dateRetrait = checkDate.dateValide(dateRetraitString);
 						if (dateRetraitString.isEmpty()) {
 							dateRetrait = details.getDateRetrait();
 						}
 					} while (!(dateRetraitString.isEmpty() || dateRetrait != null));
 
-					Company company = CompanyDataService.recupDataCompanyId(nomConstructeur);
+					Company company = companyService.recupDataCompanyId(nomConstructeur);
 
-					UpdateDatabaseService.updateDataService(
+					updateComputerService.updateDataService(
 							new Computer(details.getId(), details.getName(), dateSortie, dateRetrait, company));
 
 				}
@@ -204,7 +233,7 @@ public class GestionMenu {
 				Menu.demandeEntreeNom();
 				// Scanner readerLine = new Scanner(System.in);
 				String nomMachineDetails = readerLine.nextLine();
-				Computer detailsOrdinateur = ComputerDetailsDataService.recupDataDetailsOrdi(nomMachineDetails);
+				Computer detailsOrdinateur = computerService.recupDataDetailsOrdi(nomMachineDetails);
 				Menu.afficheDetails(detailsOrdinateur);
 
 				break;
@@ -216,11 +245,11 @@ public class GestionMenu {
 				Menu.avertissementSuppression(nomMachineInfos);
 				String confirmation = readerLine.nextLine();
 
-				Computer ordiSuppr = ComputerDetailsDataService.recupDataDetailsOrdi(nomMachineInfos);
+				Computer ordiSuppr = computerService.recupDataDetailsOrdi(nomMachineInfos);
 
 				if (!confirmation.isEmpty()
 						&& (confirmation.equals(new String("O")) || confirmation.equals(new String("o")))) {
-					ComputerSuppressionService.supprDataOrdi(ordiSuppr);
+					supprComputerService.supprDataOrdi(ordiSuppr);
 				} else {
 					System.out.println("Element non supprime");
 				}
@@ -233,7 +262,7 @@ public class GestionMenu {
 
 	}
 
-	public static void main(String[] args) throws Exception {
+	public void run() throws Exception {
 		menu1();
 	}
 }

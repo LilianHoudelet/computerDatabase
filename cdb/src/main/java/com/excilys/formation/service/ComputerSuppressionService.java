@@ -3,23 +3,35 @@ package com.excilys.formation.service;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import org.slf4j.Logger;
+import javax.sql.DataSource;
 
-import com.excilys.formation.dao.AccessDatabase;
+import org.slf4j.Logger;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Repository;
+
 import com.excilys.formation.dao.SupprimerDatabaseDao;
 import com.excilys.formation.model.Computer;
 
+@Repository
+@Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class ComputerSuppressionService {
 	
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(ComputerSuppressionService.class);
 	
-	static AccessDatabase instance = AccessDatabase.getInstance();
+	private DataSource dataSource;
+	private SupprimerDatabaseDao supprimerDatabaseDao;
 	
-	public static void supprDataOrdi(Computer computer) throws Exception {
+	public ComputerSuppressionService(DataSource dataSource, SupprimerDatabaseDao supprimerDatabaseDao) {
+		this.dataSource = dataSource;
+		this.supprimerDatabaseDao = supprimerDatabaseDao;
+	}
+	
+	public void supprDataOrdi(Computer computer) throws Exception {
 		
-		try (Connection con = instance.getConnection();) {
+		try (Connection con = dataSource.getConnection();) {
 			logger.debug("Appel suppression élément " + computer.getName() + " de la BDD");
-			SupprimerDatabaseDao.computerInformations(con, computer);
+			supprimerDatabaseDao.computerInformations(con, computer);
 			
 		} catch (SQLException e) {
 			logger.error("Erreur dans la suppression de la table");
@@ -27,11 +39,11 @@ public class ComputerSuppressionService {
 		} 
 	}
 	
-	public static void supprDataOrdiId(int id) throws Exception {
+	public void supprDataOrdiId(int id) throws Exception {
 		
-		try (Connection con = instance.getConnection();) {
+		try (Connection con = dataSource.getConnection();) {
 			logger.debug("Appel suppression élément " + id + " de la BDD");
-			SupprimerDatabaseDao.deleteComputer(con, id);
+			supprimerDatabaseDao.deleteComputer(con, id);
 			
 		} catch (SQLException e) {
 			logger.error("Erreur dans la suppression de la table");
