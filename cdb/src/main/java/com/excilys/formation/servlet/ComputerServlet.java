@@ -52,6 +52,11 @@ public class ComputerServlet extends HttpServlet {
 	@Autowired
 	private DtoMapper dtoMapper;
        
+//	public ComputerServlet(ComputerDataService computerService, DtoMapper dtoMapper) {
+//		this.computerService = computerService;
+//		this.dtoMapper = dtoMapper;
+//	}
+
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());

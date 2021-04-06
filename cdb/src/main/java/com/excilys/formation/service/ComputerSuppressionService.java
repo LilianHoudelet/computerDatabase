@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
@@ -20,10 +19,13 @@ public class ComputerSuppressionService {
 	
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(ComputerSuppressionService.class);
 	
-	@Autowired
 	private DataSource dataSource;
-	@Autowired
 	private SupprimerDatabaseDao supprimerDatabaseDao;
+	
+	public ComputerSuppressionService(DataSource dataSource, SupprimerDatabaseDao supprimerDatabaseDao) {
+		this.dataSource = dataSource;
+		this.supprimerDatabaseDao = supprimerDatabaseDao;
+	}
 	
 	public void supprDataOrdi(Computer computer) throws Exception {
 		

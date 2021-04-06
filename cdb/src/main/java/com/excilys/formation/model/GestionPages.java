@@ -14,10 +14,14 @@ import com.excilys.formation.ui.Page;
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class GestionPages {
-	
-	@Autowired
+
 	private ComputerDataService computerService;
 	
+	@Autowired
+	public GestionPages(ComputerDataService computerService) {
+		this.computerService = computerService;
+	}
+
 	public void affichePage() throws Exception {
 		int taillePage = 10;
 		

@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
@@ -18,11 +17,14 @@ import com.excilys.formation.dao.DeleteCompanyDao;
 public class DeleteCompanyService {
 
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(DeleteCompanyService.class);
-	
-	@Autowired
+
 	private DataSource dataSource;
-	@Autowired
 	private DeleteCompanyDao deleteCompanyDao;
+	
+	public DeleteCompanyService(DataSource dataSource, DeleteCompanyDao deleteCompanyDao) {
+		this.dataSource = dataSource;
+		this.deleteCompanyDao = deleteCompanyDao;
+	}
 
 	public void supprDataCompanyId(int id) throws Exception {
 

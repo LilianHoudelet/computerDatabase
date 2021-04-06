@@ -38,29 +38,29 @@ public class GestionMenu {
 	public static final int AFFICHER_DETAILS_ORDINATEUR = 2;
 	public static final int SUPPRIMER_INFORMATIONS = 3;
 	
-	@Autowired
 	private CompanyDataService companyService;
-	
-	@Autowired
 	private ComputerDetailsDataService computerService;
-	
-	@Autowired
 	private ComputerSuppressionService supprComputerService;
-	
-	@Autowired
 	private UpdateDatabaseService updateComputerService;
-	
-	@Autowired
 	private GestionPages gestionPage;
-	
-	@Autowired
 	private DeleteCompanyService deleteCompanyService;
-	
-	@Autowired
 	private AjoutOrdinateurService addComputerService;
+	private CheckDate checkDate;
 	
 	@Autowired
-	private CheckDate checkDate;
+	public GestionMenu(CompanyDataService companyService, ComputerDetailsDataService computerService,
+			ComputerSuppressionService supprComputerService, UpdateDatabaseService updateComputerService,
+			GestionPages gestionPage, DeleteCompanyService deleteCompanyService,
+			AjoutOrdinateurService addComputerService, CheckDate checkDate) {
+		this.companyService = companyService;
+		this.computerService = computerService;
+		this.supprComputerService = supprComputerService;
+		this.updateComputerService = updateComputerService;
+		this.gestionPage = gestionPage;
+		this.deleteCompanyService = deleteCompanyService;
+		this.addComputerService = addComputerService;
+		this.checkDate = checkDate;
+	}
 
 	/**
 	 * Appelle les différentes fonctions pour afficher le menu, récupérer les

@@ -37,7 +37,6 @@ import com.excilys.formation.service.ValidationComputer;
 @WebServlet("/EditComputerServlet")
 public class EditComputerServlet extends HttpServlet {
 	
-	
 	public static final String LISTE_COMPANIES = "CompanyList";
 	public static final String INTRODUCED = "IntroducedDate";
 	public static final String DISCONTINUED = "DiscontinuedDate";
@@ -45,9 +44,7 @@ public class EditComputerServlet extends HttpServlet {
 	public static final String COMPUTER_ID = "ComputerId";
 	public static final String COMPANY_NAME = "CompanyName";
 	public static final String COMPUTER_ENTER = "id";
-		
 
-	
 	private static final long serialVersionUID = 1L;
 	
 	@Autowired
@@ -62,7 +59,18 @@ public class EditComputerServlet extends HttpServlet {
 	private DtoMapper dtoMapper;
 	@Autowired
 	private MapStringToComputer mapStringToComputer;
-	
+
+//	public EditComputerServlet(ComputerDetailsDataService computerDetails, CompanyDataService companyService,
+//			UpdateDatabaseService updateComputerService, ValidationComputer validator, DtoMapper dtoMapper,
+//			MapStringToComputer mapStringToComputer) {
+//		this.computerDetails = computerDetails;
+//		this.companyService = companyService;
+//		this.updateComputerService = updateComputerService;
+//		this.validator = validator;
+//		this.dtoMapper = dtoMapper;
+//		this.mapStringToComputer = mapStringToComputer;
+//	}
+
 	@Override
 	public void init(ServletConfig config) throws ServletException {
 		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());

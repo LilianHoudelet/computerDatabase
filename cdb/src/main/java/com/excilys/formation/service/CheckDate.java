@@ -1,7 +1,7 @@
 package com.excilys.formation.service;
 
 import java.time.LocalDate;
-
+import java.time.format.DateTimeParseException;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -19,7 +19,7 @@ public class CheckDate {
 		if (Pattern.matches(PATTERN_DATE, date)) {
 			try {
 				dateLocalDate = LocalDate.parse(date);
-			} catch (Exception e) {
+			} catch (DateTimeParseException e) {
 				throw new Exception("Invalid Date");
 			}
 		}

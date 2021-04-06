@@ -7,7 +7,6 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -21,20 +20,19 @@ import com.excilys.formation.model.Computer;
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class ComputerDataService {
 	
-	
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(ComputerDataService.class);
 	
-	@Autowired
 	private DataSource dataSource;
-	
-	@Autowired
 	private RequestFilterString sortingString;
-	
-	@Autowired
 	private ComputerInfos computerMapper;
-	
-	@Autowired
 	private ComputersInfosDao computersInfosDao;
+	
+	public ComputerDataService(DataSource dataSource, RequestFilterString sortingString, ComputerInfos computerMapper, ComputersInfosDao computersInfosDao) {
+		this.dataSource = dataSource;
+		this.sortingString = sortingString;
+		this.computerMapper = computerMapper;
+		this.computersInfosDao = computersInfosDao;
+	}
 	
 	public List<Computer> recupDataOrdi() throws Exception {
 		try (Connection con = dataSource.getConnection();) {

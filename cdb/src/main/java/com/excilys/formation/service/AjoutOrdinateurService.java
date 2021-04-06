@@ -8,7 +8,6 @@ import javax.sql.DataSource;
 import org.slf4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 
 //import com.excilys.formation.dao.AccessDatabase;
@@ -19,13 +18,15 @@ import com.excilys.formation.model.Computer;
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class AjoutOrdinateurService {
 	
-	@Autowired
-	private DataSource dataSource;
-	
-	@Autowired
+	private DataSource dataSource;	
 	private AjoutOrdinateurDao ajoutOrdinateurDao;
 
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(AjoutOrdinateurService.class);
+	
+	public AjoutOrdinateurService(DataSource dataSource, AjoutOrdinateurDao ajoutOrdinateurDao) {
+		this.dataSource = dataSource;
+		this.ajoutOrdinateurDao = ajoutOrdinateurDao;
+	}
 		
 	public void ajoutDataService(Computer computer) throws Exception {
 		try (Connection newCon = dataSource.getConnection();) {

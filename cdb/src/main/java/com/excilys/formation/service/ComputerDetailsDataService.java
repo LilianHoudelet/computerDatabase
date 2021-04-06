@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import javax.sql.DataSource;
 
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
@@ -20,14 +19,16 @@ import com.excilys.formation.model.Computer;
 public class ComputerDetailsDataService {
 	
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(ComputerDetailsDataService.class);
-	
-	@Autowired
+
 	private DataSource dataSource;
-	
-	@Autowired
 	private ComputerInfos computerMapper;
-	@Autowired
 	private ComputersInfosDao computersInfosDao;
+
+	public ComputerDetailsDataService(DataSource dataSource, ComputerInfos computerMapper, ComputersInfosDao computersInfosDao) {
+		this.dataSource = dataSource;
+		this.computerMapper = computerMapper;
+		this.computersInfosDao = computersInfosDao;
+	}
 	
 	public Computer recupDataDetailsOrdi(String nomMachine) throws Exception {
 		

@@ -33,15 +33,17 @@ import com.excilys.formation.service.ValidationComputer;
 @WebServlet("/AddComputerServlet")
 public class AddComputerServlet extends HttpServlet {
 	
+
+
 	public static final String LISTE_COMPANIES = "CompanyList";
 	
 	private static final long serialVersionUID = 1L;
 	
 	@Autowired
-	private AjoutOrdinateurService ComputerService;
+	private AjoutOrdinateurService computerService;
 	
 	@Autowired
-	private CompanyDataService CompanyService;
+	private CompanyDataService companyService;
 	
 	@Autowired
 	private ValidationComputer validator;
@@ -52,12 +54,15 @@ public class AddComputerServlet extends HttpServlet {
 	@Autowired
 	private MapStringToComputer mapStringToComputer;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-//    public AddComputerServlet() {
-//        super();
-//    }
+//	public AddComputerServlet(AjoutOrdinateurService computerService, CompanyDataService companyService,
+//			ValidationComputer validator, DtoMapper dtoMapper, MapStringToComputer mapStringToComputer) {
+//		this.computerService = computerService;
+//		this.companyService = companyService;
+//		this.validator = validator;
+//		this.dtoMapper = dtoMapper;
+//		this.mapStringToComputer = mapStringToComputer;
+//	}
+	
     @Override
 	public void init(ServletConfig config) throws ServletException {
 		SpringBeanAutowiringSupport.processInjectionBasedOnServletContext(this, config.getServletContext());
@@ -71,7 +76,7 @@ public class AddComputerServlet extends HttpServlet {
 		List<CompanyDTO> companies = new ArrayList<CompanyDTO>();
 		
 		try {
-			companies = dtoMapper.mapCompanyToCompanyDTO(CompanyService.recupDataCompany());
+			companies = dtoMapper.mapCompanyToCompanyDTO(companyService.recupDataCompany());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -94,7 +99,7 @@ public class AddComputerServlet extends HttpServlet {
 		try {
 			if (validator.isComputerValid(computerName, dateSortie, dateRetrait)) {
 				Computer addedComputer = mapStringToComputer.ComputerStringToComputer(computerName, dateSortie, dateRetrait, company);
-				ComputerService.ajoutDataService(addedComputer);
+				computerService.ajoutDataService(addedComputer);
 			} else {
 				System.out.println("Ordinateur non valide");
 			}

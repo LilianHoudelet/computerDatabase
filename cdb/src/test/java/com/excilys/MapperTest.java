@@ -24,12 +24,15 @@ import com.excilys.formation.service.ValidationComputer;
 public class MapperTest {
 	
 	ValidationComputer validator;
+	DtoMapper dtoMapper;
+	RequestFilterString requestFilterString;
+	MapStringToComputer mapStringToComputer;
 	
 	@Test
 	public void computerToComputerDTOTest() {
 		Computer computer = new Computer(1,"Test",LocalDate.parse("2020-01-09"), LocalDate.parse("2020-10-01"),new Company(1,"Apple Inc."));
 		ComputerDTO computerTest = new ComputerDTO("1","Test", LocalDate.parse("2020-01-09").toString(), LocalDate.parse("2020-10-01").toString(), "Apple Inc.");
-		ComputerDTO computerDTO = DtoMapper.mapComputerToComputerDTOOne(computer);
+		ComputerDTO computerDTO = dtoMapper.mapComputerToComputerDTOOne(computer);
 		
 		assertTrue(computerDTO.equals(computerTest));
 	}
@@ -52,7 +55,7 @@ public class MapperTest {
 		
 		
 		
-		assertTrue(computersDTO.equals(DtoMapper.mapComputerToComputerDTO(computers)));
+		assertTrue(computersDTO.equals(dtoMapper.mapComputerToComputerDTO(computers)));
 	}
 	
 	@Test
@@ -71,13 +74,13 @@ public class MapperTest {
 		companiesDTO.add(companydto1);
 		companiesDTO.add(companydto2);
 		
-		assertTrue(companiesDTO.equals(DtoMapper.mapCompanyToCompanyDTO(companies)));
+		assertTrue(companiesDTO.equals(dtoMapper.mapCompanyToCompanyDTO(companies)));
 	}
 	
 	@Test
 	public void StringToComputerTest() throws Exception {
 		Computer computer = new Computer(1,"Test",LocalDate.parse("2020-01-09"), LocalDate.parse("2020-10-01"),new Company(1,""));	
-		Computer computerString = MapStringToComputer.ComputerStringToComputer("Test", "2020-01-09", "2020-10-01", "1");
+		Computer computerString = mapStringToComputer.ComputerStringToComputer("Test", "2020-01-09", "2020-10-01", "1");
 				
 		assertTrue(computer.equals(computerString));
 	}
@@ -107,18 +110,18 @@ public class MapperTest {
 	
 	@Test
 	public void mapperFilterTest() {	
-		assertEquals(RequestFilterString.convertOrderbool(true)," ASC ");
-		assertNotEquals(RequestFilterString.convertOrderbool(true)," DESC ");
+		assertEquals(requestFilterString.convertOrderbool(true)," ASC ");
+		assertNotEquals(requestFilterString.convertOrderbool(true)," DESC ");
 	}
 	
 	@Test
 	public void mapperFilterTestCol() {	
-		assertEquals(RequestFilterString.convertOrderString("introduced"),"introduced");
-		assertEquals(RequestFilterString.convertOrderString("discontinued"),"discontinued");
-		assertEquals(RequestFilterString.convertOrderString("computerName"),"computer.name");
-		assertEquals(RequestFilterString.convertOrderString("company"),"company.name");
-		assertEquals(RequestFilterString.convertOrderString(""),"computer.id");
-		assertEquals(RequestFilterString.convertOrderString(null),"computer.id");
+		assertEquals(requestFilterString.convertOrderString("introduced"),"introduced");
+		assertEquals(requestFilterString.convertOrderString("discontinued"),"discontinued");
+		assertEquals(requestFilterString.convertOrderString("computerName"),"computer.name");
+		assertEquals(requestFilterString.convertOrderString("company"),"company.name");
+		assertEquals(requestFilterString.convertOrderString(""),"computer.id");
+		assertEquals(requestFilterString.convertOrderString(null),"computer.id");
 	}
 	
 	

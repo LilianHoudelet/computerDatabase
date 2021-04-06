@@ -28,6 +28,10 @@ public class DeleteComputerServlet extends HttpServlet {
 	
 	@Autowired
 	private ComputerSuppressionService supprComputerService;
+	
+//	public DeleteComputerServlet(ComputerSuppressionService supprComputerService) {
+//		this.supprComputerService = supprComputerService;
+//	}
 
 	@Override
 	public void init(ServletConfig config) throws ServletException {
