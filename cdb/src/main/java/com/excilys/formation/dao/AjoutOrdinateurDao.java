@@ -18,16 +18,13 @@ public class AjoutOrdinateurDao {
 
 	public static final String REQUETE_AJOUTER_COMPLET = "INSERT INTO computer (id, name, introduced, discontinued, company_id) VALUES (?,?,?,?,?)";
 	
-	private DataSource dataSource;
+	JdbcTemplate insert = new JdbcTemplate();
 	
 	public AjoutOrdinateurDao(DataSource dataSource) {
-		this.dataSource = dataSource;
+		insert.setDataSource(dataSource);
 	}
 
 	public void computerInformations(Computer computer) {
-		JdbcTemplate insert = new JdbcTemplate();
-		insert.setDataSource(dataSource);
-		
 		insert.update(REQUETE_AJOUTER_COMPLET, new Object[] { 
 				computer.getId(), 
 				computer.getName(), 

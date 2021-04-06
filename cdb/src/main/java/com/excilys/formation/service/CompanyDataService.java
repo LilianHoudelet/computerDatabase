@@ -31,16 +31,22 @@ public class CompanyDataService {
 		this.companieInfoDao = companieInfoDao;
 	}
 	
+//	public List<Company> recupDataCompany() throws Exception {
+//		try (Connection con = dataSource.getConnection();) {
+//			logger.debug("Récupération de la liste des Company");
+//			return companyMapper.companyInformationsMapper(companieInfoDao.companyInformations(con));
+//		
+//		} catch (SQLException e) {
+//			logger.error("Erreur sur l'accès a la base de données ou sur le mappage des informations");
+//			throw new Exception("Impossible de se connecter a la base de donnees");
+//		} 
+//	}
+	
 	public List<Company> recupDataCompany() throws Exception {
-		try (Connection con = dataSource.getConnection();) {
-			logger.debug("Récupération de la liste des Company");
-			return companyMapper.companyInformationsMapper(companieInfoDao.companyInformations(con));
-		
-		} catch (SQLException e) {
-			logger.error("Erreur sur l'accès a la base de données ou sur le mappage des informations");
-			throw new Exception("Impossible de se connecter a la base de donnees");
-		} 
+		logger.debug("Récupération de la liste des Company");
+		return companieInfoDao.companyInformations();
 	}
+	
 	public Company recupDataCompanyId(String nomConstructeur) throws Exception {
 		try (Connection con = dataSource.getConnection();) {
 			logger.debug("Récupération de l'Id de Company avec le nom");

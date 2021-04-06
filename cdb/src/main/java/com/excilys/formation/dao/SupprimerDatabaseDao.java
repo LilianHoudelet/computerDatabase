@@ -18,19 +18,17 @@ public class SupprimerDatabaseDao {
 	
 	public static final String REQUETE_SUPPRIMER_PAR_ID = "DELETE FROM computer WHERE id = ?";
 	
-	private DataSource dataSource;
+	JdbcTemplate delete = new JdbcTemplate();
 	
 	public SupprimerDatabaseDao(DataSource dataSource) {
-		this.dataSource = dataSource;
+		delete.setDataSource(dataSource);
 	}
 	
-	public void deleteComputer(String name) {
-		JdbcTemplate delete = new JdbcTemplate(dataSource);
+	public void deleteComputer(String name) {		
         delete.update(REQUETE_SUPPRIMER, new Object[] { name });
 	}
 	
 	public void deleteComputer(int id) {
-		JdbcTemplate delete = new JdbcTemplate(dataSource);
         delete.update(REQUETE_SUPPRIMER_PAR_ID, new Object[] { id });
 	}
 }

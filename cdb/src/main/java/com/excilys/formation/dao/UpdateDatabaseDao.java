@@ -20,15 +20,15 @@ public class UpdateDatabaseDao {
 	
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(UpdateDatabaseDao.class);
 	
-	private DataSource dataSource;
+	JdbcTemplate update = new JdbcTemplate();
 	
 	public UpdateDatabaseDao(DataSource dataSource) {
-		this.dataSource = dataSource;
+		update.setDataSource(dataSource);
 	}
 	
 	public void updateComputerInformations(Computer computer) throws ClassNotFoundException, SQLException {
-		JdbcTemplate update = new JdbcTemplate();
-		update.setDataSource(dataSource);
+		
+		
 		
 		update.update(REQUETE_UPDATE, new Object[] { 
 				computer.getDateSortie() != null ? computer.getDateSortie() : null, 
