@@ -1,10 +1,5 @@
 package com.excilys.formation.service;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
-import javax.sql.DataSource;
-
 import org.slf4j.Logger;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
@@ -17,14 +12,12 @@ import com.excilys.formation.model.Computer;
 @Repository
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class AjoutOrdinateurService {
-	
-	private DataSource dataSource;	
+		
 	private AjoutOrdinateurDao ajoutOrdinateurDao;
 
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(AjoutOrdinateurService.class);
 	
-	public AjoutOrdinateurService(DataSource dataSource, AjoutOrdinateurDao ajoutOrdinateurDao) {
-		this.dataSource = dataSource;
+	public AjoutOrdinateurService(AjoutOrdinateurDao ajoutOrdinateurDao) {
 		this.ajoutOrdinateurDao = ajoutOrdinateurDao;
 	}
 		

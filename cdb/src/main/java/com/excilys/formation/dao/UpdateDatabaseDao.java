@@ -1,13 +1,13 @@
 package com.excilys.formation.dao;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
+import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import com.excilys.formation.model.Computer;
@@ -20,30 +20,24 @@ public class UpdateDatabaseDao {
 	
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(UpdateDatabaseDao.class);
 	
-	public void updateComputerInformations(Connection con, Computer ordinateur) throws ClassNotFoundException, SQLException {
+	private DataSource dataSource;
+	
+	public UpdateDatabaseDao(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
+	
+	public void updateComputerInformations(Computer computer) throws ClassNotFoundException, SQLException {
+		JdbcTemplate update = new JdbcTemplate();
+		update.setDataSource(dataSource);
+		
+		update.update(REQUETE_UPDATE, new Object[] { 
+				computer.getDateSortie() != null ? computer.getDateSortie() : null, 
+				computer.getDateRetrait() != null ? computer.getDateRetrait() : null, 
+				computer.getCompany().getId() != 0 ? computer.getCompany().getId() : null,
+				computer.getName(),
+				computer.getId() });
 
-		PreparedStatement stmt = con.prepareStatement(REQUETE_UPDATE);
 		
-		if (ordinateur.getDateSortie() != null) {
-			stmt.setDate(1, Date.valueOf(ordinateur.getDateSortie()));
-		} else {
-			stmt.setDate(1, null);
-		}
-		if (ordinateur.getDateRetrait() != null) {
-			stmt.setDate(2, Date.valueOf(ordinateur.getDateRetrait()));
-		} else {
-			stmt.setDate(2, null);
-		}
-		if (ordinateur.getCompany().getId() != 0) {
-			stmt.setInt(3, ordinateur.getCompany().getId());
-		} else {
-			stmt.setNull(3, 0);
-		}
-		stmt.setString(4, ordinateur.getName());
-		
-		stmt.setInt(5, ordinateur.getId());
-		
-		stmt.executeUpdate();
-		logger.debug("Mise à jour de l'élément " + ordinateur.getName() + " dans la base de données");
+		logger.debug("Mise à jour de l'élément " + computer.getName() + " dans la base de données");
 	}
 }

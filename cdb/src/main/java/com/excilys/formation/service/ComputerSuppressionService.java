@@ -1,8 +1,5 @@
 package com.excilys.formation.service;
 
-
-import javax.sql.DataSource;
-
 import org.slf4j.Logger;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
@@ -19,7 +16,7 @@ public class ComputerSuppressionService {
 
 	private SupprimerDatabaseDao supprimerDatabaseDao;
 	
-	public ComputerSuppressionService(DataSource dataSource, SupprimerDatabaseDao supprimerDatabaseDao) {
+	public ComputerSuppressionService(SupprimerDatabaseDao supprimerDatabaseDao) {
 		this.supprimerDatabaseDao = supprimerDatabaseDao;
 	}
 	
