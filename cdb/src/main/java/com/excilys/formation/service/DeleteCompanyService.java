@@ -1,9 +1,6 @@
 package com.excilys.formation.service;
 
-import java.sql.Connection;
 import java.sql.SQLException;
-
-import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -18,20 +15,18 @@ public class DeleteCompanyService {
 
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(DeleteCompanyService.class);
 
-	private DataSource dataSource;
 	private DeleteCompanyDao deleteCompanyDao;
 	
-	public DeleteCompanyService(DataSource dataSource, DeleteCompanyDao deleteCompanyDao) {
-		this.dataSource = dataSource;
+	public DeleteCompanyService(DeleteCompanyDao deleteCompanyDao) {
 		this.deleteCompanyDao = deleteCompanyDao;
 	}
 
 	public void supprDataCompanyId(int id) throws Exception {
 
-		try (Connection con = dataSource.getConnection();) {
+		try {
 			logger.debug("Appel suppression company " + id + " de la BDD");
 			
-			deleteCompanyDao.deleteCompany(con, id);
+			deleteCompanyDao.deleteCompany(id);
 
 		} catch (SQLException e) {
 			logger.error("Erreur dans la suppression de la table");

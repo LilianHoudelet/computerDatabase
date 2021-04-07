@@ -102,7 +102,6 @@ public class EditComputerServlet extends HttpServlet {
 		}
 		
 		request.setAttribute(COMPUTER_ID, id);
-		
 		request.setAttribute(COMPUTER_NAME,computerToUpdate.getName());
 		request.setAttribute(INTRODUCED,computerToUpdate.getDateSortie());
 		request.setAttribute(DISCONTINUED,computerToUpdate.getDateRetrait());

@@ -1,10 +1,6 @@
 package com.excilys.formation.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -34,17 +30,6 @@ public class CompanieInfoDao {
 		template.setDataSource(dataSource);
 	}
 	
-	public ResultSet companyInformations(Connection con) throws ClassNotFoundException, SQLException {
-		
-		
-		Statement stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery(REQUETE);
-		
-		logger.debug("Récupération de la liste des constructeurs");
-		
-		return rs;
-	}
-	
 	public List<Company> companyInformations() throws ClassNotFoundException, SQLException {
 		
 		logger.debug("Récupération de la liste des constructeurs");
@@ -52,22 +37,11 @@ public class CompanieInfoDao {
 		return template.query(REQUETE, new CompanyInfos() );
 	}
 	
-	public List<Company> companyInformationsId(String name) throws ClassNotFoundException, SQLException {
+	public Company companyInformationsId(String name) throws ClassNotFoundException, SQLException {
 
 		logger.debug("Récupération de l'id correspondant au nom du constructeur : " + name);
 		
-		return template.query(REQUETE_ID, new Object[] { name }, new CompanyInfos() );
+		return template.query(REQUETE_ID, new Object[] { name }, new CompanyInfos()).get(0);
 	}
-	
-	public ResultSet companyInformationsId(Connection con, String name) throws ClassNotFoundException, SQLException {
-
-		PreparedStatement stmt = con.prepareStatement(REQUETE_ID);
-		stmt.setString(1, name);
-		ResultSet rs = stmt.executeQuery();	
 		
-		logger.debug("Récupération de l'id correspondant au nom du constructeur : " + name);
-		
-		return rs;
-	}
-	
 }
