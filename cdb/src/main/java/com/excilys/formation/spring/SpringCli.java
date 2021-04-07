@@ -5,6 +5,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import com.excilys.formation.model.GestionMenu;
 
+
 public class SpringCli {
 	
 	public static void main(String[] args) throws Exception {
@@ -13,5 +14,4 @@ public class SpringCli {
 		cli.run();
 		((ConfigurableApplicationContext) context).close();
 	}
-
 }

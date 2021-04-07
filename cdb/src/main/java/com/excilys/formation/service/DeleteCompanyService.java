@@ -1,11 +1,11 @@
 package com.excilys.formation.service;
 
-import java.sql.SQLException;
-
 import org.slf4j.Logger;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.excilys.formation.dao.DeleteCompanyDao;
 
@@ -21,16 +21,17 @@ public class DeleteCompanyService {
 		this.deleteCompanyDao = deleteCompanyDao;
 	}
 
-	public void supprDataCompanyId(int id) throws Exception {
+	@Transactional
+	public void supprDataCompanyId(int id) throws DataAccessException {
 
 		try {
 			logger.debug("Appel suppression company " + id + " de la BDD");
 			
 			deleteCompanyDao.deleteCompany(id);
 
-		} catch (SQLException e) {
-			logger.error("Erreur dans la suppression de la table");
-			throw new Exception("Impossible de se connecter a la base de donnees Suppression company");
+		} catch (DataAccessException e) {
+			logger.error("Erreur dans la suppression de la companie dans la table",e);
+			throw e;
 		}
 	}
 

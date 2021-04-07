@@ -47,21 +47,21 @@ public class ComputersInfosDao {
 
 	public Integer computerInformationsNbEltsFiltre(String chaine) throws ClassNotFoundException, SQLException {
 		
-		return template.queryForObject(REQUETE_NOMBRE_FILTRE, new Object[] {"%"+chaine+"%","%"+chaine+"%"},Integer.class);
+		return template.queryForObject(REQUETE_NOMBRE_FILTRE, Integer.class, "%"+chaine+"%","%"+chaine+"%");
 	}
 	
 	public List<Computer> computerInformationsPageFilterSorted(int taillePage, int page, String chaine, String order, String upOrDown) throws SQLException {
 		
-		return template.query(REQUETE_PAGE_FILTRE_TRIE + order + upOrDown + LIMIT_OFFSET, new Object[] {"%"+chaine+"%","%"+chaine+"%", taillePage, page * taillePage} , new ComputerInfos());
+		return template.query(REQUETE_PAGE_FILTRE_TRIE + order + upOrDown + LIMIT_OFFSET, new ComputerInfos(), "%"+chaine+"%","%"+chaine+"%", taillePage, page * taillePage);
 	}
 
 	
 	public Computer computerInformationsDetails(String nomMachine) throws ClassNotFoundException, SQLException {
-		return template.query(REQUETE_DETAILS, new Object[] {nomMachine} , new ComputerInfos()).get(0);
+		return template.query(REQUETE_DETAILS, new ComputerInfos(), nomMachine).get(0);
 	}
 
 	public Computer computerInformationsDetails(int id) throws ClassNotFoundException, SQLException {
-		return template.query(REQUETE_DETAILS_ID, new Object[] {id} , new ComputerInfos()).get(0);
+		return template.query(REQUETE_DETAILS_ID, new ComputerInfos(),id).get(0);
 	}
 
 }

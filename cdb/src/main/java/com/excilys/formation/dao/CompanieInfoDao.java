@@ -41,7 +41,7 @@ public class CompanieInfoDao {
 
 		logger.debug("Récupération de l'id correspondant au nom du constructeur : " + name);
 		
-		return template.query(REQUETE_ID, new Object[] { name }, new CompanyInfos()).get(0);
+		return template.query(REQUETE_ID,new CompanyInfos(),name).get(0);
 	}
 		
 }
