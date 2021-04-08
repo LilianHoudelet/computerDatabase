@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.excilys.formation.dto.CompanyDTO;
@@ -28,13 +28,10 @@ import com.excilys.formation.service.ValidationComputer;
 /**
  * Servlet implementation class AddComputerServlet
  */
-@Component
+@Controller
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 @WebServlet("/AddComputerServlet")
 public class AddComputerServlet extends HttpServlet {
-	
-
-
 	public static final String LISTE_COMPANIES = "CompanyList";
 	
 	private static final long serialVersionUID = 1L;
@@ -72,7 +69,7 @@ public class AddComputerServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+				
 		List<CompanyDTO> companies = new ArrayList<CompanyDTO>();
 		
 		try {

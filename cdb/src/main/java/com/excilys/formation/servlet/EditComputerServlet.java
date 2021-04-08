@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.excilys.formation.dto.CompanyDTO;
@@ -32,7 +32,7 @@ import com.excilys.formation.service.ValidationComputer;
  * Servlet implementation class EditComputerServlet
  */
 
-@Component
+@Controller
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 @WebServlet("/EditComputerServlet")
 public class EditComputerServlet extends HttpServlet {

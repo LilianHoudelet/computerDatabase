@@ -27,8 +27,8 @@ public class DeleteCompanyDao {
 		
 	@Transactional
 	public void deleteCompany(int companyId) {
-		delete.update(DELETE_COMPUTER, new Object[] { companyId });
-		delete.update(DELETE_COMPANY, new Object[] { companyId });
+		delete.update(DELETE_COMPUTER, companyId );
+		delete.update(DELETE_COMPANY, companyId );
 		logger.debug("Suppression de l'element id et des computer associes a l'id " + companyId);
 	}
 }

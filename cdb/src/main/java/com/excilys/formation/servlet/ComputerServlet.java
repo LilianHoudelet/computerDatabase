@@ -16,7 +16,7 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.excilys.formation.dto.ComputerDTO;
@@ -24,7 +24,7 @@ import com.excilys.formation.mapper.DtoMapper;
 import com.excilys.formation.model.ComputerPage;
 import com.excilys.formation.service.ComputerDataService;
 
-@Component
+@Controller
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 @WebServlet("/ComputerServlet")
 public class ComputerServlet extends HttpServlet {
@@ -114,7 +114,7 @@ public class ComputerServlet extends HttpServlet {
 
 		request.setAttribute(FILTER, chaineFiltre);
 		request.setAttribute(COMPUTER_NUMBER, nombreElements);
-		request.setAttribute(LISTE_COMPUTER, computerPage.getComputerList());
+		request.setAttribute(LISTE_COMPUTER, computerPage.getComputerList()); // envoi de la liste des computers
 		request.setAttribute(NUM_PAGE, pagination);
 		request.setAttribute(PAGE_INDEX, computerPage.getIndex());
 		request.setAttribute(MAX_PAGE, computerPage.getMaxPage());

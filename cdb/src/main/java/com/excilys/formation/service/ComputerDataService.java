@@ -41,13 +41,13 @@ public class ComputerDataService {
 	public List<Computer> recupDataOrdiPageFiltreTrie(int nombreParPage, int page, String chaine, String order,
 			boolean ascendance) throws Exception {
 		logger.debug("Récupération d'une liste de computer filtrée triée plus petite : Page " + page);
-		return computersInfosDao.computerInformationsPageFilterSorted(nombreParPage, page, chaine,
+		return computersInfosDao.computerInformationsPageFilterSorted(nombreParPage, page, "%"+chaine+"%",
 				sortingString.convertOrderString(order), sortingString.convertOrderbool(ascendance));
 	}
 
 	public int recupDataOrdiNombre(String chaine) throws Exception {
 		logger.debug("Récupération du nombre de computer plus petite");
-		return computersInfosDao.computerInformationsNbEltsFiltre(chaine);
+		return computersInfosDao.computerInformationsNbEltsFiltre("%"+chaine+"%");
 	}
 
 }

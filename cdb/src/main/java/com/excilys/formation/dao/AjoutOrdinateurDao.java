@@ -25,12 +25,12 @@ public class AjoutOrdinateurDao {
 	}
 
 	public void computerInformations(Computer computer) {
-		insert.update(REQUETE_AJOUTER_COMPLET, new Object[] { 
+		insert.update(REQUETE_AJOUTER_COMPLET,  
 				computer.getId(), 
 				computer.getName(), 
 				computer.getDateSortie() != null ? computer.getDateSortie() : null, 
 				computer.getDateRetrait() != null ? computer.getDateRetrait() : null, 
-				computer.getCompany().getId() != 0 ? computer.getCompany().getId() : null });
+				computer.getCompany().getId() != 0 ? computer.getCompany().getId() : null );
 		
 	}
 }

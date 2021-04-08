@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.excilys.formation.service.ComputerSuppressionService;
@@ -20,7 +20,7 @@ import com.excilys.formation.service.ComputerSuppressionService;
 /**
  * Servlet implementation class DeleteComuterServlet
  */
-@Component
+@Controller
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 @WebServlet("/DeleteComputerServlet")
 public class DeleteComputerServlet extends HttpServlet {
