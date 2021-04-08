@@ -106,7 +106,7 @@ public class ComputerServlet extends HttpServlet {
 			
 			nombreElements = computerService.recupDataOrdiNombre(chaineFiltre);
 			
-			computerPage = new ComputerPage(nbEltParPage, nombreElements , computers);
+			computerPage = new ComputerPage(nbEltParPage, nombreElements);
 			computerPage.setNumPage(pagination);
 		} catch (Exception e) {
 			logger.error("La recherche de la page à raté",e);
@@ -114,7 +114,7 @@ public class ComputerServlet extends HttpServlet {
 
 		request.setAttribute(FILTER, chaineFiltre);
 		request.setAttribute(COMPUTER_NUMBER, nombreElements);
-		request.setAttribute(LISTE_COMPUTER, computerPage.getComputerList()); // envoi de la liste des computers
+		request.setAttribute(LISTE_COMPUTER, computers); // envoi de la liste des computers
 		request.setAttribute(NUM_PAGE, pagination);
 		request.setAttribute(PAGE_INDEX, computerPage.getIndex());
 		request.setAttribute(MAX_PAGE, computerPage.getMaxPage());

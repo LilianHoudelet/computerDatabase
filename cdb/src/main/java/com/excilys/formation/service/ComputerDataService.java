@@ -13,6 +13,7 @@ import com.excilys.formation.dao.ComputersInfosDao;
 import com.excilys.formation.mapper.ComputerInfos;
 import com.excilys.formation.mapper.RequestFilterString;
 import com.excilys.formation.model.Computer;
+import com.excilys.formation.model.ComputerPage;
 
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
@@ -50,4 +51,9 @@ public class ComputerDataService {
 		return computersInfosDao.computerInformationsNbEltsFiltre("%"+chaine+"%");
 	}
 
+	public List<Computer> recupDataOrdiPageFiltreTrie(ComputerPage page) {
+		logger.debug("Récupération d'une liste de computer filtrée triée plus petite par page: Page " + page.getNumPage());
+		return computersInfosDao.computerInformationsPageFilterSorted(page.getNbEltsParPage(), page.getNumPage(), "%"+page.getSearchString()+"%",
+				sortingString.convertOrderString(page.getOrderBy()), sortingString.convertOrderbool(page.getAsc()));
+	}
 }

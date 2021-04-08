@@ -9,14 +9,16 @@ public class ComputerPage {
 	int numPage;
 	int nbEltsParPage;
 	int index;
-	static int maxPage;
+	int maxPage;
 	int nbElts;
+	String orderBy = "id";
+	boolean asc;
+	String searchString;
 	List<ComputerDTO> computerList;
 	
-	public ComputerPage(int nbEltsParPage, int nbElts, List<ComputerDTO> computerList) {
+	public ComputerPage(int nbEltsParPage, int nbElts) { 
 		super();
 		this.nbEltsParPage = nbEltsParPage;
-		this.computerList = computerList;
 		this.numPage = 1;
 		maxPage = (nbElts -1) / this.nbEltsParPage + 1;
 		indexPagination();
@@ -57,6 +59,9 @@ public class ComputerPage {
 		maxPage = (computerList.size() -1) / this.nbEltsParPage + 1;
 	}
 	
+	public void setNbElts (int nbElts) {
+		this.nbElts = nbElts;
+	}
 	
 	public void indexPagination() {
 		if (this.numPage <= 3) {
@@ -72,8 +77,36 @@ public class ComputerPage {
 		return maxPage;
 	}
 
-	public static void setMaxPage(int maxPage) {
-		ComputerPage.maxPage = maxPage;
+	public void setMaxPage(int maxPage) {
+		this.maxPage = maxPage;
 	}
 
+	public void setSearchString(String search) {
+		this.searchString = search;		
+	}
+
+	public String getSearchString() {
+		return this.searchString;
+	}
+
+	public int getNbElts() {
+		return this.nbElts;
+	}
+
+	public void setOrder(String order) {
+		if (this.orderBy.equals(order)) {
+			this.asc = !this.asc;
+		} else {
+			this.orderBy = order;
+			this.asc = true;
+		}
+	}
+	
+	public boolean getAsc() {
+		return this.asc;
+	}
+	
+	public String getOrderBy() {
+		return this.orderBy;
+	}
 }
