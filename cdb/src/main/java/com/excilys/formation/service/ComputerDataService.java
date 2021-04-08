@@ -34,18 +34,18 @@ public class ComputerDataService {
 		return computersInfosDao.computerInformations();
 	}
 
-	public List<Computer> recupDataOrdiPage(int nombreParPage, int page) throws Exception {
+	public List<Computer> recupDataOrdiPage(int nombreParPage, int page) {
 		return recupDataOrdiPageFiltreTrie(nombreParPage, page, "", "id", true);
 	}
 
 	public List<Computer> recupDataOrdiPageFiltreTrie(int nombreParPage, int page, String chaine, String order,
-			boolean ascendance) throws Exception {
+			boolean ascendance) {
 		logger.debug("Récupération d'une liste de computer filtrée triée plus petite : Page " + page);
 		return computersInfosDao.computerInformationsPageFilterSorted(nombreParPage, page, "%"+chaine+"%",
 				sortingString.convertOrderString(order), sortingString.convertOrderbool(ascendance));
 	}
 
-	public int recupDataOrdiNombre(String chaine) throws Exception {
+	public int recupDataOrdiNombre(String chaine) {
 		logger.debug("Récupération du nombre de computer plus petite");
 		return computersInfosDao.computerInformationsNbEltsFiltre("%"+chaine+"%");
 	}

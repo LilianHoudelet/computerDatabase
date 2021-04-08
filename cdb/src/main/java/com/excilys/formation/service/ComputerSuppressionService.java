@@ -20,11 +20,11 @@ public class ComputerSuppressionService {
 		this.supprimerDatabaseDao = supprimerDatabaseDao;
 	}
 	
-	public void supprDataOrdi(Computer computer) throws Exception {
+	public void supprDataOrdi(Computer computer) {
 		logger.debug("Appel suppression élément " + computer.getName() + " de la BDD");
 		supprimerDatabaseDao.deleteComputer(computer.getName());
 	}
-	public void supprDataOrdiId(int id) throws Exception {
+	public void supprDataOrdiId(int id) {
 		logger.debug("Appel suppression élément " + id + " de la BDD");
 		supprimerDatabaseDao.deleteComputer(id);
 	}
