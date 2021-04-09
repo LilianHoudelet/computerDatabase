@@ -103,7 +103,7 @@ public class DashboardController {
 		if (search != null) {
 			dashboardParameters.setSearchValue(search);
 		} else {
-			dashboardParameters.setSearchValue("");
+			dashboardParameters.setSearchValue(dashboardParameters.getSearchValue());
 		}
 		if (orderBy != null) {
 			dashboardParameters.setOrderByValue(orderBy);
