@@ -67,4 +67,5 @@ public class SpringWebConfig implements WebApplicationInitializer, WebMvcConfigu
     public PlatformTransactionManager txManager() {
         return new DataSourceTransactionManager(getDataSource());
     }
+	
 }
