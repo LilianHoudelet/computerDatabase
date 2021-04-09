@@ -13,6 +13,7 @@ import com.excilys.formation.dao.ComputersInfosDao;
 import com.excilys.formation.mapper.ComputerInfos;
 import com.excilys.formation.mapper.RequestFilterString;
 import com.excilys.formation.model.Computer;
+import com.excilys.formation.model.ComputerPage;
 
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
@@ -34,20 +35,25 @@ public class ComputerDataService {
 		return computersInfosDao.computerInformations();
 	}
 
-	public List<Computer> recupDataOrdiPage(int nombreParPage, int page) throws Exception {
+	public List<Computer> recupDataOrdiPage(int nombreParPage, int page) {
 		return recupDataOrdiPageFiltreTrie(nombreParPage, page, "", "id", true);
 	}
 
 	public List<Computer> recupDataOrdiPageFiltreTrie(int nombreParPage, int page, String chaine, String order,
-			boolean ascendance) throws Exception {
+			boolean ascendance) {
 		logger.debug("Récupération d'une liste de computer filtrée triée plus petite : Page " + page);
-		return computersInfosDao.computerInformationsPageFilterSorted(nombreParPage, page, chaine,
+		return computersInfosDao.computerInformationsPageFilterSorted(nombreParPage, page, "%"+chaine+"%",
 				sortingString.convertOrderString(order), sortingString.convertOrderbool(ascendance));
 	}
 
-	public int recupDataOrdiNombre(String chaine) throws Exception {
+	public int recupDataOrdiNombre(String chaine) {
 		logger.debug("Récupération du nombre de computer plus petite");
-		return computersInfosDao.computerInformationsNbEltsFiltre(chaine);
+		return computersInfosDao.computerInformationsNbEltsFiltre("%"+chaine+"%");
 	}
 
+	public List<Computer> recupDataOrdiPageFiltreTrie(ComputerPage page) {
+		logger.debug("Récupération d'une liste de computer filtrée triée plus petite par page: Page " + page.getNumPage());
+		return computersInfosDao.computerInformationsPageFilterSorted(page.getNbEltsParPage(), page.getNumPage() -1, "%"+page.getSearchString()+"%",
+				sortingString.convertOrderString(page.getOrderBy()), sortingString.convertOrderbool(page.getAsc()));
+	}
 }

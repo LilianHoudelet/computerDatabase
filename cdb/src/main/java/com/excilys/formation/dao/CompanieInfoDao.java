@@ -1,6 +1,5 @@
 package com.excilys.formation.dao;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -30,14 +29,14 @@ public class CompanieInfoDao {
 		template.setDataSource(dataSource);
 	}
 	
-	public List<Company> companyInformations() throws ClassNotFoundException, SQLException {
+	public List<Company> companyInformations() {
 		
 		logger.debug("Récupération de la liste des constructeurs");
 		
 		return template.query(REQUETE, new CompanyInfos() );
 	}
 	
-	public Company companyInformationsId(String name) throws ClassNotFoundException, SQLException {
+	public Company companyInformationsId(String name) {
 
 		logger.debug("Récupération de l'id correspondant au nom du constructeur : " + name);
 		

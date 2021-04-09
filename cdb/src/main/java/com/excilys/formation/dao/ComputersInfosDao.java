@@ -1,6 +1,5 @@
 package com.excilys.formation.dao;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import javax.sql.DataSource;
@@ -39,28 +38,28 @@ public class ComputersInfosDao {
 		template.setDataSource(dataSource);
 	}
 	
-	public List<Computer> computerInformations() throws ClassNotFoundException, SQLException {
+	public List<Computer> computerInformations() {
 
 		return template.query(REQUETE_TOUT, new ComputerInfos() );
 
 	}
 
-	public Integer computerInformationsNbEltsFiltre(String chaine) throws ClassNotFoundException, SQLException {
+	public Integer computerInformationsNbEltsFiltre(String chaine) {
 		
-		return template.queryForObject(REQUETE_NOMBRE_FILTRE, Integer.class, "%"+chaine+"%","%"+chaine+"%");
+		return template.queryForObject(REQUETE_NOMBRE_FILTRE, Integer.class, chaine,chaine);
 	}
 	
-	public List<Computer> computerInformationsPageFilterSorted(int taillePage, int page, String chaine, String order, String upOrDown) throws SQLException {
+	public List<Computer> computerInformationsPageFilterSorted(int taillePage, int page, String chaine, String order, String upOrDown) {
 		
-		return template.query(REQUETE_PAGE_FILTRE_TRIE + order + upOrDown + LIMIT_OFFSET, new ComputerInfos(), "%"+chaine+"%","%"+chaine+"%", taillePage, page * taillePage);
+		return template.query(REQUETE_PAGE_FILTRE_TRIE + order + upOrDown + LIMIT_OFFSET, new ComputerInfos(), chaine,chaine, taillePage, page * taillePage);
 	}
 
 	
-	public Computer computerInformationsDetails(String nomMachine) throws ClassNotFoundException, SQLException {
+	public Computer computerInformationsDetails(String nomMachine) {
 		return template.query(REQUETE_DETAILS, new ComputerInfos(), nomMachine).get(0);
 	}
 
-	public Computer computerInformationsDetails(int id) throws ClassNotFoundException, SQLException {
+	public Computer computerInformationsDetails(int id) {
 		return template.query(REQUETE_DETAILS_ID, new ComputerInfos(),id).get(0);
 	}
 

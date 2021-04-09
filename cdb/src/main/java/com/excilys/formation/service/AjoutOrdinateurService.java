@@ -20,18 +20,8 @@ public class AjoutOrdinateurService {
 	public AjoutOrdinateurService(AjoutOrdinateurDao ajoutOrdinateurDao) {
 		this.ajoutOrdinateurDao = ajoutOrdinateurDao;
 	}
-		
-//	public void ajoutDataService(Computer computer) throws Exception {
-//		try (Connection newCon = dataSource.getConnection();) {
-//			ajoutOrdinateurDao.computerInformations(newCon, computer);
-//			logger.debug("Ajout d'un élément dans la BDD sans problème");
-//		} catch (SQLException e) {
-//			logger.error("Un problème est survenu lors de l'ajout d'un élément ou de l'accès a la base de données");
-//			throw new Exception("Impossible de se connecter a la base de donnees Ajout");
-//		} 
-//	}
 	
-	public void ajoutDataService(Computer computer) throws Exception {	
+	public void ajoutDataService(Computer computer) {	
 		ajoutOrdinateurDao.computerInformations(computer);
 		logger.debug("Ajout d'un élément dans la BDD sans problème");
 	} 

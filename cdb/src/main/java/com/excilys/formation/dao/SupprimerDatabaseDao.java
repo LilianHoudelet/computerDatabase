@@ -25,7 +25,7 @@ public class SupprimerDatabaseDao {
 	}
 	
 	public void deleteComputer(String name) {		
-        delete.update(REQUETE_SUPPRIMER, new Object[] { name });
+        delete.update(REQUETE_SUPPRIMER, name );
 	}
 	
 	public void deleteComputer(int id) {

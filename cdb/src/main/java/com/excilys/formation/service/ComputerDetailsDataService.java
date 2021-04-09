@@ -20,12 +20,12 @@ public class ComputerDetailsDataService {
 		this.computersInfosDao = computersInfosDao;
 	}
 
-	public Computer recupDataDetailsOrdi(String nomMachine) throws Exception {
+	public Computer recupDataDetailsOrdi(String nomMachine) {
 		logger.debug("récupération des détails de la machine " + nomMachine);
 		return computersInfosDao.computerInformationsDetails(nomMachine);
 	}
 
-	public Computer recupDataDetailsOrdi(int id) throws Exception {
+	public Computer recupDataDetailsOrdi(int id) {
 		logger.debug("récupération des détails de la machine " + id);
 		return computersInfosDao.computerInformationsDetails(id);
 	}

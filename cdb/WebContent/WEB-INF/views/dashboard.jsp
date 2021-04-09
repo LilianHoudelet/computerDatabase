@@ -17,7 +17,7 @@
 <body>
 	<header class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="/cdb/ComputerServlet"> Application
+			<a class="navbar-brand" href="/cdb/dashboard"> Application
 				- Computer Database </a>
 		</div>
 	</header>
@@ -44,14 +44,14 @@
 				
 					
 					<a class="btn btn-success" id="addComputer"
-						href="/cdb/AddComputerServlet">Add Computer</a> 
+						href="/cdb/addComputer">Add Computer</a> 
 					<a class="btn btn-default" id="editComputer" href="#"
 						onclick="$.fn.toggleEditMode();">Edit</a>
 				</div>
 			</div>
 		</div>
 
-		<form id="deleteForm" action="/cdb/DeleteComputerServlet" method="POST">
+		<form id="deleteForm" action="/cdb/dashboard" method="POST">
 			<input type="hidden" name="selection" value="">
 		</form>
 
@@ -86,13 +86,13 @@
 				</thead>
 				<!-- Browse attribute computers -->
 				<tbody id="results">
-						<c:forEach items="${ComputerList}" var="current">
+						<c:forEach items="${computerList}" var="current">
 							<tr>
 								<td class="editMode">
 									<input type="checkbox" name="cb"
 										class="cb" value="${ current.getId() }">	
 								</td>
-								<td><a href="/cdb/EditComputerServlet?id=${ current.getId() }" onclick="">
+								<td><a href="/cdb/editComputer?id=${ current.getId() }" onclick="">
 									<c:out value="${ current.getName()}" /></a>
 								</td>
 								<td><c:out value="${current.getDateSortie()}" /></td>

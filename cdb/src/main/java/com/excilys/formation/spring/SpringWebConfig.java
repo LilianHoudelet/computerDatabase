@@ -2,6 +2,7 @@ package com.excilys.formation.spring;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRegistration.Dynamic;
 import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
@@ -12,21 +13,37 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
+import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
+import org.springframework.web.servlet.view.JstlView;
+import org.springframework.web.servlet.view.UrlBasedViewResolver;
 
-//import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 @EnableTransactionManagement
+@EnableWebMvc
 @ComponentScan( basePackages = { "com.excilys.formation.dao","com.excilys.formation.service","com.excilys.formation.servlet","com.excilys.formation.model","com.excilys.formation.mapper"})
-public class SpringWebConfig implements WebApplicationInitializer {
+public class SpringWebConfig implements WebApplicationInitializer, WebMvcConfigurer {
+	
+	@Override
+	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+        configurer.enable();
+    }
 	
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
 		AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
 	    context.register(SpringWebConfig.class);
 	    context.setServletContext(servletContext);
+	    Dynamic servlet = servletContext.addServlet("dispacher", new DispatcherServlet(context));
+        servlet.setLoadOnStartup(1);
+        servlet.addMapping("/");
 	}
+	
 	@Bean
 	public DataSource getDataSource() {
 		HikariDataSource dataSource = new HikariDataSource();
@@ -38,7 +55,17 @@ public class SpringWebConfig implements WebApplicationInitializer {
 	}
 	
 	@Bean
+    public UrlBasedViewResolver viewResolver() {
+        InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
+        viewResolver.setViewClass(JstlView.class);
+        viewResolver.setPrefix("/WEB-INF/views/");
+        viewResolver.setSuffix(".jsp");
+        return viewResolver;
+    }
+	
+	@Bean
     public PlatformTransactionManager txManager() {
         return new DataSourceTransactionManager(getDataSource());
     }
+	
 }

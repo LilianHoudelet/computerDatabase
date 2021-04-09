@@ -24,12 +24,12 @@ public class CompanyDataService {
 		this.companieInfoDao = companieInfoDao;
 	}
 
-	public List<Company> recupDataCompany() throws Exception {
+	public List<Company> recupDataCompany(){
 		logger.debug("Récupération de la liste des Company");
 		return companieInfoDao.companyInformations();
 	}
 
-	public Company recupDataCompanyId(String nomConstructeur) throws Exception {
+	public Company recupDataCompanyId(String nomConstructeur) {
 		logger.debug("Récupération de l'Id de Company avec le nom");
 		return companieInfoDao.companyInformationsId(nomConstructeur);
 	}

@@ -1,7 +1,5 @@
 package com.excilys.formation.dao;
 
-import java.sql.SQLException;
-
 import javax.sql.DataSource;
 
 import org.slf4j.Logger;
@@ -26,18 +24,15 @@ public class UpdateDatabaseDao {
 		update.setDataSource(dataSource);
 	}
 	
-	public void updateComputerInformations(Computer computer) throws ClassNotFoundException, SQLException {
-		
-		
-		
-		update.update(REQUETE_UPDATE, new Object[] { 
+	public void updateComputerInformations(Computer computer) {
+
+		update.update(REQUETE_UPDATE, 
 				computer.getDateSortie() != null ? computer.getDateSortie() : null, 
 				computer.getDateRetrait() != null ? computer.getDateRetrait() : null, 
 				computer.getCompany().getId() != 0 ? computer.getCompany().getId() : null,
 				computer.getName(),
-				computer.getId() });
+				computer.getId());
 
-		
 		logger.debug("Mise à jour de l'élément " + computer.getName() + " dans la base de données");
 	}
 }
