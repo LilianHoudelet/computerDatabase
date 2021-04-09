@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.excilys.formation.dto.AddComputerDTO;
 import com.excilys.formation.dto.CompanyDTO;
 import com.excilys.formation.dto.ComputerDTO;
 
@@ -47,7 +48,7 @@ public class EditComputerParameters {
 		modelAndView.addObject("introducedDate", computer.getDateSortie());
 		modelAndView.addObject("discontinuedDate", computer.getDateRetrait());
 		modelAndView.addObject("companyName", computer.getCompany());
-
+		modelAndView.addObject("AddComputerDTO", new AddComputerDTO());
 		return modelAndView;
 	}
 }

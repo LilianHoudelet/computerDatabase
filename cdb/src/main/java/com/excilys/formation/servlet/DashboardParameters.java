@@ -37,10 +37,7 @@ public class DashboardParameters {
 		listPage.setComputerList(listComputer);
 	}
 	public void setMaxComputers(int value) {
-		System.out.println("Nb Computer : " + value + "++++++++++++++++++");
-		listPage.setNbElts(value);
-		System.out.println("MAx page : " + listPage.getMaxPage());
-		
+		listPage.setNbElts(value);		
 	}
 	public void setOrderByValue(String orderBy) {
 		listPage.setOrder(orderBy);

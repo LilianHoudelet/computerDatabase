@@ -6,11 +6,13 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.excilys.formation.dto.AddComputerDTO;
 import com.excilys.formation.dto.ComputerDTO;
 import com.excilys.formation.mapper.DtoMapper;
 import com.excilys.formation.mapper.MapStringToComputer;
@@ -138,23 +140,10 @@ public class DashboardController {
 	}
 	
 	@PostMapping("/addComputer")
-	public RedirectView addComputerPost(@RequestParam(required = false) String computerId,
-			@RequestParam(required = true)String computerName,
-			@RequestParam(required = false)String introduced,
-			@RequestParam(required = false)String discontinued,
-			@RequestParam(required = false)String companyId) {
+	public RedirectView addComputerPost(@ModelAttribute("AddComputerDTO") AddComputerDTO computer) {
 		
-		try {
-			if (validationComputer.isComputerValid(computerName, introduced, discontinued)) {
-				Computer addedComputer = mapStringToComputer.ComputerStringToComputer(computerName, introduced, discontinued, companyId);
-				addComputeService.ajoutDataService(addedComputer);
-			} else {
-				System.out.println("Ordinateur non valide");
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		Computer addedComputer = mapStringToComputer.ComputerStringToComputer(computer);
+		addComputeService.ajoutDataService(addedComputer);
 		
 		return new RedirectView("dashboard");
 		
@@ -172,27 +161,11 @@ public class DashboardController {
 	}
 	
 	@PostMapping("/editComputer")
-	public RedirectView editComputerPost(@RequestParam(required = false) String computerId,
-			@RequestParam(required = false)String computerName,
-			@RequestParam(required = false)String introducedDate,
-			@RequestParam(required = false)String discontinuedDate,
-			@RequestParam(required = false)String companyId) {
+	public RedirectView editComputerPost(@ModelAttribute("AddComputerDTO") AddComputerDTO computer) {
+		computer.setId(editComputerParameters.getComputer().getId());
+		Computer addedComputer = mapStringToComputer.ComputerStringToComputer(computer);
 		
-		try {
-			int id = Integer.parseInt(editComputerParameters.getComputer().getId());
-			
-			if (validationComputer.isComputerValid(computerName, introducedDate, discontinuedDate)) {
-				Computer addedComputer = mapStringToComputer.ComputerStringToComputer(computerName, introducedDate, discontinuedDate, companyId);
-				addedComputer.setId(id);
-				updateDatabaseService.updateDataService(addedComputer);
-			} else {
-				System.out.println("Ordinateur non valide");
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
+		updateDatabaseService.updateDataService(addedComputer);
 		return new RedirectView("dashboard");
 		
 	}

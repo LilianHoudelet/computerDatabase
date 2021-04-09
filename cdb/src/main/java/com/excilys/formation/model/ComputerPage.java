@@ -13,7 +13,7 @@ public class ComputerPage {
 	int nbElts;
 	String orderBy = "id";
 	boolean asc = true;
-	String searchString;
+	String searchString = "";
 	List<ComputerDTO> computerList;
 	
 	public ComputerPage(int nbEltsParPage, int nbElts) { 
