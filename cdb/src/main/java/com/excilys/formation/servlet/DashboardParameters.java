@@ -1,6 +1,5 @@
 package com.excilys.formation.servlet;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -15,7 +14,6 @@ import com.excilys.formation.model.ComputerPage;
 public class DashboardParameters {
 	
 	private ComputerPage listPage;
-	private List<ComputerDTO> listComputers = new ArrayList<>();
 	private ModelAndView modelAndView;
 	
 	public DashboardParameters() {
@@ -39,10 +37,13 @@ public class DashboardParameters {
 		listPage.setComputerList(listComputer);
 	}
 	public void setMaxComputers(int value) {
+		System.out.println("Nb Computer : " + value + "++++++++++++++++++");
 		listPage.setNbElts(value);
+		System.out.println("MAx page : " + listPage.getMaxPage());
+		
 	}
 	public void setOrderByValue(String orderBy) {
-		listPage.setSearchString(orderBy);
+		listPage.setOrder(orderBy);
 	}
 	public ComputerPage getPage() {
 		return listPage;
@@ -57,8 +58,9 @@ public class DashboardParameters {
 		modelAndView.addObject("search", listPage.getSearchString());
 		modelAndView.addObject("page", listPage.getNumPage());
 		modelAndView.addObject("index", listPage.getIndex());
-		modelAndView.addObject("computerList", listComputers);
+		modelAndView.addObject("computerList", listPage.getComputerList());
 		modelAndView.addObject("maxPage", listPage.getMaxPage());
+		System.out.println(listPage.getMaxPage());
 		return modelAndView;
 	}
 

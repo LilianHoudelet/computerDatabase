@@ -6,13 +6,13 @@ import com.excilys.formation.dto.ComputerDTO;
 
 public class ComputerPage {
 	
-	int numPage;
-	int nbEltsParPage;
-	int index;
+	int numPage = 1;
+	int nbEltsParPage = 10;
+	int index = 3;
 	int maxPage;
 	int nbElts;
 	String orderBy = "id";
-	boolean asc;
+	boolean asc = true;
 	String searchString;
 	List<ComputerDTO> computerList;
 	
@@ -42,6 +42,7 @@ public class ComputerPage {
 
 	public void setNbEltsParPage(int nbEltsParPage) {
 		this.nbEltsParPage = nbEltsParPage;
+		this.maxPage = (nbElts -1) / (this.nbEltsParPage) + 1;
 		setNumPage(1);
 	}
 
@@ -55,12 +56,11 @@ public class ComputerPage {
 
 	public void setComputerList(List<ComputerDTO> computerList) {
 		this.computerList = computerList;
-		setNbEltsParPage(computerList.size());
-		maxPage = (computerList.size() -1) / this.nbEltsParPage + 1;
 	}
 	
 	public void setNbElts (int nbElts) {
 		this.nbElts = nbElts;
+		this.maxPage = (nbElts -1) / (this.nbEltsParPage) + 1;
 	}
 	
 	public void indexPagination() {
@@ -108,5 +108,12 @@ public class ComputerPage {
 	
 	public String getOrderBy() {
 		return this.orderBy;
+	}
+
+	@Override
+	public String toString() {
+		return "ComputerPage [numPage=" + numPage + ", nbEltsParPage=" + nbEltsParPage + ", index=" + index
+				+ ", maxPage=" + maxPage + ", nbElts=" + nbElts + ", orderBy=" + orderBy + ", asc=" + asc
+				+ ", searchString=" + searchString + ", computerList=" + computerList + "]";
 	}
 }

@@ -53,7 +53,7 @@ public class ComputerDataService {
 
 	public List<Computer> recupDataOrdiPageFiltreTrie(ComputerPage page) {
 		logger.debug("Récupération d'une liste de computer filtrée triée plus petite par page: Page " + page.getNumPage());
-		return computersInfosDao.computerInformationsPageFilterSorted(page.getNbEltsParPage(), page.getNumPage(), "%"+page.getSearchString()+"%",
+		return computersInfosDao.computerInformationsPageFilterSorted(page.getNbEltsParPage(), page.getNumPage() -1, "%"+page.getSearchString()+"%",
 				sortingString.convertOrderString(page.getOrderBy()), sortingString.convertOrderbool(page.getAsc()));
 	}
 }

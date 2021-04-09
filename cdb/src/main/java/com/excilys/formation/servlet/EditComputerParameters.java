@@ -19,7 +19,7 @@ public class EditComputerParameters {
 	private List<CompanyDTO> companyList;
 	
 	public EditComputerParameters() {
-		this.modelAndView = new ModelAndView("addComputer");
+		this.modelAndView = new ModelAndView("editComputer");
 		this.computer = null;
 		this.companyList = new ArrayList<>();
 	}
@@ -42,7 +42,12 @@ public class EditComputerParameters {
 
 	public ModelAndView getModelAndView() {
 		modelAndView.addObject("companyList", companyList);
-		// ADD des infos du Computer
+		modelAndView.addObject("computerId", computer.getId());
+		modelAndView.addObject("computerName", computer.getName());
+		modelAndView.addObject("introducedDate", computer.getDateSortie());
+		modelAndView.addObject("discontinuedDate", computer.getDateRetrait());
+		modelAndView.addObject("companyName", computer.getCompany());
+
 		return modelAndView;
 	}
 }

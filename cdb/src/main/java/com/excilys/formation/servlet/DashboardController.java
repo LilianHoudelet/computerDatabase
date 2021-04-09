@@ -9,13 +9,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
+import com.excilys.formation.dto.ComputerDTO;
 import com.excilys.formation.mapper.DtoMapper;
 import com.excilys.formation.mapper.MapStringToComputer;
 import com.excilys.formation.model.Computer;
 import com.excilys.formation.service.AjoutOrdinateurService;
 import com.excilys.formation.service.CompanyDataService;
 import com.excilys.formation.service.ComputerDataService;
+import com.excilys.formation.service.ComputerDetailsDataService;
 import com.excilys.formation.service.ComputerSuppressionService;
 import com.excilys.formation.service.UpdateDatabaseService;
 import com.excilys.formation.service.ValidationComputer;
@@ -33,6 +36,7 @@ public class DashboardController {
 	ComputerSuppressionService supprComputerService;
 	AjoutOrdinateurService addComputeService;
 	UpdateDatabaseService updateDatabaseService;
+	ComputerDetailsDataService computerDetailsService;
 	
 	ValidationComputer validationComputer;
 	
@@ -49,7 +53,8 @@ public class DashboardController {
 			ValidationComputer validationComputer,
 			MapStringToComputer mapStringToComputer,
 			EditComputerParameters editComputerParameters,
-			UpdateDatabaseService updateDatabaseService) {
+			UpdateDatabaseService updateDatabaseService,
+			ComputerDetailsDataService computerDetailsDataService) {
 		this.dashboardParameters = dashboardParameters;
 		this.computerService = computerDataService;
 		this.dtoMapper = dtoMapper;
@@ -61,35 +66,44 @@ public class DashboardController {
 		this.mapStringToComputer = mapStringToComputer;
 		this.editComputerParameters = editComputerParameters;
 		this.updateDatabaseService = updateDatabaseService;
+		this.computerDetailsService = computerDetailsDataService;
 	}
 	
 	@GetMapping("/dashboard")
-	public ModelAndView dashboardGet(@RequestParam(required = false) Integer pageIndex,
-			@RequestParam(required = false) Integer numberOfValues, @RequestParam(required = false) String search,
+	public ModelAndView dashboardGet(@RequestParam(required = false) Integer page,
+			@RequestParam(required = false) Integer nbEltsParPage, @RequestParam(required = false) String search,
 			@RequestParam(required = false) String sortedOn) {
 		
-		readParameters(pageIndex, numberOfValues, search, sortedOn);
+		readParameters(page, nbEltsParPage, search, sortedOn);
 		
 		getDashboardValues();
-		
+				
 		return dashboardParameters.getModelAndView();
 	}
 	
 	private void getDashboardValues() {
-		dashboardParameters.setMaxComputers(computerService.recupDataOrdiNombre(dashboardParameters.getSearchValue()));
 		
+		
+		dashboardParameters.setMaxComputers(computerService.recupDataOrdiNombre(dashboardParameters.getSearchValue()));
 		dashboardParameters.setValues(dtoMapper.mapComputerToComputerDTO(computerService.recupDataOrdiPageFiltreTrie(dashboardParameters.getPage())));
 	}
 
-	private void readParameters(Integer page, Integer numberOfValues, String search, String orderBy) {
+	private void readParameters(@RequestParam(required = false) Integer page,
+			@RequestParam(required = false) Integer nbEltsParPage,
+			@RequestParam(required = false) String search,
+			@RequestParam(required = false) String orderBy) {
 		if (page != null) {
 			dashboardParameters.setPageIndex(page);
+		} else {
+			dashboardParameters.setPageIndex(1);
 		}
-		if (numberOfValues != null) {
-			dashboardParameters.setNumberOfValues(numberOfValues);
+		if (nbEltsParPage != null) {
+			dashboardParameters.setNumberOfValues(nbEltsParPage);
 		}
 		if (search != null) {
 			dashboardParameters.setSearchValue(search);
+		} else {
+			dashboardParameters.setSearchValue("");
 		}
 		if (orderBy != null) {
 			dashboardParameters.setOrderByValue(orderBy);
@@ -123,9 +137,8 @@ public class DashboardController {
 		return addComputerParameters.getModelAndView();
 	}
 	
-	// POST ADD Computer
 	@PostMapping("/addComputer")
-	public ModelAndView addComputerPost(@RequestParam(required = true) String computerId,
+	public RedirectView addComputerPost(@RequestParam(required = false) String computerId,
 			@RequestParam(required = true)String computerName,
 			@RequestParam(required = false)String introduced,
 			@RequestParam(required = false)String discontinued,
@@ -143,28 +156,34 @@ public class DashboardController {
 			e.printStackTrace();
 		}
 		
-		return addComputerParameters.getModelAndView();
+		return new RedirectView("dashboard");
 		
 	}
 	
 	@GetMapping("/editComputer")
-	public ModelAndView editComputerGet(@RequestParam(required = false) Integer computerId) {
-		// mettre les entree
+	public ModelAndView editComputerGet(@RequestParam(required = true) Integer id) {
+
+		ComputerDTO computer = dtoMapper.mapComputerToComputerDTOOne(computerDetailsService.recupDataDetailsOrdi(id));
+		editComputerParameters.setComputer(computer);
 		
 		editComputerParameters.setCompanyList(dtoMapper.mapCompanyToCompanyDTO(companyService.recupDataCompany()));
-		return addComputerParameters.getModelAndView();
+		
+		return editComputerParameters.getModelAndView();
 	}
 	
 	@PostMapping("/editComputer")
-	public ModelAndView editComputerPost(@RequestParam(required = false) String computerId,
+	public RedirectView editComputerPost(@RequestParam(required = false) String computerId,
 			@RequestParam(required = false)String computerName,
-			@RequestParam(required = false)String introduced,
-			@RequestParam(required = false)String discontinued,
+			@RequestParam(required = false)String introducedDate,
+			@RequestParam(required = false)String discontinuedDate,
 			@RequestParam(required = false)String companyId) {
 		
 		try {
-			if (validationComputer.isComputerValid(computerName, introduced, discontinued)) {
-				Computer addedComputer = mapStringToComputer.ComputerStringToComputer(computerName, introduced, discontinued, companyId);
+			int id = Integer.parseInt(editComputerParameters.getComputer().getId());
+			
+			if (validationComputer.isComputerValid(computerName, introducedDate, discontinuedDate)) {
+				Computer addedComputer = mapStringToComputer.ComputerStringToComputer(computerName, introducedDate, discontinuedDate, companyId);
+				addedComputer.setId(id);
 				updateDatabaseService.updateDataService(addedComputer);
 			} else {
 				System.out.println("Ordinateur non valide");
@@ -174,7 +193,7 @@ public class DashboardController {
 			e.printStackTrace();
 		}
 		
-		return addComputerParameters.getModelAndView();
+		return new RedirectView("dashboard");
 		
 	}
 		

@@ -15,7 +15,7 @@
 <body>
 	<header class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="/cdb/ComputerServlet"> Application
+			<a class="navbar-brand" href="/cdb/dashboard"> Application
 				- Computer Database </a>
 		</div>
 	</header>
@@ -30,23 +30,23 @@
 							<div class="form-group">
 								<label for="computerName">Computer name</label> <input
 									type="text" class="form-control" id="computerName"
-									placeholder="Computer name" name="ComputerName" required="required">
+									placeholder="Computer name" name="computerName" required="required">
 							</div>
 							<div class="form-group">
 								<label for="introduced">Introduced date</label> <input
 									type="date" class="form-control" id="introduced"
-									placeholder="Introduced date" name="ComputerDateSortie">
+									placeholder="Introduced date" name="introduced">
 							</div>
 							<div class="form-group">
 								<label for="discontinued">Discontinued date</label> <input
 									type="date" class="form-control" id="discontinued"
-									placeholder="Discontinued date" name="ComputerDateRetrait">
+									placeholder="Discontinued date" name="discontinued">
 							</div>
 							<div class="form-group">
 								<label for="companyId">Company</label> <select
-									class="form-control" id="companyId" name="CompanyId">
+									class="form-control" id="companyId" name="companyId">
 									<option value="0"> -- </option>
-									<c:forEach items="${CompanyList}" var="current">
+									<c:forEach items="${companyList}" var="current">
 										<option value="${current.getId()}"> ${current.getName()} </option>
 									</c:forEach>
 								</select>
@@ -54,7 +54,7 @@
 						</fieldset>
 						<div class="actions pull-right">
 							<input type="submit" value="Add" class="btn btn-primary">
-							or <a href="/cdb/ComputerServlet" class="btn btn-default">Cancel</a>
+							or <a href="/cdb/dashboard" class="btn btn-default">Cancel</a>
 						</div>
 					</form>
 				</div>

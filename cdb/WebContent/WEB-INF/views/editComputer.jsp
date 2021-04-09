@@ -15,7 +15,7 @@
 <body>
     <header class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="ComputerServlet"> Application - Computer Database </a>
+            <a class="navbar-brand" href="dashboard"> Application - Computer Database </a>
         </div>
     </header>
     <section id="main">
@@ -23,7 +23,7 @@
             <div class="row">
                 <div class="col-xs-8 col-xs-offset-2 box">
                     <div class="label label-default pull-right">
-                        id: ${ ComputerId }
+                        id: ${ computerId }
                     </div>
                     <h1>Edit Computer</h1>
 
@@ -32,26 +32,26 @@
 							<div class="form-group">
 								<label for="computerName">Computer name</label> <input
 									type="text" class="form-control" id="computerName"
-									placeholder="Computer name" name="ComputerName" required="required"
-									value = "${ ComputerName }">
+									placeholder="Computer name" name="computerName" required="required"
+									value = "${ computerName }">
 							</div>
 							<div class="form-group">
 								<label for="introduced">Introduced date</label> <input
 									type="date" class="form-control" id="introduced"
-									placeholder="Introduced date" name="ComputerDateSortie"
-									value = "${ IntroducedDate }">
+									placeholder="Introduced date" name="introducedDate"
+									value = "${ introducedDate }">
 							</div>
 							<div class="form-group">
 								<label for="discontinued">Discontinued date</label> <input
 									type="date" class="form-control" id="discontinued"
-									placeholder="Discontinued date" name="ComputerDateRetrait"
-									value = "${ DiscontinuedDate }">
+									placeholder="Discontinued date" name="discontinuedDate"
+									value = "${ discontinuedDate }">
 							</div>
 							<div class="form-group">
 								<label for="companyId">Company</label> <select
-									class="form-control" id="companyId" name="CompanyId" >
+									class="form-control" id="companyId" name="companyId" >
 									<option value="0"> -- </option>
-									<c:forEach items="${CompanyList}" var="current">
+									<c:forEach items="${companyList}" var="current">
 										
 										<c:if test="${CompanyName == current.getName()}">
 											<option value="${current.getId()}" selected> ${current.getName()} </option>
@@ -65,7 +65,7 @@
 						</fieldset>
 						<div class="actions pull-right">
 							<input type="submit" value="Update" class="btn btn-primary">
-							or <a href="/cdb/ComputerServlet" class="btn btn-default">Cancel</a>
+							or <a href="/cdb/dashboard" class="btn btn-default">Cancel</a>
 						</div>
                     </form>
                 </div>
