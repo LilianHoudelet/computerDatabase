@@ -32,9 +32,10 @@
 					<form:form action="" method="POST" modelAttribute="AddComputerDTO">
 						<fieldset>
 							<div class="form-group">
-								<form:label path="nom"><fmt:message key="label.dashboard.computerName"/></form:label> 
+								<fmt:message key="label.dashboard.computerName" var="computerLabel"/>
+								<form:label path="nom">${ computerLabel }</form:label> 
 								<form:input type="text" class="form-control" id="computerName"
-									placeholder="Computer Name" name="computerName" path="nom" required="required"/>
+									placeholder="${ computerLabel }" name="computerName" path="nom" required="required"/>
 							</div>
 							<div class="form-group">
 								<form:label path="dateSortie"><fmt:message key="label.dashboard.introducedDate"/></form:label> 
