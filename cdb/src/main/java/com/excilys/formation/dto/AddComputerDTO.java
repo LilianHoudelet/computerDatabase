@@ -1,14 +1,15 @@
 package com.excilys.formation.dto;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 
 public class AddComputerDTO {
 	String id;
 	
 	@NotNull(message = "Name cannot be null")
+	@Size(min = 1, message = "Name can't be Empty")
 	String nom;
-	
 	
 	String dateSortie; 
 	String dateRetrait;
@@ -21,7 +22,7 @@ public class AddComputerDTO {
 	
 	public AddComputerDTO(String id, String nom, String dateSortie, String dateRetrait, String companyId) {
 		this.id = id;
-		this.nom = nom;
+		this.nom = nom.trim();
 		this.dateSortie = dateSortie;
 		this.dateRetrait = dateRetrait;
 		this.companyId = companyId;

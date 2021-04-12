@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html" pageEncoding="iso-8859-1"%>
+<%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt"%>
 <!DOCTYPE html>
@@ -21,6 +21,7 @@
 				<div class="pull-right">
 	      		  <a href="?lang=en"><fmt:message key="label.lang.en" /></a>
 	      		  <a href="?lang=fr"><fmt:message key="label.lang.fr" /></a>
+	      		  <a href="?lang=jp"><fmt:message key="label.lang.jp" /></a>
 	        </div>
 		</div>
 	</header>
@@ -158,6 +159,12 @@
 		</div>
 	</div>
 	</footer>
+	<script type="text/javascript">
+		var strings = new Array();
+		strings['view'] = "<fmt:message key="label.dashboard.view" />";
+		strings['edit'] = "<fmt:message key="label.dashboard.edit" />";
+		strings['deleteMessage'] = "<fmt:message key="label.dashboard.message" />"; 
+	</script>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/dashboard.js"></script>

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html" pageEncoding="iso-8859-1"%>
+<%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt"%>
@@ -20,6 +20,7 @@
 			 <div class="pull-right">
 	        	<a href="?lang=en"><fmt:message key="label.lang.en" /></a>
 	        	<a href="?lang=fr"><fmt:message key="label.lang.fr" /></a>
+	        	<a href="?lang=jp"><fmt:message key="label.lang.jp" /></a>
 	        </div>
 		</div>
 	</header>
