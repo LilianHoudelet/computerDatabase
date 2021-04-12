@@ -3,6 +3,8 @@ package com.excilys.formation.servlet;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -140,7 +142,7 @@ public class DashboardController {
 	}
 	
 	@PostMapping("/addComputer")
-	public RedirectView addComputerPost(@ModelAttribute("AddComputerDTO") AddComputerDTO computer) {
+	public RedirectView addComputerPost(@Valid @ModelAttribute("AddComputerDTO") AddComputerDTO computer) {
 		
 		Computer addedComputer = mapStringToComputer.ComputerStringToComputer(computer);
 		addComputeService.ajoutDataService(addedComputer);
@@ -161,7 +163,7 @@ public class DashboardController {
 	}
 	
 	@PostMapping("/editComputer")
-	public RedirectView editComputerPost(@ModelAttribute("AddComputerDTO") AddComputerDTO computer) {
+	public RedirectView editComputerPost(@Valid @ModelAttribute("AddComputerDTO") AddComputerDTO computer) {
 		computer.setId(editComputerParameters.getComputer().getId());
 		Computer addedComputer = mapStringToComputer.ComputerStringToComputer(computer);
 		

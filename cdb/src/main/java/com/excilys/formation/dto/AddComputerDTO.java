@@ -1,10 +1,17 @@
 package com.excilys.formation.dto;
 
+import javax.validation.constraints.NotNull;
+
 public class AddComputerDTO {
 	String id;
+	
+	@NotNull(message = "Name cannot be null")
 	String nom;
+	
 	String dateSortie; 
+	
 	String dateRetrait;
+	
 	String companyId;
 
 	public AddComputerDTO() {
