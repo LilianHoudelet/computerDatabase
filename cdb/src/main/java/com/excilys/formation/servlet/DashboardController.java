@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +27,8 @@ import com.excilys.formation.service.ComputerDetailsDataService;
 import com.excilys.formation.service.ComputerSuppressionService;
 import com.excilys.formation.service.UpdateDatabaseService;
 import com.excilys.formation.service.ValidationComputer;
+import com.excilys.formation.validator.DateConstraintValidator;
+//simport com.excilys.formation.validator.DateConstraintValidator;
 
 @Controller
 public class DashboardController {
@@ -43,6 +46,7 @@ public class DashboardController {
 	ComputerDetailsDataService computerDetailsService;
 	
 	ValidationComputer validationComputer;
+	DateConstraintValidator dateConstraintValidator;
 	
 	DtoMapper dtoMapper;
 	MapStringToComputer mapStringToComputer;
@@ -58,7 +62,9 @@ public class DashboardController {
 			MapStringToComputer mapStringToComputer,
 			EditComputerParameters editComputerParameters,
 			UpdateDatabaseService updateDatabaseService,
-			ComputerDetailsDataService computerDetailsDataService) {
+			ComputerDetailsDataService computerDetailsDataService,
+			DateConstraintValidator dateConstraintValidator
+			) {
 		this.dashboardParameters = dashboardParameters;
 		this.computerService = computerDataService;
 		this.dtoMapper = dtoMapper;
@@ -71,8 +77,9 @@ public class DashboardController {
 		this.editComputerParameters = editComputerParameters;
 		this.updateDatabaseService = updateDatabaseService;
 		this.computerDetailsService = computerDetailsDataService;
+		this.dateConstraintValidator = dateConstraintValidator;
 	}
-	
+		
 	@GetMapping("/dashboard")
 	public ModelAndView dashboardGet(@RequestParam(required = false) Integer page,
 			@RequestParam(required = false) Integer nbEltsParPage, @RequestParam(required = false) String search,
@@ -142,13 +149,18 @@ public class DashboardController {
 	}
 	
 	@PostMapping("/addComputer")
-	public RedirectView addComputerPost(@Valid @ModelAttribute("AddComputerDTO") AddComputerDTO computer) {
+	public RedirectView addComputerPost(@Valid @ModelAttribute("AddComputerDTO") AddComputerDTO computer, BindingResult r) {
+		dateConstraintValidator.validate(computer,r);
+		if (r.hasErrors()) {
+			return new RedirectView("addComputer");
+		} else {
+			
 		
 		Computer addedComputer = mapStringToComputer.ComputerStringToComputer(computer);
 		addComputeService.ajoutDataService(addedComputer);
 		
 		return new RedirectView("dashboard");
-		
+		}
 	}
 	
 	@GetMapping("/editComputer")
@@ -163,13 +175,17 @@ public class DashboardController {
 	}
 	
 	@PostMapping("/editComputer")
-	public RedirectView editComputerPost(@Valid @ModelAttribute("AddComputerDTO") AddComputerDTO computer) {
+	public RedirectView editComputerPost(@Valid @ModelAttribute("AddComputerDTO") AddComputerDTO computer, BindingResult r) {
+		dateConstraintValidator.validate(computer,r);
+		if (r.hasErrors()) {
+			return new RedirectView("editComputer");
+		} else {
 		computer.setId(editComputerParameters.getComputer().getId());
 		Computer addedComputer = mapStringToComputer.ComputerStringToComputer(computer);
 		
 		updateDatabaseService.updateDataService(addedComputer);
 		return new RedirectView("dashboard");
-		
+		}
 	}
 		
 }

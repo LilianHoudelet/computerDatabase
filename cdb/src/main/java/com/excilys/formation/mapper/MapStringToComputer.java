@@ -36,7 +36,7 @@ public class MapStringToComputer {
  
 		logger.debug("Passage des entrées en AddComputerDTO vers un Computer");
 
-		return new Computer(id, computer.getNom(), dateSortie, dateRetrait, new Company(Integer.valueOf(computer.getCompanyId()), ""));
+		return new Computer(id, computer.getName(), dateSortie, dateRetrait, new Company(Integer.valueOf(computer.getCompanyId()), ""));
 	}
 
 }
