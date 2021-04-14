@@ -8,6 +8,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 import com.excilys.formation.model.Company;
@@ -15,7 +16,7 @@ import com.excilys.formation.model.Company;
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 
-public class CompanyInfos {
+public class CompanyInfos implements RowMapper<Company> {
 	
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(CompanyInfos.class);
 	
@@ -38,6 +39,15 @@ public class CompanyInfos {
 			return new Company(0,"");
 		}
 	}
-	
-	
+
+	@Override
+	public Company mapRow(ResultSet companyInformations, int rowNum) throws SQLException {
+		if (rowNum >= 0) {
+			logger.debug("Création d'un objet Company avec les informations de la requête");
+			return new Company(companyInformations.getInt(1), companyInformations.getString(2));	
+		}	else {
+			logger.debug("Création d'une Company vide pour l'ajout dans la table");
+			return new Company(0,"");
+		}
+	}	
 }

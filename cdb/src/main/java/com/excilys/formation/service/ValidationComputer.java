@@ -32,12 +32,12 @@ public class ValidationComputer {
 	public boolean isComputerValid(String computerName, String dateSortie, String dateRetrait) {
 
 		if (computerName == null || computerName.isBlank()) {
-
+			System.out.println("name");
 			return false;
 		}
 
 		if (dateSortie != null && !dateSortie.isBlank()) {
-
+			System.out.println("date Sortie");
 			if (dateRetrait != null && !dateRetrait.isBlank()
 					&& LocalDate.parse(dateRetrait).isBefore(LocalDate.parse(dateSortie))) {
 

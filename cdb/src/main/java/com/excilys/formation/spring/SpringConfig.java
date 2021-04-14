@@ -2,6 +2,9 @@ package com.excilys.formation.spring;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.context.AbstractContextLoaderInitializer;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -15,7 +18,8 @@ import org.springframework.context.annotation.Bean;
 
 @Configuration
 @EnableWebMvc
-@ComponentScan( basePackages = { "com.excilys.formation.dao","com.excilys.formation.service","com.excilys.formation.servlet","com.excilys.formation.model","com.excilys.formation.mapper"})
+@EnableTransactionManagement
+@ComponentScan( basePackages = { "com.excilys.formation.dao","com.excilys.formation.service","com.excilys.formation.servlet","com.excilys.formation.model","com.excilys.formation.mapper","com.excilys.formation.validator"})
 public class SpringConfig extends AbstractContextLoaderInitializer {
 	
 	@Override
@@ -24,6 +28,11 @@ public class SpringConfig extends AbstractContextLoaderInitializer {
 		context.register(SpringConfig.class);
 		return context;
 	}
+	
+	@Bean
+    public PlatformTransactionManager txManager() {
+        return new DataSourceTransactionManager(getDataSource());
+    }
 	
 	@Bean
 	public DataSource getDataSource() {

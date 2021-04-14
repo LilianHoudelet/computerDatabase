@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Scanner;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -46,8 +45,7 @@ public class GestionMenu {
 	private DeleteCompanyService deleteCompanyService;
 	private AjoutOrdinateurService addComputerService;
 	private CheckDate checkDate;
-	
-	@Autowired
+
 	public GestionMenu(CompanyDataService companyService, ComputerDetailsDataService computerService,
 			ComputerSuppressionService supprComputerService, UpdateDatabaseService updateComputerService,
 			GestionPages gestionPage, DeleteCompanyService deleteCompanyService,

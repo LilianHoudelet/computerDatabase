@@ -1,14 +1,16 @@
 package com.excilys.formation.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.util.List;
+
+import javax.sql.DataSource;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+
+import com.excilys.formation.mapper.ComputerInfos;
+import com.excilys.formation.model.Computer;
 
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
@@ -30,53 +32,35 @@ public class ComputersInfosDao {
 	public static final String REQUETE_DETAILS_ID = "SELECT computer.id, computer.name, introduced, discontinued, company.name, computer.company_id FROM computer "
 			+ "LEFT JOIN company ON company.id = computer.company_id WHERE computer.id = ?";
 	
-	public ResultSet computerInformations(Connection con) throws ClassNotFoundException, SQLException {
-
-		Statement stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery(REQUETE_TOUT);
-					
-		return rs;
-	}
-
-	public ResultSet computerInformationsNbEltsFiltre(Connection con, String chaine) throws ClassNotFoundException, SQLException {
-
-		PreparedStatement stmt = con.prepareStatement(REQUETE_NOMBRE_FILTRE);
-		stmt.setString(1, "%"+chaine+"%");
-		stmt.setString(2, "%"+chaine+"%");
-		ResultSet rs = stmt.executeQuery();
-			
-		return rs;
-	}
-		
-	public ResultSet computerInformationsPageFilterSorted(Connection con, int taillePage, int page, String chaine, String order, String upOrDown) throws SQLException {
-		
-		PreparedStatement stmt = con.prepareStatement(REQUETE_PAGE_FILTRE_TRIE + order + upOrDown + LIMIT_OFFSET);
-				
-		stmt.setString(1, "%"+chaine+"%");
-		stmt.setString(2, "%"+chaine+"%");
-		stmt.setInt(3, taillePage);
-		stmt.setInt(4, page * taillePage);
-		
-		ResultSet rs = stmt.executeQuery();
-		return rs;
-	}
-
-
-	public ResultSet computerInformationsDetails(Connection con, String nomMachine) throws ClassNotFoundException, SQLException {
-
-		PreparedStatement stmt = con.prepareStatement(REQUETE_DETAILS);
-		stmt.setString(1, nomMachine);
-		ResultSet rs = stmt.executeQuery();
-			
-		return rs;
-	}
-
-	public ResultSet computerInformationsDetails(Connection con, int id) throws SQLException {
-		PreparedStatement stmt = con.prepareStatement(REQUETE_DETAILS_ID);
-		stmt.setInt(1, id);
-		ResultSet rs = stmt.executeQuery();
-
-		return rs;
+	JdbcTemplate template = new JdbcTemplate();
+	
+	public ComputersInfosDao(DataSource dataSource) {
+		template.setDataSource(dataSource);
 	}
 	
+	public List<Computer> computerInformations() {
+
+		return template.query(REQUETE_TOUT, new ComputerInfos() );
+
+	}
+
+	public Integer computerInformationsNbEltsFiltre(String chaine) {
+		
+		return template.queryForObject(REQUETE_NOMBRE_FILTRE, Integer.class, chaine,chaine);
+	}
+	
+	public List<Computer> computerInformationsPageFilterSorted(int taillePage, int page, String chaine, String order, String upOrDown) {
+		
+		return template.query(REQUETE_PAGE_FILTRE_TRIE + order + upOrDown + LIMIT_OFFSET, new ComputerInfos(), chaine,chaine, taillePage, page * taillePage);
+	}
+
+	
+	public Computer computerInformationsDetails(String nomMachine) {
+		return template.query(REQUETE_DETAILS, new ComputerInfos(), nomMachine).get(0);
+	}
+
+	public Computer computerInformationsDetails(int id) {
+		return template.query(REQUETE_DETAILS_ID, new ComputerInfos(),id).get(0);
+	}
+
 }

@@ -1,9 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt"%>
 <!DOCTYPE html>
-<html>
+<html lang="${lang}">
 <head>
 <title>Computer Database</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -17,26 +16,31 @@
 <body>
 	<header class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="/cdb/ComputerServlet"> Application
+			<a class="navbar-brand" href="/cdb/dashboard"> Application
 				- Computer Database </a>
+				<div class="pull-right">
+	      		  <a href="?lang=en"><fmt:message key="label.lang.en" /></a>
+	      		  <a href="?lang=fr"><fmt:message key="label.lang.fr" /></a>
+	      		  <a href="?lang=jp"><fmt:message key="label.lang.jp" /></a>
+	        </div>
 		</div>
 	</header>
 
 	<section id="main">
 		<div class="container">
-			<h1 id="homeTitle">${computerNumber} Computers found</h1>
+			<h1 id="homeTitle">${computerNumber} <fmt:message key="label.dashboard.computerFound"/></h1>
 			<div id="actions" class="form-horizontal">
 				<div class="pull-left">
 				
 					<form id="searchForm" action="?search=${ search }" method="GET" class="form-inline">
 
 						<input type="search" id="searchbox" name="search"
-							class="form-control" placeholder="Search name" value="${ search }"/> 
-						<input type="submit" id="searchsubmit" value="Filter by name"
+							class="form-control" placeholder="<fmt:message key="label.dashboard.searchName"/>" value="${ search }"/> 
+						<input type="submit" id="searchsubmit" value="<fmt:message key="label.dashboard.searchNameFilter"/>"
 							class="btn btn-primary" />
 					
 						<a class="btn btn-default" id="sortList"
-							href="?sortedOn=id">Reset sort</a>
+							href="?sortedOn=id"><fmt:message key="label.dashboard.initFilter"/></a>
 					</form>
 				</div>
 				
@@ -44,14 +48,14 @@
 				
 					
 					<a class="btn btn-success" id="addComputer"
-						href="/cdb/AddComputerServlet">Add Computer</a> 
+						href="/cdb/addComputer"><fmt:message key="label.dashboard.add"/></a> 
 					<a class="btn btn-default" id="editComputer" href="#"
-						onclick="$.fn.toggleEditMode();">Edit</a>
+						onclick="$.fn.toggleEditMode();"><fmt:message key="label.dashboard.edit"/></a>
 				</div>
 			</div>
 		</div>
 
-		<form id="deleteForm" action="/cdb/DeleteComputerServlet" method="POST">
+		<form id="deleteForm" action="/cdb/dashboard" method="POST">
 			<input type="hidden" name="selection" value="">
 		</form>
 
@@ -71,28 +75,28 @@
 						</span></th>
 						
 						<th><a href="?sortedOn=computerName" onclick="">
-									<c:out value="Computer name" /></a></th>
+									<fmt:message key="label.dashboard.computerName"/></a></th>
 									
 						<th><a href="?sortedOn=introduced" onclick="">
-									<c:out value="Introduced date" /></a></th>
+									<fmt:message key="label.dashboard.introducedDate"/></a></th>
 						<!-- Table header for Discontinued Date -->
 						<th><a href="?sortedOn=discontinued" onclick="">
-									<c:out value="Discontinued date" /></a></th>
+									<fmt:message key="label.dashboard.discontinuedDate"/></a></th>
 						<!-- Table header for Company -->
 						<th><a href="?sortedOn=company" onclick="">
-									<c:out value="Company" /></a></th>
+									<fmt:message key="label.dashboard.company"/></a></th>
 
 					</tr>
 				</thead>
 				<!-- Browse attribute computers -->
 				<tbody id="results">
-						<c:forEach items="${ComputerList}" var="current">
+						<c:forEach items="${computerList}" var="current">
 							<tr>
 								<td class="editMode">
 									<input type="checkbox" name="cb"
 										class="cb" value="${ current.getId() }">	
 								</td>
-								<td><a href="/cdb/EditComputerServlet?id=${ current.getId() }" onclick="">
+								<td><a href="/cdb/editComputer?id=${ current.getId() }" onclick="">
 									<c:out value="${ current.getName()}" /></a>
 								</td>
 								<td><c:out value="${current.getDateSortie()}" /></td>
@@ -119,7 +123,7 @@
 				<c:if test="${page != 1}">
 					<li>
 						<a href="?page=${page-1}" aria-label="Previous"> 
-							<span aria-hidden="true">Previous</span>
+							<span aria-hidden="true"><fmt:message key="label.dashboard.previous"/></span>
 						</a>
 					</li>
 				</c:if>
@@ -133,7 +137,7 @@
 				<c:if test="${page != maxPage}">
 				<li>
 					<a href="?page=${page+1}" aria-label="Next"> 
-						<span aria-hidden="true">Next</span>
+						<span aria-hidden="true"><fmt:message key="label.dashboard.next"/></span>
 					</a>
 				</li>
 				</c:if>
@@ -155,6 +159,12 @@
 		</div>
 	</div>
 	</footer>
+	<script type="text/javascript">
+		var strings = new Array();
+		strings['view'] = "<fmt:message key="label.dashboard.view" />";
+		strings['edit'] = "<fmt:message key="label.dashboard.edit" />";
+		strings['deleteMessage'] = "<fmt:message key="label.dashboard.message" />"; 
+	</script>
 	<script src="js/jquery.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/dashboard.js"></script>
