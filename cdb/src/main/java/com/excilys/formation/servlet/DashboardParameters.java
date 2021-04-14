@@ -57,7 +57,6 @@ public class DashboardParameters {
 		modelAndView.addObject("index", listPage.getIndex());
 		modelAndView.addObject("computerList", listPage.getComputerList());
 		modelAndView.addObject("maxPage", listPage.getMaxPage());
-		System.out.println(listPage.getMaxPage());
 		return modelAndView;
 	}
 
