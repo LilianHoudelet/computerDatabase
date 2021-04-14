@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.excilys.formation.dto.CompanyDTO;
+import com.excilys.formation.dto.CompanyPersist;
 import com.excilys.formation.dto.ComputerDTO;
 import com.excilys.formation.model.Company;
 import com.excilys.formation.model.Computer;
@@ -53,5 +54,17 @@ public class DtoMapper {
 		}
 		logger.debug("Passage d'une liste de Company vers sont equivalent réduit CompanyDTO");
 		return listeCompaniesDto;
+	}
+	
+	public List<Company> mapCompanyPersistToCompanyList(List<CompanyPersist> companyList) {
+		List<Company> list = new ArrayList<Company>();
+		for(CompanyPersist c : companyList) {
+			list.add(mapCompanyPersistToCompany(c));
+		}
+		return list;
+	}
+	
+	public Company mapCompanyPersistToCompany(CompanyPersist company) {
+		return new Company(company.getId(), company.getName());		
 	}
 }
