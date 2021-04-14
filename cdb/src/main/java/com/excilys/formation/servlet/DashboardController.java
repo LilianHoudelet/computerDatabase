@@ -154,12 +154,10 @@ public class DashboardController {
 		if (r.hasErrors()) {
 			return new RedirectView("addComputer");
 		} else {
+			Computer addedComputer = mapStringToComputer.ComputerStringToComputer(computer);
+			addComputeService.ajoutDataService(addedComputer);
 			
-		
-		Computer addedComputer = mapStringToComputer.ComputerStringToComputer(computer);
-		addComputeService.ajoutDataService(addedComputer);
-		
-		return new RedirectView("dashboard");
+			return new RedirectView("dashboard");
 		}
 	}
 	

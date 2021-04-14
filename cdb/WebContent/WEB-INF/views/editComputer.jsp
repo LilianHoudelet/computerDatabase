@@ -39,6 +39,7 @@
 									<form:input type="text" class="form-control" id="computerName"
 										placeholder="Computer Name" name="computerName" path="nom" required="required"
 										value = "${computerName}"/>
+									<form:errors path="name" cssStyle="color: red;"/>
 								</div>
 								<div class="form-group">
 									<form:label path="dateSortie"><fmt:message key="label.dashboard.introducedDate" /></form:label> 
@@ -51,6 +52,7 @@
 									<form:input type="date" class="form-control" id="discontinued"
 										placeholder="Discontinued date" name="discontinued" path="dateRetrait"
 										value = "${discontinuedDate}"/>
+									<form:errors path="dateRetrait" cssStyle="color: red;"/>
 								</div>
 							<div class="form-group">
 								<form:label path="companyId"><fmt:message key="label.dashboard.company" /></form:label> 
@@ -79,7 +81,7 @@
     </section>
     <footer>
 		<script src="js/jquery.min.js"></script>
-		<script src="js/validation.js"></script>
+		<!-- <script src="js/validation.js"></script> -->
 	</footer>
 </body>
 </html>
