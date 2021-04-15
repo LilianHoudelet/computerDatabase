@@ -6,11 +6,10 @@ import javax.persistence.EntityManager;
 
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
-
 import org.springframework.stereotype.Component;
 
-import com.excilys.formation.dto.CompanyPersist;
-import com.excilys.formation.dto.QCompanyPersist;
+import com.excilys.formation.dto.dao.CompanyPersist;
+import com.excilys.formation.dto.dao.QCompanyPersist;
 import com.excilys.formation.mapper.DtoMapper;
 import com.excilys.formation.model.Company;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -33,7 +32,7 @@ public class CompanieInfoDao {
 		
 		JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
 		QCompanyPersist companyPersist = QCompanyPersist.companyPersist;
-		List<CompanyPersist> companyList = queryFactory.selectFrom(companyPersist).fetch();
+		List<CompanyPersist> companyList = queryFactory.selectFrom(companyPersist).orderBy(companyPersist.id.asc()).fetch();
 		
 		return dtoMapper.mapCompanyPersistToCompanyList(companyList);
 	}

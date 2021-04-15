@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.excilys.formation.dto.CompanyDTO;
-import com.excilys.formation.dto.CompanyPersist;
 import com.excilys.formation.dto.ComputerDTO;
+import com.excilys.formation.dto.dao.CompanyPersist;
 import com.excilys.formation.model.Company;
 import com.excilys.formation.model.Computer;
 

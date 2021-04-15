@@ -1,4 +1,4 @@
-package com.excilys.formation.dto;
+package com.excilys.formation.dto.dao;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,9 +24,12 @@ public class CompanyPersist {
 	@Column(name = "name")
 	private String name;
 	
-	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "companyId")
-	private Set<ComputerPersist> computerList = new HashSet<>(0);
+//	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "companyId")
+//	private Set<ComputerPersist> computerList = new HashSet<>(0);
 
+	public CompanyPersist() {
+		
+	}
 	public CompanyPersist(int id, String name) {
 		this.id = id;
 		this.name = name;
@@ -40,9 +43,9 @@ public class CompanyPersist {
 		return name;
 	}
 
-	public Set<ComputerPersist> getComputerList() {
-		return computerList;
-	}
+//	public Set<ComputerPersist> getComputerList() {
+//		return computerList;
+//	}
 
 	public void setId(int id) {
 		this.id = id;
@@ -52,7 +55,7 @@ public class CompanyPersist {
 		this.name = name;
 	}
 
-	public void setComputerList(Set<ComputerPersist> computerList) {
-		this.computerList = computerList;
-	}
+//	public void setComputerList(Set<ComputerPersist> computerList) {
+//		this.computerList = computerList;
+//	}
 }

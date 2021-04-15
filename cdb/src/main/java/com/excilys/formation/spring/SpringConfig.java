@@ -51,7 +51,7 @@ public class SpringConfig extends AbstractContextLoaderInitializer {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(getDataSource());
-        sessionFactory.setPackagesToScan(new String[]{"com.excilys.formation.dao"});
+        sessionFactory.setPackagesToScan("com.excilys.formation.dto.dao");
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }
