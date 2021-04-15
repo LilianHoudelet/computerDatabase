@@ -3,6 +3,7 @@ package com.excilys.formation.spring;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.context.AbstractContextLoaderInitializer;
@@ -11,6 +12,8 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.zaxxer.hikari.HikariDataSource;
+
+import java.util.Properties;
 
 import javax.sql.DataSource;
 
@@ -42,5 +45,20 @@ public class SpringConfig extends AbstractContextLoaderInitializer {
 		dataSource.setUsername( "admincdb" );
 		dataSource.setPassword( "qwerty1234" );
 		return dataSource;
+	}
+	
+    @Bean
+    public LocalSessionFactoryBean sessionFactory() {
+        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+        sessionFactory.setDataSource(getDataSource());
+        sessionFactory.setPackagesToScan(new String[]{"com.excilys.formation.dao"});
+        sessionFactory.setHibernateProperties(hibernateProperties());
+        return sessionFactory;
+    }
+    
+    private Properties hibernateProperties() {
+		Properties hibernateProperties = new Properties();
+		hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+		return hibernateProperties;
 	}
 }

@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,11 +18,19 @@ public class CompanyPersist {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	int id;
-	String name;
+	@Column(name = "id")
+	private int id;
+	
+	@Column(name = "name")
+	private String name;
 	
 	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "companyId")
 	private Set<ComputerPersist> computerList = new HashSet<>(0);
+
+	public CompanyPersist(int id, String name) {
+		this.id = id;
+		this.name = name;
+	}
 
 	public int getId() {
 		return id;
