@@ -35,5 +35,4 @@ public class AjoutOrdinateurDao {
 		entityManager.getTransaction().commit();
 	}
 	
-	
 }

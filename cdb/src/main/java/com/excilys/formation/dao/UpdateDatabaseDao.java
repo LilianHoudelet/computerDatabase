@@ -8,7 +8,9 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.excilys.formation.dto.dao.ComputerPersist;
 import com.excilys.formation.dto.dao.QComputerPersist;
+import com.excilys.formation.mapper.DtoMapper;
 import com.excilys.formation.model.Computer;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -19,9 +21,12 @@ public class UpdateDatabaseDao {
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(UpdateDatabaseDao.class);
 	
 	private EntityManager entityManager;
+	private DtoMapper dtoMapper;
 	
-	public UpdateDatabaseDao(SessionFactory sessionFactory) {
+	public UpdateDatabaseDao(SessionFactory sessionFactory, DtoMapper dtoMapper) {
 		this.entityManager = sessionFactory.createEntityManager();
+		this.dtoMapper = dtoMapper;
+		
 	}
 
 	public void updateComputerInformations(Computer computer) {
@@ -40,5 +45,11 @@ public class UpdateDatabaseDao {
 		.execute();
 		
 		entityManager.getTransaction().commit();
+		
+//		ComputerPersist computerPersist = dtoMapper.mapComputerToComputerPersist(computer);
+//		
+//		entityManager.getTransaction().begin();
+//		entityManager.persist(computerPersist);
+//		entityManager.getTransaction().commit();
 	}
 }

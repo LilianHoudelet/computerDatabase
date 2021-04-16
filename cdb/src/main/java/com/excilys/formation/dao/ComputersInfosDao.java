@@ -55,6 +55,7 @@ public class ComputersInfosDao {
 		JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
 		QComputerPersist computerPersist = QComputerPersist.computerPersist;
 		
+		@SuppressWarnings({ "rawtypes", "unchecked" })
 		OrderSpecifier<?> ordered = new OrderSpecifier(upOrDown, Expressions.path(Object.class, QComputerPersist.computerPersist, order));
 		
 		List<ComputerPersist> computerList = queryFactory.selectFrom(computerPersist).where(computerPersist.name.contains(chaine)).orderBy(ordered).limit(taillePage).offset(page*taillePage).fetch();
