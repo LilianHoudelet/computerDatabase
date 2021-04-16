@@ -85,11 +85,27 @@ public class SpringWebConfig implements WebApplicationInitializer, WebMvcConfigu
     public LocaleResolver localeResolver() {
         return new SessionLocaleResolver();
     }
-
+    
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         LocaleChangeInterceptor localeChangeInterceptor = new LocaleChangeInterceptor();
         localeChangeInterceptor.setParamName("lang");
         registry.addInterceptor(localeChangeInterceptor);
     }
+
+//    @Bean
+//    public LocalSessionFactoryBean sessionFactory() {
+//        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+//        sessionFactory.setDataSource(getDataSource());
+//        sessionFactory.setPackagesToScan(new String[]{"com.excilys.formation.dao"});
+//        sessionFactory.setHibernateProperties(hibernateProperties());
+//        return sessionFactory;
+//    }
+//    
+//    private Properties hibernateProperties() {
+//		Properties hibernateProperties = new Properties();
+//		hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
+//		return hibernateProperties;
+//	}
+
 }

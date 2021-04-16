@@ -1,34 +1,52 @@
 package com.excilys.formation.dao;
 
-import javax.sql.DataSource;
+import javax.persistence.EntityManager;
 
+import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+
+import com.excilys.formation.dto.dao.QComputerPersist;
+import com.querydsl.jpa.impl.JPAQueryFactory;
 
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class SupprimerDatabaseDao {
 	
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(SupprimerDatabaseDao.class);
+
+	private EntityManager entityManager;
 	
-	public static final String REQUETE_SUPPRIMER = "DELETE FROM computer WHERE name = ?";
-	
-	public static final String REQUETE_SUPPRIMER_PAR_ID = "DELETE FROM computer WHERE id = ?";
-	
-	JdbcTemplate delete = new JdbcTemplate();
-	
-	public SupprimerDatabaseDao(DataSource dataSource) {
-		delete.setDataSource(dataSource);
+	public SupprimerDatabaseDao(SessionFactory sessionFactory) {
+		this.entityManager = sessionFactory.createEntityManager();
 	}
 	
 	public void deleteComputer(String name) {		
-        delete.update(REQUETE_SUPPRIMER, name );
+
+		JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
+		QComputerPersist computerPersist = QComputerPersist.computerPersist;
+		
+		entityManager.getTransaction().begin();
+		
+		queryFactory
+		.delete(computerPersist).where(computerPersist.name.eq(name))
+		.execute();
+		
+		entityManager.getTransaction().commit();
 	}
 	
 	public void deleteComputer(int id) {
-        delete.update(REQUETE_SUPPRIMER_PAR_ID, new Object[] { id });
+		JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
+		QComputerPersist computerPersist = QComputerPersist.computerPersist;
+		
+		entityManager.getTransaction().begin();
+		
+		queryFactory
+		.delete(computerPersist).where(computerPersist.id.eq(id))
+		.execute();
+		
+		entityManager.getTransaction().commit();
 	}
 }

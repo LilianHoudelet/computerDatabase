@@ -35,9 +35,9 @@
 							<fieldset>
 								
 								<div class="form-group">
-									<form:label path="nom"><fmt:message key="label.dashboard.computerName" /></form:label> 
+									<form:label path="name"><fmt:message key="label.dashboard.computerName" /></form:label> 
 									<form:input type="text" class="form-control" id="computerName"
-										placeholder="Computer Name" name="computerName" path="nom" required="required"
+										placeholder="Computer Name" name="computerName" path="name" required="required"
 										value = "${computerName}"/>
 									<form:errors path="name" cssStyle="color: red;"/>
 								</div>
