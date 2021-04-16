@@ -34,6 +34,10 @@ public class Computer {
 		return this.nom;
 	}
 	
+	public void setName(String name) {
+		this.nom = name;
+	}
+	
 	public LocalDate getDateSortie() {
 		return this.dateSortie;
 	}

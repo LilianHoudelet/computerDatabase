@@ -1,5 +1,6 @@
 package com.excilys.formation.mapper;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 import com.excilys.formation.dto.CompanyDTO;
 import com.excilys.formation.dto.ComputerDTO;
 import com.excilys.formation.dto.dao.CompanyPersist;
+import com.excilys.formation.dto.dao.ComputerPersist;
 import com.excilys.formation.model.Company;
 import com.excilys.formation.model.Computer;
 
@@ -43,7 +45,7 @@ public class DtoMapper {
 		logger.debug("Passage d'un Computer vers sont equivalent réduit ComputerDTO");
 
 		return (new ComputerDTO(String.valueOf(computer.getId()), computer.getName(), dateSortie, dateRetrait,
-				computer.getCompany().getName()));
+				computer.getCompany() != null ? computer.getCompany().getName() : ""));
 	}
 
 	public List<CompanyDTO> mapCompanyToCompanyDTO(List<Company> companies) {
@@ -66,5 +68,37 @@ public class DtoMapper {
 	
 	public Company mapCompanyPersistToCompany(CompanyPersist company) {
 		return new Company(company.getId(), company.getName());		
+	}
+	
+	public ComputerPersist mapComputerToComputerPersist(Computer computer) {
+		
+		ComputerPersist computerPersist = new ComputerPersist();
+		computerPersist.setId(computer.getId());
+		computerPersist.setName(computer.getName());
+		computerPersist.setIntroduced(computer.getDateSortie());
+		computerPersist.setDiscontinued(computer.getDateRetrait());
+		computerPersist.setCompanyId(computer.getCompany().getId() != 0 ? computer.getCompany().getId() : null );
+		
+		return computerPersist;
+	}
+	
+	public Computer mapComputerPersistToComputer(ComputerPersist computerPersist) {
+		
+		Computer computer = new Computer(computerPersist.getId(),
+				computerPersist.getName(),
+				computerPersist.getIntroduced(),
+				computerPersist.getDiscontinued(),
+				computerPersist.getCompany() != null ? new Company(computerPersist.getCompany().getId(), computerPersist.getCompany().getName()) : null);
+		return computer;
+	}
+	
+	public List<Computer> mapComputerPersistToComputerList(List<ComputerPersist> computerPersistList) {
+		List<Computer> computerList = new ArrayList<Computer>();
+		
+		for (ComputerPersist computer : computerPersistList) {
+			computerList.add(mapComputerPersistToComputer(computer));
+		}
+		
+		return computerList;
 	}
 }

@@ -1,13 +1,15 @@
 package com.excilys.formation.dao;
 
-import javax.sql.DataSource;
+import javax.persistence.EntityManager;
 
+import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import com.excilys.formation.dto.dao.ComputerPersist;
+import com.excilys.formation.mapper.DtoMapper;
 import com.excilys.formation.model.Computer;
 
 @Component
@@ -16,21 +18,22 @@ public class AjoutOrdinateurDao {
 
 	static Logger logger = org.slf4j.LoggerFactory.getLogger(AjoutOrdinateurDao.class);
 
-	public static final String REQUETE_AJOUTER_COMPLET = "INSERT INTO computer (id, name, introduced, discontinued, company_id) VALUES (?,?,?,?,?)";
+	private EntityManager entityManager;
+	private DtoMapper dtoMapper;
 	
-	JdbcTemplate insert = new JdbcTemplate();
-	
-	public AjoutOrdinateurDao(DataSource dataSource) {
-		insert.setDataSource(dataSource);
+	public AjoutOrdinateurDao(SessionFactory sessionFactory, DtoMapper dtoMapper) {
+		this.entityManager = sessionFactory.createEntityManager();
+		this.dtoMapper = dtoMapper;
 	}
-
+	
 	public void computerInformations(Computer computer) {
-		insert.update(REQUETE_AJOUTER_COMPLET,  
-				computer.getId(), 
-				computer.getName(), 
-				computer.getDateSortie() != null ? computer.getDateSortie() : null, 
-				computer.getDateRetrait() != null ? computer.getDateRetrait() : null, 
-				computer.getCompany().getId() != 0 ? computer.getCompany().getId() : null );
 		
+		ComputerPersist computerPersist = dtoMapper.mapComputerToComputerPersist(computer);
+		
+		entityManager.getTransaction().begin();
+		entityManager.persist(computerPersist);
+		entityManager.getTransaction().commit();
 	}
+	
+	
 }

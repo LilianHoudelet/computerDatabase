@@ -4,28 +4,30 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.querydsl.core.types.Order;
+
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class RequestFilterString {
 
 	public String convertOrderString(String entry) {
 		if (entry == null || entry.isBlank()) {
-			return "computer.id";
+			return "id";
 		} else if ("computerName".equals(entry)) {
-			return "computer.name";
+			return "name";
 		} else if ("company".equals(entry)) {
-			return "company.name";
+			return "companyId";
 		} else if ("introduced".equals(entry)) {
 			return "introduced";
 		} else if ("discontinued".equals(entry)) {
 			return "discontinued";
 		} else {
-			return "computer.id";
+			return "id";
 		}
 	}
 	
-	public String convertOrderbool(boolean upDown) {
-		return (upDown ? " ASC " : " DESC ");
+	public Order convertOrderbool(boolean upDown) {
+		return (upDown ? Order.ASC : Order.DESC);
 	}
 
 }

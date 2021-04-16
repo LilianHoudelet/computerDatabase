@@ -27,14 +27,6 @@ public class CompanyPersist {
 //	@OneToMany(cascade = CascadeType.PERSIST, mappedBy = "companyId")
 //	private Set<ComputerPersist> computerList = new HashSet<>(0);
 
-	public CompanyPersist() {
-		
-	}
-	public CompanyPersist(int id, String name) {
-		this.id = id;
-		this.name = name;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -54,7 +46,7 @@ public class CompanyPersist {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+//
 //	public void setComputerList(Set<ComputerPersist> computerList) {
 //		this.computerList = computerList;
 //	}
