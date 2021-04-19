@@ -1,8 +1,6 @@
-package com.excilys.formation.model;
+package com.excilys.formation.dto;
 
 import java.util.List;
-
-import com.excilys.formation.dto.ComputerDTO;
 
 public class ComputerPage {
 	

@@ -3,7 +3,7 @@ package com.excilys.formation.spring;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import com.excilys.formation.model.GestionMenu;
+import com.excilys.formation.cli.GestionMenu;
 
 
 public class SpringCli {

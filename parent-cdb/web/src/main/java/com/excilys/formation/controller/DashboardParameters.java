@@ -7,7 +7,8 @@ import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.excilys.formation.dto.ComputerDTO;
-import com.excilys.formation.model.ComputerPage;
+import com.excilys.formation.dto.ComputerPage;
+
 
 @Component
 @SessionScope

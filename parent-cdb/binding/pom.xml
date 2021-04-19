@@ -50,63 +50,36 @@
       <artifactId>querydsl-jpa</artifactId>     			
       <version>4.4.0</version>      		
     </dependency>
-    
+ 
+    <dependency> 			
+      <groupId>org.springframework</groupId>   			
+      <artifactId>spring-webmvc</artifactId>      			
+      <version>5.3.5</version>      		
+    </dependency>
+		
+    <dependency>      		    
+      <groupId>org.springframework</groupId>      		    
+      <artifactId>spring-jdbc</artifactId>      		    
+      <version>5.3.5</version>
+   	</dependency>
+		
     <dependency>    			
-      <groupId>org.springframework</groupId>    			
+      <groupId>org.springframework</groupId>     			
       <artifactId>spring-core</artifactId>     			
-      <version>5.3.5</version>      			
-      <exclusions>    				
-        <exclusion>         					
-          <groupId>commons-logging</groupId>          					
-          <artifactId>commons-logging</artifactId>          				
-        </exclusion>        			
+      <version>5.3.5</version>
+       <exclusions>        				
+        <exclusion>          					
+          <groupId>commons-logging</groupId>         					
+          <artifactId>commons-logging</artifactId>         				
+        </exclusion>       			
       </exclusions>     		
-    </dependency>
-    
-    <dependency>
-      			
-      <groupId>org.springframework</groupId>
-      			
-      <artifactId>spring-webmvc</artifactId>
-      			
-      <version>5.3.5</version>
-      		
-    </dependency>
-    		
-		
-    <dependency>
-      		    
-      <groupId>org.springframework</groupId>
-      		    
-      <artifactId>spring-jdbc</artifactId>
-      		    
-      <version>5.3.5</version>
-      		
-    </dependency>
-    		
-		
-    <dependency>
-      			
-      <groupId>org.springframework</groupId>
-      			
-      <artifactId>spring-core</artifactId>
-      			
-      <version>5.3.5</version>
-      			
-      <exclusions>
-        				
-        <exclusion>
-          					
-          <groupId>commons-logging</groupId>
-          					
-          <artifactId>commons-logging</artifactId>
-          				
-        </exclusion>
-        			
-      </exclusions>
-      		
-    </dependency>
-        	
+  	</dependency>
+  
+	<dependency>
+	   <groupId>com.excilys</groupId>
+	   <artifactId>model</artifactId>
+	   <version>${project.version}</version>
+	</dependency>        	
   </dependencies>
 
   <build>

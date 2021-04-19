@@ -119,7 +119,6 @@
 						<span aria-hidden="true">&laquo;</span>
 					</a>
 				</li>
-				
 				<c:if test="${page != 1}">
 					<li>
 						<a href="?page=${page-1}" aria-label="Previous"> 
