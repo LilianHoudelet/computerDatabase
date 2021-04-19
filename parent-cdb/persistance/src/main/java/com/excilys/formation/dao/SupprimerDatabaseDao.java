@@ -9,37 +9,44 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.excilys.formation.dto.dao.QComputerPersist;
-import com.excilys.formation.model.Computer;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
-public class UpdateDatabaseDao {
+public class SupprimerDatabaseDao {
 	
-	static Logger logger = org.slf4j.LoggerFactory.getLogger(UpdateDatabaseDao.class);
-	
+	static Logger logger = org.slf4j.LoggerFactory.getLogger(SupprimerDatabaseDao.class);
+
 	private EntityManager entityManager;
 	
-	public UpdateDatabaseDao(SessionFactory sessionFactory) {
+	public SupprimerDatabaseDao(SessionFactory sessionFactory) {
 		this.entityManager = sessionFactory.createEntityManager();
 	}
+	
+	public void deleteComputer(String name) {		
 
-	public void updateComputerInformations(Computer computer) {
-		logger.debug("Mise à jour de l'élément " + computer.getName() + " dans la base de données");
-		
 		JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
 		QComputerPersist computerPersist = QComputerPersist.computerPersist;
 		
 		entityManager.getTransaction().begin();
 		
-		queryFactory.update(computerPersist).where(computerPersist.id.eq(computer.getId()))
-		.set(computerPersist.name, computer.getName())
-		.set(computerPersist.introduced, computer.getDateSortie())
-		.set(computerPersist.discontinued, computer.getDateRetrait())
-		.set(computerPersist.companyId, computer.getCompany().getId() != 0 ? computer.getCompany().getId() : null)
+		queryFactory
+		.delete(computerPersist).where(computerPersist.name.eq(name))
 		.execute();
 		
 		entityManager.getTransaction().commit();
+	}
+	
+	public void deleteComputer(int id) {
+		JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
+		QComputerPersist computerPersist = QComputerPersist.computerPersist;
 		
+		entityManager.getTransaction().begin();
+		
+		queryFactory
+		.delete(computerPersist).where(computerPersist.id.eq(id))
+		.execute();
+		
+		entityManager.getTransaction().commit();
 	}
 }
