@@ -8,13 +8,15 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.excilys.formation.service.AjoutOrdinateurService;
-import com.excilys.formation.service.CheckDate;
-import com.excilys.formation.service.CompanyDataService;
-import com.excilys.formation.service.ComputerDetailsDataService;
-import com.excilys.formation.service.ComputerSuppressionService;
-import com.excilys.formation.service.DeleteCompanyService;
-import com.excilys.formation.service.UpdateDatabaseService;
+import com.excilys.formation.model.Company;
+import com.excilys.formation.model.Computer;
+import com.excilys.formation.services.AjoutOrdinateurService;
+import com.excilys.formation.validation.CheckDate;
+import com.excilys.formation.services.CompanyDataService;
+import com.excilys.formation.services.ComputerDetailsDataService;
+import com.excilys.formation.services.ComputerSuppressionService;
+import com.excilys.formation.services.DeleteCompanyService;
+import com.excilys.formation.services.UpdateDatabaseService;
 import com.excilys.formation.text.Menu;
 
 /**

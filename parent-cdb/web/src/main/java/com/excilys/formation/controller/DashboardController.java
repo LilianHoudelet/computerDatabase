@@ -20,15 +20,14 @@ import com.excilys.formation.dto.ComputerDTO;
 import com.excilys.formation.mapper.DtoMapper;
 import com.excilys.formation.mapper.MapStringToComputer;
 import com.excilys.formation.model.Computer;
-import com.excilys.formation.service.AjoutOrdinateurService;
-import com.excilys.formation.service.CompanyDataService;
-import com.excilys.formation.service.ComputerDataService;
-import com.excilys.formation.service.ComputerDetailsDataService;
-import com.excilys.formation.service.ComputerSuppressionService;
-import com.excilys.formation.service.UpdateDatabaseService;
-import com.excilys.formation.service.ValidationComputer;
+import com.excilys.formation.services.AjoutOrdinateurService;
+import com.excilys.formation.services.CompanyDataService;
+import com.excilys.formation.services.ComputerDataService;
+import com.excilys.formation.services.ComputerDetailsDataService;
+import com.excilys.formation.services.ComputerSuppressionService;
+import com.excilys.formation.services.UpdateDatabaseService;
+import com.excilys.formation.validation.ValidationComputer;
 import com.excilys.formation.validator.DateConstraintValidator;
-//simport com.excilys.formation.validator.DateConstraintValidator;
 
 @Controller
 public class DashboardController {

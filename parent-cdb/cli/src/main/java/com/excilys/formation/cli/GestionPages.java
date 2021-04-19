@@ -8,6 +8,7 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.excilys.formation.model.Computer;
 import com.excilys.formation.services.ComputerDataService;
 import com.excilys.formation.text.Page;
 
