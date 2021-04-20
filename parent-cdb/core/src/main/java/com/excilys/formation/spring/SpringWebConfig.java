@@ -32,7 +32,7 @@ import com.zaxxer.hikari.HikariDataSource;
 @Configuration
 @EnableTransactionManagement
 @EnableWebMvc
-@ComponentScan( basePackages = { "com" }) //"com.excilys.formation.dao","com.excilys.formation.service","com.excilys.formation.servlet","com.excilys.formation.model","com.excilys.formation.mapper","com.excilys.formation.validator"
+@ComponentScan( basePackages = { "com.excilys.formation" }) //"com.excilys.formation.dao","com.excilys.formation.service","com.excilys.formation.servlet","com.excilys.formation.model","com.excilys.formation.mapper","com.excilys.formation.validator"
 public class SpringWebConfig implements WebApplicationInitializer, WebMvcConfigurer {
 	
 	@Override
@@ -93,19 +93,5 @@ public class SpringWebConfig implements WebApplicationInitializer, WebMvcConfigu
         registry.addInterceptor(localeChangeInterceptor);
     }
 
-//    @Bean
-//    public LocalSessionFactoryBean sessionFactory() {
-//        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-//        sessionFactory.setDataSource(getDataSource());
-//        sessionFactory.setPackagesToScan(new String[]{"com.excilys.formation.dao"});
-//        sessionFactory.setHibernateProperties(hibernateProperties());
-//        return sessionFactory;
-//    }
-//    
-//    private Properties hibernateProperties() {
-//		Properties hibernateProperties = new Properties();
-//		hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL5Dialect");
-//		return hibernateProperties;
-//	}
 
 }

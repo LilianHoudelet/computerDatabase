@@ -7,7 +7,7 @@
 
 	<welcome-file-list>
 
-		<welcome-file>cdb/dashboard</welcome-file>
+		<welcome-file>web/dashboard</welcome-file>
 
 	</welcome-file-list>
 

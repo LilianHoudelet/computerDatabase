@@ -22,7 +22,7 @@ import org.springframework.context.annotation.Bean;
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
-@ComponentScan( basePackages = { "com" }) //"com.excilys.formation.dao","com.excilys.formation.service","com.excilys.formation.servlet","com.excilys.formation.model","com.excilys.formation.mapper","com.excilys.formation.validator"
+@ComponentScan( basePackages = { "com.excilys.formation" }) //"comdao","com.excilys.formation.service","com.excilys.formation.servlet","com.excilys.formation.model","com.excilys.formation.mapper","com.excilys.formation.validator"
 public class SpringConfig extends AbstractContextLoaderInitializer {
 	
 	@Override
@@ -51,7 +51,7 @@ public class SpringConfig extends AbstractContextLoaderInitializer {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(getDataSource());
-        //sessionFactory.setPackagesToScan("com.excilys.formation.dto.dao");
+        sessionFactory.setPackagesToScan("com.excilys.formation.dto.dao");
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }
