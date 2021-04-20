@@ -8,8 +8,8 @@ import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.excilys.formation.dto.dao.QComputerPersist;
 import com.excilys.formation.model.Computer;
+import com.excilys.formation.dto.dao.QComputerPersist;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 @Component
@@ -40,6 +40,7 @@ public class UpdateDatabaseDao {
 		.execute();
 		
 		entityManager.getTransaction().commit();
+		entityManager.clear();
 		
 	}
 }

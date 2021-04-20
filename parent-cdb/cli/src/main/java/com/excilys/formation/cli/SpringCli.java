@@ -1,9 +1,9 @@
-package com.excilys.formation.spring;
+package com.excilys.formation.cli;
 
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import com.excilys.formation.cli.GestionMenu;
+import com.excilys.formation.spring.SpringWebConfig;
 
 
 public class SpringCli {

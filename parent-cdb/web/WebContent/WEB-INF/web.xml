@@ -7,7 +7,7 @@
 
 	<welcome-file-list>
 
-		<welcome-file>cdb/ComputerServlet</welcome-file>
+		<welcome-file>cdb/dashboard</welcome-file>
 
 	</welcome-file-list>
 

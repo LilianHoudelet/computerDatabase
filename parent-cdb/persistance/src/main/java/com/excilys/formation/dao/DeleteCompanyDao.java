@@ -9,8 +9,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.excilys.formation.dto.dao.QCompanyPersist;
 import com.excilys.formation.dto.dao.QComputerPersist;
+import com.excilys.formation.dto.dao.QCompanyPersist;
+
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 @Component
@@ -46,5 +47,6 @@ public class DeleteCompanyDao {
 		.execute();
 
 		entityManager.getTransaction().commit();
+		entityManager.clear();
 	}
 }
