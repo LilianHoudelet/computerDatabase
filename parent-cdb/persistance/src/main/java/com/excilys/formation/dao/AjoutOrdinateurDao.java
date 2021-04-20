@@ -33,6 +33,7 @@ public class AjoutOrdinateurDao {
 		entityManager.getTransaction().begin();
 		entityManager.persist(computerPersist);
 		entityManager.getTransaction().commit();
+		entityManager.clear();
 	}
 	
 }

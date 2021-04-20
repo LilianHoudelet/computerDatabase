@@ -73,7 +73,7 @@
 						</fieldset>
 						<div class="actions pull-right">
 							<input type="submit" value="<fmt:message key="label.editComputer.update"/>" class="btn btn-primary">
-							<fmt:message key="label.addComputer.or"/> <a href="/cdb/dashboard" class="btn btn-default"><fmt:message key="label.addComputer.cancel"/></a>
+							<fmt:message key="label.addComputer.or"/> <a href="/web/dashboard" class="btn btn-default"><fmt:message key="label.addComputer.cancel"/></a>
 						</div>
                     </form:form>
                 </div>

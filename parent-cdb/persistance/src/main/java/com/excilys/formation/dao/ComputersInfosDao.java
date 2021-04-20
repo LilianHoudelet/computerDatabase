@@ -52,6 +52,8 @@ public class ComputersInfosDao {
 	
 	public List<Computer> computerInformationsPageFilterSorted(int taillePage, int page, String chaine, String order, Order upOrDown) {
 		
+		entityManager.clear();
+		
 		JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
 		QComputerPersist computerPersist = QComputerPersist.computerPersist;
 		

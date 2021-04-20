@@ -1,4 +1,4 @@
-package com.excilys.formation.spring;
+package com.excilys.formation.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +22,12 @@ import org.springframework.context.annotation.Bean;
 @Configuration
 @EnableWebMvc
 @EnableTransactionManagement
-@ComponentScan( basePackages = { "com.excilys.formation" }) //"comdao","com.excilys.formation.service","com.excilys.formation.servlet","com.excilys.formation.model","com.excilys.formation.mapper","com.excilys.formation.validator"
+@ComponentScan( basePackages = {  "com.excilys.formation.dao",
+	"com.excilys.formation.config",
+	"com.excilys.formation.controller",	
+	"com.excilys.formation.mapper",
+	"com.excilys.formation.services",
+	"com.excilys.formation.validation" }) 
 public class SpringConfig extends AbstractContextLoaderInitializer {
 	
 	@Override

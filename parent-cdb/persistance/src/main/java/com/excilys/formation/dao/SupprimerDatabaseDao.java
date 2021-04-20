@@ -48,5 +48,6 @@ public class SupprimerDatabaseDao {
 		.execute();
 		
 		entityManager.getTransaction().commit();
+		entityManager.refresh(computerPersist);
 	}
 }

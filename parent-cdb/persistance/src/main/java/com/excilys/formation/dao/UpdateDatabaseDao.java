@@ -39,8 +39,9 @@ public class UpdateDatabaseDao {
 		.set(computerPersist.companyId, computer.getCompany().getId() != 0 ? computer.getCompany().getId() : null)
 		.execute();
 		
+		entityManager.flush();
 		entityManager.getTransaction().commit();
-		entityManager.clear();
+
 		
 	}
 }

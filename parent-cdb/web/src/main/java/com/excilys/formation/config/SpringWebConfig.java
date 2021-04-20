@@ -1,4 +1,4 @@
-package com.excilys.formation.spring;
+package com.excilys.formation.config;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -32,7 +32,12 @@ import com.zaxxer.hikari.HikariDataSource;
 @Configuration
 @EnableTransactionManagement
 @EnableWebMvc
-@ComponentScan( basePackages = { "com.excilys.formation" }) //"com.excilys.formation.dao","com.excilys.formation.service","com.excilys.formation.servlet","com.excilys.formation.model","com.excilys.formation.mapper","com.excilys.formation.validator"
+@ComponentScan( basePackages = {  "com.excilys.formation.dao",
+		"com.excilys.formation.config",
+		"com.excilys.formation.controller",	
+		"com.excilys.formation.mapper",
+		"com.excilys.formation.services",
+		"com.excilys.formation.validation" }) 
 public class SpringWebConfig implements WebApplicationInitializer, WebMvcConfigurer {
 	
 	@Override
@@ -42,12 +47,14 @@ public class SpringWebConfig implements WebApplicationInitializer, WebMvcConfigu
 	
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
+		System.out.println("Je passe bien par ici");
 		AnnotationConfigWebApplicationContext context = new AnnotationConfigWebApplicationContext();
 	    context.register(SpringWebConfig.class);
 	    context.setServletContext(servletContext);
 	    Dynamic servlet = servletContext.addServlet("dispacher", new DispatcherServlet(context));
         servlet.setLoadOnStartup(1);
         servlet.addMapping("/");
+        System.out.println("Je passe bien par la");
 	}
 	
 	@Bean

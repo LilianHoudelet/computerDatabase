@@ -17,7 +17,7 @@
 <body>
 	<header class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container">
-			<a class="navbar-brand" href="/cdb/dashboard"> Application
+			<a class="navbar-brand" href="/web/dashboard"> Application
 				- Computer Database </a>
 				<div class="pull-right">
 	      		  <a href="?lang=en"><fmt:message key="label.lang.en" /></a>
@@ -49,14 +49,14 @@
 				
 					
 					<a class="btn btn-success" id="addComputer"
-						href="/cdb/addComputer"><fmt:message key="label.dashboard.add"/></a> 
+						href="/web/addComputer"><fmt:message key="label.dashboard.add"/></a> 
 					<a class="btn btn-default" id="editComputer" href="#"
 						onclick="$.fn.toggleEditMode();"><fmt:message key="label.dashboard.edit"/></a>
 				</div>
 			</div>
 		</div>
 
-		<form id="deleteForm" action="/cdb/dashboard" method="POST">
+		<form id="deleteForm" action="/web/dashboard" method="POST">
 			<input type="hidden" name="selection" value="">
 		</form>
 
@@ -97,7 +97,7 @@
 									<input type="checkbox" name="cb"
 										class="cb" value="${ current.getId() }">	
 								</td>
-								<td><a href="/cdb/editComputer?id=${ current.getId() }" onclick="">
+								<td><a href="/web/editComputer?id=${ current.getId() }" onclick="">
 									<c:out value="${ current.getName()}" /></a>
 								</td>
 								<td><c:out value="${current.getDateSortie()}" /></td>
