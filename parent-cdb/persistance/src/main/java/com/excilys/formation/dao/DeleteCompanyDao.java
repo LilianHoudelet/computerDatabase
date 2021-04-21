@@ -7,39 +7,46 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.excilys.formation.dto.dao.QComputerPersist;
-import com.excilys.formation.model.Computer;
+import com.excilys.formation.dto.dao.QCompanyPersist;
+
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 @Component
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
-public class UpdateDatabaseDao {
+public class DeleteCompanyDao {
 	
-	static Logger logger = org.slf4j.LoggerFactory.getLogger(UpdateDatabaseDao.class);
+	public final static String DELETE_COMPANY = "DELETE FROM company WHERE id = ? ";
 	
+	public final static String DELETE_COMPUTER = "DELETE FROM computer WHERE company_id = ?";
+	
+	static Logger logger = org.slf4j.LoggerFactory.getLogger(DeleteCompanyDao.class);
+
 	private EntityManager entityManager;
 	
-	public UpdateDatabaseDao(SessionFactory sessionFactory) {
+	public DeleteCompanyDao(SessionFactory sessionFactory) {
 		this.entityManager = sessionFactory.createEntityManager();
 	}
-
-	public void updateComputerInformations(Computer computer) {
-		logger.debug("Mise à jour de l'élément " + computer.getName() + " dans la base de données");
-		
+	
+	@Transactional
+	public void deleteCompany(int companyId) {
 		JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
 		QComputerPersist computerPersist = QComputerPersist.computerPersist;
+		QCompanyPersist companyPersist = QCompanyPersist.companyPersist;
 		
 		entityManager.getTransaction().begin();
 		
-		queryFactory.update(computerPersist).where(computerPersist.id.eq(computer.getId()))
-		.set(computerPersist.name, computer.getName())
-		.set(computerPersist.introduced, computer.getDateSortie())
-		.set(computerPersist.discontinued, computer.getDateRetrait())
-		.set(computerPersist.companyId, computer.getCompany().getId() != 0 ? computer.getCompany().getId() : null)
+		queryFactory
+		.delete(computerPersist).where(computerPersist.companyId.eq(companyId))
 		.execute();
 		
+		queryFactory
+		.delete(computerPersist).where(companyPersist.id.eq(companyId))
+		.execute();
+
 		entityManager.getTransaction().commit();
-		
+		entityManager.clear();
 	}
 }
