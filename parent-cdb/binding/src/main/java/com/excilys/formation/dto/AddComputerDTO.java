@@ -61,4 +61,10 @@ public class AddComputerDTO {
 		this.companyId = companyId;
 	}
 
+	@Override
+	public String toString() {
+		return "AddComputerDTO [id=" + id + ", name=" + name + ", dateSortie=" + dateSortie + ", dateRetrait="
+				+ dateRetrait + ", companyId=" + companyId + "]";
+	}
+
 }

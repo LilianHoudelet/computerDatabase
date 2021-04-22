@@ -34,7 +34,8 @@ import com.zaxxer.hikari.HikariDataSource;
 @EnableWebMvc
 @ComponentScan( basePackages = {  "com.excilys.formation.dao",
 		"com.excilys.formation.config",
-		"com.excilys.formation.controller",	
+		"com.excilys.formation.controller",
+		"com.excilys.formation.restcontroller",
 		"com.excilys.formation.mapper",
 		"com.excilys.formation.services",
 		"com.excilys.formation.validation" }) 
