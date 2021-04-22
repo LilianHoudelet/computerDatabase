@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.excilys.formation.model.Company;
 import com.excilys.formation.model.Computer;
@@ -24,7 +24,8 @@ import com.excilys.formation.text.Menu;
  * @author excilys
  *
  */
-@Component
+
+@Repository
 @Scope(value = ConfigurableBeanFactory.SCOPE_SINGLETON)
 public class GestionMenu {
 
@@ -48,15 +49,15 @@ public class GestionMenu {
 	private AjoutOrdinateurService addComputerService;
 	private CheckDate checkDate;
 
-	public GestionMenu(CompanyDataService companyService, ComputerDetailsDataService computerService,
+	public GestionMenu(CompanyDataService companyDataService, ComputerDetailsDataService computerDetailsDataService,
 			ComputerSuppressionService supprComputerService, UpdateDatabaseService updateComputerService,
-			GestionPages gestionPage, DeleteCompanyService deleteCompanyService,
+			GestionPages gestionPages, DeleteCompanyService deleteCompanyService,
 			AjoutOrdinateurService addComputerService, CheckDate checkDate) {
-		this.companyService = companyService;
-		this.computerService = computerService;
+		this.companyService = companyDataService;
+		this.computerService = computerDetailsDataService;
 		this.supprComputerService = supprComputerService;
 		this.updateComputerService = updateComputerService;
-		this.gestionPage = gestionPage;
+		this.gestionPage = gestionPages;
 		this.deleteCompanyService = deleteCompanyService;
 		this.addComputerService = addComputerService;
 		this.checkDate = checkDate;

@@ -1,4 +1,4 @@
-package com.excilys.formation.config;
+package com.excilys.formation.consoleconfig;
 
 import java.util.Properties;
 

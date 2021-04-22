@@ -1,5 +1,6 @@
 package com.excilys.formation.restcontroller;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.validation.BindingResult;
@@ -23,6 +24,7 @@ import com.excilys.formation.services.AjoutOrdinateurService;
 import com.excilys.formation.services.CompanyDataService;
 import com.excilys.formation.services.ComputerDataService;
 import com.excilys.formation.services.ComputerDetailsDataService;
+import com.excilys.formation.services.ComputerSuppressionService;
 import com.excilys.formation.services.UpdateDatabaseService;
 import com.excilys.formation.validation.DateConstraintValidator;
 
@@ -33,6 +35,7 @@ public class ControllerRest {
 	ComputerDetailsDataService computerDetailService;
 	CompanyDataService companyService;
 	UpdateDatabaseService updateDatabaseService;
+	ComputerSuppressionService supprComputerService;
 
 	AjoutOrdinateurService addComputerService;
 
@@ -46,7 +49,8 @@ public class ControllerRest {
 
 	public ControllerRest(ComputerDataService computerDataService, ComputerDetailsDataService computerDetailDataService,
 			CompanyDataService companyDataService, UpdateDatabaseService updateDatabaseService,
-			AjoutOrdinateurService ajoutOrdinateurService, DashboardParameters dashboardParameters,
+			AjoutOrdinateurService ajoutOrdinateurService, ComputerSuppressionService computerSuppressionService,
+			DashboardParameters dashboardParameters,
 			AddComputerParameters addComputerParameters, EditComputerParameters editComputerParameters,
 			DateConstraintValidator dateConstraintValidator, DtoMapper dtoMapper,
 			MapStringToComputer mapStringToComputer) {
@@ -54,6 +58,7 @@ public class ControllerRest {
 		this.computerDetailService = computerDetailDataService;
 		this.updateDatabaseService = updateDatabaseService;
 		this.addComputerService = ajoutOrdinateurService;
+		this.supprComputerService = computerSuppressionService;
 		this.dashboardParameters = dashboardParameters;
 		this.addComputerParameters = addComputerParameters;
 		this.editComputerParameters = editComputerParameters;
@@ -101,6 +106,22 @@ public class ControllerRest {
 		dashboardParameters.setMaxComputers(computerService.recupDataOrdiNombre(dashboardParameters.getSearchValue()));
 		dashboardParameters.setValues(dtoMapper
 				.mapComputerToComputerDTO(computerService.recupDataOrdiPageFiltreTrie(dashboardParameters.getPage())));
+	}
+	
+	@PostMapping("/computer")
+	public void dashboardPost(@RequestBody(required = false) String selection) {
+		if (selection != null) {
+			List<String> ids = Arrays.asList(selection.split(","));
+			for (String id : ids) {
+				try {
+					supprComputerService.supprDataOrdiId(Integer.parseInt(id));
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}		
 	}
 
 	@GetMapping("/computerUpdate")
